@@ -1,0 +1,24 @@
+<?php
+use Util\Util;
+$children = $this->viewModel()->getCurrent()->getChildren();
+$child = $children[0];
+?>
+			<ol class="breadcrumb">
+			<?php for($i = 0; $i < count($child->breadcrumb); $i++): ?>
+				<li<?php echo $i == (count($child->breadcrumb) - 1) ? ' class="active"' : ''; ?>>
+					<?php if(isset($child->breadcrumb[$i][1]) && $child->breadcrumb[$i][1]): ?>
+					<a href="<?php echo $child->breadcrumb[$i][1]; ?>">
+						<?php if(isset($child->breadcrumb[$i][2])): ?>
+						<i class="<?php echo $child->breadcrumb[$i][2]; ?>"></i>
+						<?php endif; ?>
+						<?php echo $i == (count($child->breadcrumb) - 1) ? '<strong>' . $child->breadcrumb[$i][0] . '</strong>' : $child->breadcrumb[$i][0]; ?>
+					</a>
+					<?php else: ?>
+						<?php if(isset($child->breadcrumb[$i][2])): ?>
+					<i class="<?php echo $child->breadcrumb[$i][2]; ?>"></i>
+						<?php endif; ?>
+					<?php echo $i == (count($child->breadcrumb) - 1) ? '<strong>' . $child->breadcrumb[$i][0] . '</strong>' : $child->breadcrumb[$i][0]; ?>
+					<?php endif; ?>
+				</li>
+				<?php endfor; ?>
+			</ol>

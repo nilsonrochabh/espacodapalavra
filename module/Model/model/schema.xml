@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="default" defaultIdMethod="native" defaultPhpNamingMethod="underscore" namespace="Model" package="Model">
+  <table name="cliente" idMethod="native" phpName="Cliente">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="nome" phpName="Nome" type="VARCHAR" size="45" required="true"/>
+    <column name="endereco" phpName="Endereco" type="VARCHAR" size="45"/>
+    <column name="telefone" phpName="Telefone" type="VARCHAR" size="45"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="45"/>
+    <column name="data_cadastro" phpName="DataCadastro" type="TIMESTAMP" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="consumo" idMethod="native" phpName="Consumo">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_producao" phpName="IdProducao" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="id_produto" phpName="IdProduto" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="quantidade" phpName="Quantidade" type="DECIMAL" scale="0" required="true"/>
+    <foreign-key foreignTable="producao" name="fk_consumo_producao1">
+      <reference local="id_producao" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="produto" name="fk_consumo_produto1">
+      <reference local="id_produto" foreign="id"/>
+    </foreign-key>
+    <index name="fk_consumo_producao1_idx">
+      <index-column name="id_producao"/>
+    </index>
+    <index name="fk_consumo_produto1_idx">
+      <index-column name="id_produto"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="ingrediente" idMethod="native" phpName="Ingrediente">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="nome" phpName="Nome" type="VARCHAR" size="100" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="ingrediente_receita" idMethod="native" phpName="IngredienteReceita">
+    <column name="id_ingrediente" phpName="IdIngrediente" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" required="true"/>
+    <column name="id_receita" phpName="IdReceita" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" required="true"/>
+    <column name="quantidade" phpName="Quantidade" type="DECIMAL" scale="0" required="true"/>
+    <column name="id_unidade" phpName="IdUnidade" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <foreign-key foreignTable="ingrediente" name="fk_ingrediente_has_receita_ingrediente1">
+      <reference local="id_ingrediente" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="receita" name="fk_ingrediente_has_receita_receita1">
+      <reference local="id_receita" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="unidade" name="fk_ingrediente_receita_unidade1">
+      <reference local="id_unidade" foreign="id"/>
+    </foreign-key>
+    <index name="fk_ingrediente_has_receita_receita1_idx">
+      <index-column name="id_receita"/>
+    </index>
+    <index name="fk_ingrediente_has_receita_ingrediente1_idx">
+      <index-column name="id_ingrediente"/>
+    </index>
+    <index name="fk_ingrediente_receita_unidade1_idx">
+      <index-column name="id_unidade"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="local" idMethod="native" phpName="Local">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="nome" phpName="Nome" type="VARCHAR" size="45" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="marca" idMethod="native" phpName="Marca">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="nome" phpName="Nome" type="VARCHAR" size="45" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="pedido" idMethod="native" phpName="Pedido">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="codigo" phpName="Codigo" type="VARCHAR" size="45" required="true"/>
+    <column name="id_cliente" phpName="IdCliente" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="data_pedido" phpName="DataPedido" type="TIMESTAMP" required="true"/>
+    <column name="data_entrega" phpName="DataEntrega" type="TIMESTAMP"/>
+    <column name="valor_cobrado" phpName="ValorCobrado" type="DECIMAL" scale="0" required="true"/>
+    <column name="custo" phpName="Custo" type="DECIMAL" scale="0"/>
+    <column name="lucro" phpName="Lucro" type="DECIMAL" scale="0"/>
+    <foreign-key foreignTable="cliente" name="fk_pedido_cliente1">
+      <reference local="id_cliente" foreign="id"/>
+    </foreign-key>
+    <index name="fk_pedido_cliente1_idx">
+      <index-column name="id_cliente"/>
+    </index>
+    <unique name="codigo_UNIQUE">
+      <unique-column name="codigo"/>
+    </unique>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="producao" idMethod="native" phpName="Producao">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_pedido" phpName="IdPedido" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="descricao" phpName="Descricao" type="VARCHAR" size="45"/>
+    <column name="id_tipo_producao" phpName="IdTipoProducao" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="quantidade_produzida" phpName="QuantidadeProduzida" type="DECIMAL" scale="0"/>
+    <column name="data_producao" phpName="DataProducao" type="TIMESTAMP" required="true"/>
+    <foreign-key foreignTable="pedido" name="fk_producao_pedido1">
+      <reference local="id_pedido" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="tipo_producao" name="fk_producao_tipo_producao1">
+      <reference local="id_tipo_producao" foreign="id"/>
+    </foreign-key>
+    <index name="fk_producao_pedido1_idx">
+      <index-column name="id_pedido"/>
+    </index>
+    <index name="fk_producao_tipo_producao1_idx">
+      <index-column name="id_tipo_producao"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="produto" idMethod="native" phpName="Produto">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_produto_base" phpName="IdProdutoBase" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="id_local" phpName="IdLocal" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="preco" phpName="Preco" type="DECIMAL" scale="0" required="true"/>
+    <column name="data_cadastro" phpName="DataCadastro" type="TIMESTAMP" required="true"/>
+    <foreign-key foreignTable="local" name="fk_produto_local1">
+      <reference local="id_local" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="produto_base" name="fk_produto_produto_base1">
+      <reference local="id_produto_base" foreign="id"/>
+    </foreign-key>
+    <index name="fk_produto_produto_base1_idx">
+      <index-column name="id_produto_base"/>
+    </index>
+    <index name="fk_produto_local1_idx">
+      <index-column name="id_local"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="produto_base" idMethod="native" phpName="ProdutoBase">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_ingrediente" phpName="IdIngrediente" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="id_marca" phpName="IdMarca" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="nome" phpName="Nome" type="VARCHAR" size="100" required="true"/>
+    <column name="quantidade" phpName="Quantidade" type="DECIMAL" scale="0" required="true"/>
+    <column name="id_unidade" phpName="IdUnidade" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <foreign-key foreignTable="ingrediente" name="fk_produto_base_ingrediente1">
+      <reference local="id_ingrediente" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="marca" name="fk_produto_base_marca1">
+      <reference local="id_marca" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="unidade" name="fk_produto_base_unidade">
+      <reference local="id_unidade" foreign="id"/>
+    </foreign-key>
+    <index name="fk_produto_base_unidade_idx">
+      <index-column name="id_unidade"/>
+    </index>
+    <index name="fk_produto_base_ingrediente1_idx">
+      <index-column name="id_ingrediente"/>
+    </index>
+    <index name="fk_produto_base_marca1_idx">
+      <index-column name="id_marca"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="receita" idMethod="native" phpName="Receita">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="nome" phpName="Nome" type="VARCHAR" size="100" required="true"/>
+    <column name="receita" phpName="Receita" type="LONGVARCHAR" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="tipo_producao" idMethod="native" phpName="TipoProducao">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_receita" phpName="IdReceita" type="INTEGER" size="10" sqlType="int(10) unsigned"/>
+    <column name="nome" phpName="Nome" type="VARCHAR" size="45" required="true"/>
+    <foreign-key foreignTable="receita" name="fk_tipo_producao_receita1">
+      <reference local="id_receita" foreign="id"/>
+    </foreign-key>
+    <index name="fk_tipo_producao_receita1_idx">
+      <index-column name="id_receita"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="unidade" idMethod="native" phpName="Unidade">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="nome" phpName="Nome" type="VARCHAR" size="45" required="true"/>
+    <column name="sigla" phpName="Sigla" type="VARCHAR" size="10" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="usuario" idMethod="native" phpName="Usuario">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="nome" phpName="Nome" type="VARCHAR" size="100" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="200" required="true"/>
+    <column name="senha" phpName="Senha" type="VARCHAR" size="250" required="true"/>
+    <column name="data_cadastro" phpName="DataCadastro" type="TIMESTAMP" required="true"/>
+    <column name="habilitado" phpName="Habilitado" type="BOOLEAN" size="1" required="true" defaultValue="false"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+</database>

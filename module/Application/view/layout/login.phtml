@@ -1,0 +1,25 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="<?php echo $this->translate('pt-br'); ?>">
+	<head>
+		<?php echo $this->partial('layout/head', $this); ?>
+	</head>
+
+	<body>
+		<div>&nbsp;</div>
+		<div class="middle-box text-center loginscreen animated fadeInDown">
+			<div>
+				<div>
+					
+				</div>
+				
+				<?php echo $this->content; ?>
+				
+				<p class="m-t"><small>Company &copy; 2016<?php echo date("Y") == "2016" ? "" : " - " . date("Y"); ?></small></p>
+			</div>
+		</div>
+	
+		<?php echo $this->partial('layout/scripts', $this); ?>
+		<?php echo $this->partial('layout/messages', $this); ?>
+	</body>
+</html>

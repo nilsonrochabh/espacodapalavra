@@ -1,0 +1,40 @@
+<?php
+use Util\Util;
+$children = $this->viewModel()->getCurrent()->getChildren();
+$child = $children[0];
+
+if($this->userIdentity()) {
+
+$routeMatch = $this->getHelperPluginManager()->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch();
+$matched = $routeMatch->getMatchedRouteName();
+?>
+	<li<?php echo $matched == 'local' ? ' class="active"' : ''; ?>>
+		<a href="<?php echo $this->url('local'); ?>" title="<?php echo $this->translate('Locais'); ?>">
+			<i class="fa fa-map-marker"></i>
+			<span class="nav-label"><?php echo $this->translate('Locais'); ?></span>
+		</a>
+	</li>
+	
+	<li<?php echo $matched == 'unidade' ? ' class="active"' : ''; ?>>
+		<a href="<?php echo $this->url('unidade'); ?>" title="<?php echo $this->translate('Unidades'); ?>">
+			<i class="fa fa-balance-scale"></i>
+			<span class="nav-label"><?php echo $this->translate('Unidades'); ?></span>
+		</a>
+	</li>
+	
+	<li<?php echo $matched == 'ingrediente' ? ' class="active"' : ''; ?>>
+		<a href="<?php echo $this->url('ingrediente'); ?>" title="<?php echo $this->translate('Ingredientes'); ?>">
+			<i class="fa fa-cutlery"></i>
+			<span class="nav-label"><?php echo $this->translate('Ingredientes'); ?></span>
+		</a>
+	</li>
+	
+	<li<?php echo $matched == 'receita' ? ' class="active"' : ''; ?>>
+		<a href="<?php echo $this->url('receita'); ?>" title="<?php echo $this->translate('Receitas'); ?>">
+			<i class="fa fa-book"></i>
+			<span class="nav-label"><?php echo $this->translate('Receitas'); ?></span>
+		</a>
+	</li>
+<?php
+}
+?>

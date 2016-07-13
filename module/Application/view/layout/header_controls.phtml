@@ -1,0 +1,15 @@
+<?php
+use Util\Util;
+$children = $this->viewModel()->getCurrent()->getChildren();
+$child = $children[0];
+?>
+<div class="title-action">
+	<?php for($i = 0; $i < count($child->headerControls); $i++): ?>
+		<a class="btn <?php echo isset($child->headerControls[$i][3]) && $child->headerControls[$i][3] ? $child->headerControls[$i][3] : ""; ?>" href="<?php echo $child->headerControls[$i][1]; ?>"<?php if(isset($child->headerControls[$i][4])):?> onclick="<?php echo $child->headerControls[$i][4]; ?>"<?php endif; ?>>
+			<?php if(isset($child->headerControls[$i][2]) && $child->headerControls[$i][2]): ?>
+			<i class="<?php echo Util::IsNullOrEmptyString($child->headerControls[$i][2]) ? '' : 'fa ' . $child->headerControls[$i][2]; ?>"></i>
+			<?php endif; ?>
+			<?php echo Util::IsNullOrEmptyString($child->headerControls[$i][0]) ? '' : '&nbsp;' . $child->headerControls[$i][0]; ?>
+		</a>
+	<?php endfor; ?>
+</div>

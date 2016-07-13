@@ -1,0 +1,494 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Calculei\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-04 20:22-0300\n"
+"PO-Revision-Date: 2015-03-04 20:22-0300\n"
+"Last-Translator: Bruno Saliba <bsaliba@gmail.com>\n"
+"Language-Team: Bruno Saliba <bsaliba@gmail.com>\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: translate;_;addMessage\n"
+"X-Poedit-Basepath: ../../../\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.6.10\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: module\n"
+
+#: module/Core/src/Core/BO/QuestaoBO.php:677
+msgid "separador_decimal"
+msgstr ","
+
+#: module/Core/src/Core/BO/QuestaoBO.php:677
+msgid "separador_milhares"
+msgstr "."
+
+#: module/Core/src/Core/Controller/DisciplinaController.php:33
+#: module/Core/src/Core/Controller/DisciplinaController.php:38
+#: module/Core/src/Core/Mvc/Controller/BaseController.php:57
+msgid "Disciplinas"
+msgstr "Disciplinas"
+
+#: module/Core/src/Core/Controller/I18nController.php:40
+msgid "sEmptyTable"
+msgstr "Nenhum registro encontrado"
+
+#: module/Core/src/Core/Controller/I18nController.php:41
+msgid "sInfo"
+msgstr "Mostrando de _START_ até _END_ de _TOTAL_ registros"
+
+#: module/Core/src/Core/Controller/I18nController.php:42
+msgid "sInfoEmpty"
+msgstr "Mostrando 0 até 0 de 0 registros"
+
+#: module/Core/src/Core/Controller/I18nController.php:43
+msgid "sInfoFiltered"
+msgstr "(Filtrados de _MAX_ registros)"
+
+#: module/Core/src/Core/Controller/I18nController.php:44
+msgid "sInfoPostFix"
+msgstr " "
+
+#: module/Core/src/Core/Controller/I18nController.php:45
+msgid "sInfoThousands"
+msgstr "."
+
+#: module/Core/src/Core/Controller/I18nController.php:46
+msgid "sLengthMenu"
+msgstr "_MENU_ resultados por página"
+
+#: module/Core/src/Core/Controller/I18nController.php:47
+msgid "sLoadingRecords"
+msgstr "Carregando..."
+
+#: module/Core/src/Core/Controller/I18nController.php:48
+msgid "sZeroRecords"
+msgstr "Nenhum registro encontrado"
+
+#: module/Core/src/Core/Controller/I18nController.php:49
+msgid "sSearch"
+msgstr "Pesquisar"
+
+#: module/Core/src/Core/Controller/I18nController.php:50
+msgid "oPaginate_sNext"
+msgstr "Próximo"
+
+#: module/Core/src/Core/Controller/I18nController.php:51
+msgid "oPaginate_sPrevious"
+msgstr "Anterior"
+
+#: module/Core/src/Core/Controller/I18nController.php:52
+msgid "oPaginate_sFirst"
+msgstr "Primeiro"
+
+#: module/Core/src/Core/Controller/I18nController.php:53
+msgid "oPaginate_sLast"
+msgstr "Último"
+
+#: module/Core/src/Core/Controller/I18nController.php:54
+msgid "oAria_sSortAscending"
+msgstr ": Ordenar colunas de forma ascendente"
+
+#: module/Core/src/Core/Controller/I18nController.php:55
+msgid "oAria_sSortDescending"
+msgstr ": Ordenar colunas de forma descendente"
+
+#: module/Core/src/Core/Controller/ItemController.php:33
+#: module/Core/src/Core/Controller/ItemController.php:40
+msgid "Itens"
+msgstr "Itens"
+
+#: module/Core/src/Core/Controller/MateriaController.php:33
+#: module/Core/src/Core/Controller/MateriaController.php:39
+msgid "Materias"
+msgstr "Materias"
+
+#: module/Core/src/Core/Controller/QuestaoController.php:53
+#: module/Core/src/Core/Controller/QuestaoController.php:62
+#: module/Core/src/Core/Controller/QuestaoController.php:142
+#: module/Core/src/Core/Controller/QuestaoController.php:371
+msgid "Questões"
+msgstr "Questões"
+
+#: module/Core/src/Core/Controller/QuestaoController.php:63
+msgid "Adicionar Questão"
+msgstr "Adicionar Questão"
+
+#: module/Core/src/Core/Controller/QuestaoController.php:121
+#: module/Core/src/Core/Controller/QuestaoController.php:221
+#: module/Login/src/Login/Controller/EsqueciSenhaController.php:194
+msgid "Registro salvo com sucesso."
+msgstr "Registro salvo com sucesso."
+
+#: module/Core/src/Core/Controller/QuestaoController.php:124
+#: module/Core/src/Core/Controller/QuestaoController.php:224
+msgid "Ocorreu um erro ao salvar o registro."
+msgstr "Ocorreu um erro ao salvar o registro."
+
+#: module/Core/src/Core/Controller/QuestaoController.php:127
+msgid "Pelo menos um campo de texto deve ser preenchido."
+msgstr "Pelo menos um campo de texto deve ser preenchido."
+
+#: module/Core/src/Core/Controller/QuestaoController.php:153
+msgid "Editar Questão"
+msgstr "Editar Questão"
+
+#: module/Core/src/Core/Controller/QuestaoController.php:155
+msgid "Novo"
+msgstr "Novo"
+
+#: module/Core/src/Core/Controller/QuestaoController.php:157
+#: module/Core/src/Core/Controller/QuestaoController.php:258
+#: module/Login/view/login/esqueci-senha/codigo.phtml:19
+#: module/Login/view/login/esqueci-senha/index.phtml:13
+msgid "Voltar"
+msgstr "Voltar"
+
+#: module/Core/src/Core/Controller/QuestaoController.php:172
+#: module/Core/src/Core/Controller/QuestaoController.php:316
+msgid "Questão não encontrada."
+msgstr "Questão não encontrada."
+
+#: module/Core/src/Core/Controller/QuestaoController.php:178
+msgid "Nenhuma tradução encontrada para a questão."
+msgstr "Nenhuma tradução encontrada para a questão."
+
+#: module/Core/src/Core/Controller/QuestaoController.php:247
+msgid "Variáveis Questões"
+msgstr "Variáveis Questões"
+
+#: module/Core/src/Core/Controller/QuestaoController.php:257
+msgid "Editar Variáveis Questão"
+msgstr "Editar Variáveis Questão"
+
+#: module/Core/src/Core/Controller/QuestaoController.php:322
+msgid "A Questão não tem tradução para o seu idioma."
+msgstr "A Questão não tem tradução para o seu idioma."
+
+#: module/Core/src/Core/Controller/QuestaoController.php:382
+msgid "Questão"
+msgstr "Questão"
+
+#: module/Core/src/Core/Form/ManterQuestaoForm.php:47
+msgid "Texto"
+msgstr "Texto"
+
+#: module/Core/src/Core/Form/ManterQuestaoForm.php:69
+msgid "Código Resposta:"
+msgstr "Código Resposta:"
+
+#: module/Core/src/Core/Form/ManterQuestaoForm.php:82
+msgid "Salvar e Prosseguir"
+msgstr "Salvar e Prosseguir"
+
+#: module/Core/src/Core/Form/ManterVariaveisQuestaoForm.php:34
+msgid "Variáveis para geração"
+msgstr "Variáveis para geração"
+
+#: module/Core/src/Core/Form/ManterVariaveisQuestaoForm.php:51
+#: module/Core/src/Core/Form/ManterVariaveisQuestaoForm.php:107
+msgid "Variável "
+msgstr "Variável "
+
+#: module/Core/src/Core/Form/ManterVariaveisQuestaoForm.php:65
+msgid "Valores Possíveis"
+msgstr "Valores Possíveis"
+
+#: module/Core/src/Core/Form/ManterVariaveisQuestaoForm.php:85
+msgid "Variáveis de resposta"
+msgstr "Variáveis de resposta"
+
+#: module/Core/src/Core/Form/ManterVariaveisQuestaoForm.php:121
+msgid "Tipo Variável"
+msgstr "Tipo Variável"
+
+#: module/Core/src/Core/Form/ManterVariaveisQuestaoForm.php:134
+msgid "Tamanho Campo"
+msgstr "Tamanho Campo"
+
+#: module/Core/src/Core/Form/ManterVariaveisQuestaoForm.php:148
+msgid "Label Variável"
+msgstr "Label Variável"
+
+#: module/Core/src/Core/Form/ManterVariaveisQuestaoForm.php:161
+msgid "Variável Relacionada"
+msgstr "Variável Relacionada"
+
+#: module/Core/src/Core/Form/ManterVariaveisQuestaoForm.php:177
+msgid "Salvar e Testar"
+msgstr "Salvar e Testar"
+
+#: module/Core/src/Core/Form/QuestaoForm.php:66
+msgid "Responder"
+msgstr "Responder"
+
+#: module/Core/src/Core/Mvc/Controller/BaseController.php:44
+msgid "Início"
+msgstr "Início"
+
+#: module/Core/src/Core/Mvc/Controller/BaseController.php:54
+msgid "Disciplina não encontrada."
+msgstr "Disciplina não encontrada."
+
+#: module/Core/src/Core/Mvc/Controller/BaseController.php:209
+msgid "Ver"
+msgstr "Ver"
+
+#: module/Core/src/Core/Mvc/Controller/BaseController.php:216
+msgid "Editar"
+msgstr "Editar"
+
+#: module/Core/src/Core/Mvc/Controller/BaseController.php:220
+msgid "Tem certeza que deseja excluir o registro?"
+msgstr "Tem certeza que deseja excluir o registro?"
+
+#: module/Core/src/Core/Mvc/Controller/BaseController.php:220
+msgid "Excluir"
+msgstr "Excluir"
+
+#: module/Core/src/Core/Mvc/Controller/BaseController.php:265
+msgid "Sim"
+msgstr "Sim"
+
+#: module/Core/src/Core/Mvc/Controller/BaseController.php:268
+msgid "Não"
+msgstr "Não"
+
+#: module/Login/src/Login/Authentication/Adapter/MyAuthAdapter.php:48
+msgid "Usuário bloqueado."
+msgstr "Usuário bloqueado."
+
+#: module/Login/src/Login/Authentication/Adapter/MyAuthAdapter.php:51
+msgid "Email/Senha incorretos."
+msgstr "Email/Senha incorretos."
+
+#: module/Login/src/Login/Controller/EsqueciSenhaController.php:125
+msgid "Um email foi enviado com as instruções para alteração da senha."
+msgstr "Um email foi enviado com as instruções para alteração da senha."
+
+#: module/Login/src/Login/Controller/EsqueciSenhaController.php:131
+msgid ""
+"Não foi possível realizar a operação. Favor entrar em contato com o "
+"administrador."
+msgstr ""
+"Não foi possível realizar a operação. Favor entrar em contato com o "
+"administrador."
+
+#: module/Login/src/Login/Controller/EsqueciSenhaController.php:134
+#: module/Login/src/Login/Controller/EsqueciSenhaController.php:137
+msgid "Email inválido."
+msgstr "Email inválido."
+
+#: module/Login/src/Login/Controller/EsqueciSenhaController.php:162
+#: module/Login/src/Login/Controller/EsqueciSenhaController.php:203
+msgid "Código inválido."
+msgstr "Código inválido."
+
+#: module/Login/src/Login/Controller/EsqueciSenhaController.php:176
+msgid "Senhas não conferem."
+msgstr "Senhas não conferem."
+
+#: module/Login/src/Login/Controller/EsqueciSenhaController.php:198
+msgid "Não foi possível salvar. Favor entrar em contato com o administrador.."
+msgstr "Não foi possível salvar. Favor entrar em contato com o administrador.."
+
+#: module/Login/src/Login/Controller/LoginController.php:124
+msgid "Sessão iniciada com sucesso"
+msgstr "Sessão iniciada com sucesso"
+
+#: module/Login/src/Login/Controller/LoginController.php:127
+msgid "Dados inválidos."
+msgstr "Dados inválidos."
+
+#: module/Login/src/Login/Controller/LoginController.php:144
+msgid "Sessão encerrada com sucesso"
+msgstr "Sessão encerrada com sucesso"
+
+#: module/Login/src/Login/Form/EsqueciSenhaForm.php:29
+msgid "Email:"
+msgstr "Email:"
+
+#: module/Login/src/Login/Form/LoginForm.php:29
+#: module/Login/view/login/esqueci-senha/index.phtml:5
+#: module/Login/view/login/login/login.phtml:5
+msgid "Email"
+msgstr "Email"
+
+#: module/Login/src/Login/Form/LoginForm.php:40
+#: module/Login/src/Login/Form/TrocaSenhaForm.php:31
+#: module/Login/view/login/esqueci-senha/codigo.phtml:5
+#: module/Login/view/login/login/login.phtml:11
+msgid "Senha"
+msgstr "Senha"
+
+#: module/Login/src/Login/Form/LoginForm.php:51
+#: module/Login/view/login/login/login.phtml:18
+msgid "Manter Conectado"
+msgstr "Manter Conectado"
+
+#: module/Login/src/Login/Form/TrocaSenhaForm.php:45
+#: module/Login/view/login/esqueci-senha/codigo.phtml:11
+msgid "Confirma Senha"
+msgstr "Confirma Senha"
+
+#: module/Application/view/error/404.phtml:1
+msgid "A 404 error occurred"
+msgstr "Ocorreu um erro 404"
+
+#: module/Application/view/error/404.phtml:10
+msgid "The requested controller was unable to dispatch the request."
+msgstr "O controlador requisitado não foi capaz de despachar a requisição."
+
+#: module/Application/view/error/404.phtml:13
+msgid ""
+"The requested controller could not be mapped to an existing controller class."
+msgstr ""
+"O controlador requisitados não pode ser mapeado a uma classe de controlador "
+"existente."
+
+#: module/Application/view/error/404.phtml:16
+msgid "The requested controller was not dispatchable."
+msgstr "O controlador requisitado não foi despachado."
+
+#: module/Application/view/error/404.phtml:19
+msgid "The requested URL could not be matched by routing."
+msgstr "A URL requisitada não pode ser encontrada em uma rota."
+
+#: module/Application/view/error/404.phtml:22
+msgid "We cannot determine at this time why a 404 was generated."
+msgstr "Não foi possível determinar o motivo do 404 ter ocorrido."
+
+#: module/Application/view/error/404.phtml:34
+msgid "Controller"
+msgstr "Controlador"
+
+#: module/Application/view/error/404.phtml:41
+#, php-format
+msgid "resolves to %s"
+msgstr "resolve como %s"
+
+#: module/Application/view/error/404.phtml:53
+#: module/Application/view/error/index.phtml:8
+msgid "Additional information"
+msgstr "Informação adicional"
+
+#: module/Application/view/error/404.phtml:56
+#: module/Application/view/error/404.phtml:80
+#: module/Application/view/error/index.phtml:11
+#: module/Application/view/error/index.phtml:35
+msgid "File"
+msgstr "Arquivo"
+
+#: module/Application/view/error/404.phtml:60
+#: module/Application/view/error/404.phtml:84
+#: module/Application/view/error/index.phtml:15
+#: module/Application/view/error/index.phtml:39
+msgid "Message"
+msgstr "Mensagem"
+
+#: module/Application/view/error/404.phtml:64
+#: module/Application/view/error/404.phtml:88
+#: module/Application/view/error/index.phtml:19
+#: module/Application/view/error/index.phtml:43
+msgid "Stack trace"
+msgstr "Pilha de execução"
+
+#: module/Application/view/error/404.phtml:74
+#: module/Application/view/error/index.phtml:29
+msgid "Previous exceptions"
+msgstr "Exceções anteriores"
+
+#: module/Application/view/error/404.phtml:103
+#: module/Application/view/error/index.phtml:58
+msgid "No Exception available"
+msgstr "Nenhuma exceção disponível"
+
+#: module/Application/view/error/index.phtml:1
+msgid "An error occurred"
+msgstr "Ocorreu um erro"
+
+#: module/Application/view/layout/head.phtml:5
+msgid "Core"
+msgstr "Core"
+
+#: module/Application/view/layout/layout.phtml:3
+#: module/Application/view/layout/login.phtml:3
+msgid "pt-br"
+msgstr "pt-br"
+
+#: module/Application/view/layout/layout.phtml:32
+msgid "Perfil"
+msgstr "Perfil"
+
+#: module/Application/view/layout/layout.phtml:34
+#: module/Application/view/layout/layout.phtml:64
+#: module/Application/view/layout/login.phtml:29
+msgid "Sair"
+msgstr "Sair"
+
+#: module/Core/view/core/questao/gerar.phtml:10
+msgid "Verificando..."
+msgstr "Verificando..."
+
+#: module/Core/view/core/questao/gerar.phtml:24
+msgid "Resposta Correta!"
+msgstr "Resposta Correta!"
+
+#: module/Core/view/core/questao/gerar.phtml:26
+msgid "Resposta Incorreta!"
+msgstr "Resposta Incorreta!"
+
+#: module/Core/view/core/questao/gerar.phtml:26
+msgid "A resposta deveria ser: "
+msgstr "A resposta deveria ser: "
+
+#: module/Core/view/core/questao/gerar.phtml:45
+msgid "Ocorreu um erro. Verifique sua conexão e tente novamente."
+msgstr "Ocorreu um erro. Verifique sua conexão e tente novamente."
+
+#: module/Core/view/core/questao/index.phtml:5
+msgid "#"
+msgstr "#"
+
+#: module/Core/view/core/questao/index.phtml:6
+#, php-format
+msgid "Questão (%s)"
+msgstr "Questão (%s)"
+
+#: module/Core/view/core/questao/index.phtml:7
+msgid "Habilitado"
+msgstr "Habilitado"
+
+#: module/Core/view/core/questao/index.phtml:8
+msgid "Data Cadastro"
+msgstr "Data Cadastro"
+
+#: module/Login/view/login/esqueci-senha/codigo.phtml:1
+msgid "Alterar Senha"
+msgstr "Alterar Senha"
+
+#: module/Login/view/login/esqueci-senha/codigo.phtml:15
+#: module/Login/view/login/esqueci-senha/index.phtml:9
+msgid "Enviar"
+msgstr "Enviar"
+
+#: module/Login/view/login/esqueci-senha/index.phtml:1
+msgid "Esqueci a senha"
+msgstr "Esqueci a senha"
+
+#: module/Login/view/login/login/login.phtml:1
+#: module/Login/view/login/login/login.phtml:21
+msgid "Entrar"
+msgstr "Entrar"
+
+#: module/Login/view/login/login/login.phtml:25
+msgid "Esqueceu a senha?"
+msgstr "Esqueceu a senha?"
+
+#~ msgid "d/m/Y H:i:s"
+#~ msgstr "d/m/Y H:i:s"
+
+#~ msgid "sProcessing"
+#~ msgstr "Carregando..."

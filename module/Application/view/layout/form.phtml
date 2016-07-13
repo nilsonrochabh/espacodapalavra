@@ -1,0 +1,203 @@
+<?php
+use Util\Util;
+use Zend\Form\Element;
+use Zend\Form\Fieldset;
+use Zend\Form\Element\Collection;
+$form = $this->form;
+$form->setAttribute('action', $this->actionUrl);
+$form->prepare();
+
+$this->formRadio()->setSeparator('</div><div class="radio i-checks">');
+$this->formmulticheckbox()->setSeparator('</div><div class="checkbox i-checks">');
+
+if (!function_exists('renderElement')) {
+	function renderElement(Element $element, $t, $isInline, $isHorizontal, $allowRemove = false) {
+		$html = '';
+
+		if($element instanceof Collection) {
+			$html .= '<fieldset class="collection"><legend>';
+			$html .= $element->getLabel();
+
+			if($element->getOption('should_create_template') && $element->getOption('allow_add')) {
+				$html .= '<button type="button" onclick="return addFieldset(this)" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i> ' . $t->translate('Adicionar') . '</button>';
+			}
+			$html .= '</legend>';
+			$html .= '<div class="collection_wrapper">';
+			foreach($element as $el) {
+				$html .= renderElement($el, $t, $isInline, $isHorizontal, $element->getOption('allow_remove'));
+			}
+			$html .= '</div>';
+
+			if($element->getOption('should_create_template')) {
+				$escaper = new Zend\Escaper\Escaper('utf-8');
+
+				$htmlTemplate = renderElement($element->getTemplateElement(), $t, $isInline, $isHorizontal);
+
+				$html .= '<span class="collection_template" data-template="' . $escaper->escapeHtmlAttr($htmlTemplate) . '" data-remove="' . $escaper->escapeHtmlAttr(renderRemoveFieldsetButton($t, $element->getOption('allow_remove'))) . '"></span>';
+			}
+
+			$html .= '</fieldset>';
+		} elseif($element instanceof Fieldset) {
+			$html .= '<fieldset>';
+			foreach($element as $el) {
+				$html .= renderElement($el, $t, $isInline, $isHorizontal);
+			}
+
+			$html .= renderRemoveFieldsetButton($t, $allowRemove);
+
+			$html .= '</fieldset>';
+		} else {
+			if($element->getAttribute('position') == 'original' || !in_array($element->getAttribute('type'), array('submit', 'button', 'hidden', 'hr', 'header'))) {
+				$html .= '<div class="form-group' . ($t->formElementErrors($element) ? ' has-error' : '') .'">' . PHP_EOL;
+
+				if($element->getLabel()) {
+					$html .= renderLabel($element, $t, $isInline, $isHorizontal) . PHP_EOL;
+
+					if($isInline && !$element->getAttribute('placeholder')) {
+						$element->setAttribute('placeholder', $element->getLabel());
+					}
+				}
+
+				if($isHorizontal) {
+					$html .= '<div class="' . ($element->getLabel() ? "" : "col-sm-offset-2 ") . ' col-sm-' . ($element->getAttribute('column-sm') ?: 10) . ' col-xs-' . ($element->getAttribute('column-xs') ?: 10) . '">' . PHP_EOL;
+				}
+
+				if($element->getAttribute('type') == 'radio') {
+					$html .= renderRadioMultiCheckbox($element, 'radio') . PHP_EOL;
+				} elseif($element->getAttribute('type') == 'multi_checkbox') {
+					$html .= renderRadioMultiCheckbox($element, 'checkbox') . PHP_EOL;
+				} elseif($element->getAttribute('type') == 'checkbox') {
+					$html .= renderCheckbox($element) . PHP_EOL;
+				} else {
+					$html .= $t->formElement($element) . PHP_EOL;
+				}
+
+				if($isHorizontal) {
+					if($t->formElementErrors($element)) {
+						$html .= $t->formElementErrors()
+								->setMessageOpenFormat('<p class="help-block m-b-none">')
+								->setMessageSeparatorString('</p><p class="help-block m-b-none">')
+								->setMessageCloseString('</p>')
+								->render($element) . PHP_EOL;
+					}
+
+					if(!Util::IsNullOrEmptyString($element->getAttribute('help-block'))) {
+						$html .= '<p class="help-block m-b-none">' . $t->translate($element->getAttribute('help-block')) .'</p>' . PHP_EOL;
+					}
+
+					$html .= '</div>' . PHP_EOL;
+				}
+
+				$html .= '</div>' . PHP_EOL;
+			} elseif(in_array($element->getAttribute('type'), array('hidden', 'hr', 'header'))) {
+				$html .= $t->formElement($element) . PHP_EOL;
+			}
+		}
+
+		return $html;
+	}
+}
+
+if (!function_exists('renderRemoveFieldsetButton')) {
+	function renderRemoveFieldsetButton($t, $allowRemove) {
+		$html = '';
+
+		if($allowRemove) {
+			$html .= '<div class="form-group"><div class=" col-sm-10 col-sm-offset-2 col-xs-10 col-xs-offset-2">';
+			$html .= '<button type="button" onclick="return removeFieldset(this);" class="btn btn-danger btn-xs"><i class="fa fa-arrow-circle-up"></i> ' . $t->translate('Excluir') . '</button>';
+			$html .= '</div></div>';
+		}
+
+		return $html;
+	}
+}
+
+if (!function_exists('renderCheckbox')) {
+	function renderCheckbox(Element $element) {
+		$html = '<div class="i-checks">' . PHP_EOL;
+		$html .= '  <label>' . PHP_EOL;
+		if($element->getOption('use_hidden_element')) {
+			$html .= '  <input type="hidden" name="consumo_final" value="' . $element->getOption('unchecked_value') . '" />';
+		}
+		$html .= '  <input type="checkbox" name="' . $element->getName() .'" id="' . $element->getAttribute('id') .'" value="' . $element->getOption('checked_value') .'" />' . PHP_EOL;
+		$html .= '  <i></i>' . PHP_EOL;
+		$html .= '  ' . $element->getLabel() . '</label>' . PHP_EOL;
+		$html .= '</div>' . PHP_EOL;
+
+		return $html;
+	}
+}
+
+if (!function_exists('renderRadioMultiCheckbox')) {
+	function renderRadioMultiCheckbox(Element $element, $className) {
+		$html = '';
+
+		foreach($element->getValueOptions() as $key => $value) {
+			$html .= '<div class="' . $className . '">' . PHP_EOL;
+			$html .= '  <input type="' . $className . '" name="' . $element->getName() . '" id="' . $value['attributes']['id'] . '" value="' . $value["value"] . '" />' . PHP_EOL;
+			$html .= '  <label for="' . $value['attributes']['id'] . '">' . $value['label'] . '</label>' . PHP_EOL;
+			$html .= '</div>' . PHP_EOL;
+		}
+
+		return $html;
+	}
+}
+
+if (!function_exists('renderLabel')) {
+	function renderLabel(Element $element, $t, $isInline, $isHorizontal) {
+		$clazz = '';
+		if($isInline) {
+			$clazz = 'sr-only';
+		} elseif($isHorizontal) {
+			$col = $element->hasAttribute('label-column-sm') ? $element->getAttribute('label-column-sm') : '2';
+			$clazz = 'col-sm-' . $col . ' control-label';
+		} else {
+			$clazz = 'control-label';
+		}
+
+		if($element->hasAttribute('required')) {
+			$clazz .= ' required';
+		}
+		
+		if($element->getAttribute('type') != 'checkbox') {
+			$html = '<label' . ($element->getAttribute('id') ? ' for="' . $element->getAttribute('id') . '"' : '') . ' class="' . $clazz . '">' . $element->getLabel() . '</label>';
+		} else {
+			$html = '<div class="' . $clazz . '"></div>';
+		}
+
+		return $html;
+	}
+}
+
+echo $this->form()->openTag($form);
+$isInline = $form->getAttribute('class') == "form-inline";
+$isHorizontal = $form->getAttribute('class') == "form-horizontal";
+$hasButton = false;
+
+foreach($form as $element) {
+    echo renderElement($element, $this, $isInline, $isHorizontal);
+    
+    if($element->getAttribute('position') != 'original' && in_array($element->getAttribute('type'), array('submit', 'button'))) {
+        $hasButton = true;
+    }
+}
+?>
+<?php if($isInline && $hasButton): ?>
+	<?php foreach($form as $element): ?>
+		<?php if(($element->getAttribute('type') == 'submit' || $element->getAttribute('type') == 'button') && $element->getAttribute('position') != 'original'): ?>
+			<?php echo $this->formElement($element); ?>
+		<?php endif; ?>
+	<?php endforeach; ?>
+<?php elseif($hasButton): ?>
+	<div class="hr-line-dashed"></div>
+	<div class="form-group">
+		<div class="col-sm-4 col-sm-offset-2">
+			<?php foreach($form as $element): ?>
+				<?php if(($element->getAttribute('type') == 'submit' || $element->getAttribute('type') == 'button') && $element->getAttribute('position') != 'original'): ?>
+					<?php echo $this->formElement($element); ?>
+				<?php endif; ?>
+			<?php endforeach; ?>
+		</div>
+	</div>
+<?php endif; ?>
+<?php echo $this->form()->closeTag($form); ?>

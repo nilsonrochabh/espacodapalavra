@@ -1,0 +1,19 @@
+{
+	"name": "bsaliba/Skeleton",
+	"description": "Skeleton",
+	"homepage": "https://bitbucket.org/bsaliba/skeleton",
+	"repositories": [
+		{
+			"type": "pear",
+			"url": "http://pear.php.net"
+		}
+	],
+	"require": {
+		"php": ">=5.4",
+		"zendframework/zendframework": "2.*",
+		"zendframework/zend-developer-tools": "dev-master",
+		"propel/propel": "~2.0@dev",
+		"monolog/monolog": ">=1.0",
+		"evandotpro/edp-module-layouts": "*"
+	}
+}

@@ -1,0 +1,44 @@
+{
+    "propel": {
+    	"general": {
+			"project": "model"
+		},
+        "database": {
+            "connections": {
+                "default": {
+                    "adapter": "mysql",
+                    "classname": "Propel\\Runtime\\Connection\\DebugPDO",
+                    "dsn": "mysql:host=localhost;dbname=quintina",
+                    "user": "quintina",
+                    "password": "quintina",
+                    "attributes": [],
+                    "settings": {
+                    	"charset": "utf8",
+                    	"queries": [
+                    		"SET NAMES utf8 COLLATE utf8_unicode_ci, COLLATION_CONNECTION = utf8_unicode_ci, COLLATION_DATABASE = utf8_unicode_ci, COLLATION_SERVER = utf8_unicode_ci"
+                    	]
+                    }
+                }
+            }
+        },
+        "reverse": {
+        	"connection": "default"
+        },
+        "runtime": {
+            "defaultConnection": "default",
+            "connections": ["default"]
+        },
+        "generator": {
+            "defaultConnection": "default",
+            "connections": ["default"],
+            "namespaceAutoPackage": true,
+            "dateTime": {
+            	"useDateTimeClass": true
+            },
+            "schema": {
+            	"autoPackage": true,
+            	"autoNamespace": true
+            }
+        }
+    }
+}
