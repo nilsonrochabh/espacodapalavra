@@ -11,7 +11,6 @@
 	"require": {
 		"php": ">=5.4",
 		"zendframework/zendframework": "2.*",
-		"zendframework/zend-developer-tools": "dev-master",
 		"propel/propel": "~2.0@dev",
 		"monolog/monolog": ">=1.0",
 		"evandotpro/edp-module-layouts": "*"

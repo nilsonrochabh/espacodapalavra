@@ -10,31 +10,19 @@ return array(
 	'controllers' => array(
 		'invokables' => array(
 			// Controllers
-			'Core\Controller\Index'             => 'Core\Controller\IndexController',
-			'Core\Controller\I18n'              => 'Core\Controller\I18nController',
-		    'Core\Controller\Select2'           => 'Core\Controller\Select2Controller',
-		    
-			'Core\Controller\FilterLocal'       => 'Core\Controller\FilterLocalPage',
-			'Core\Controller\ManterLocal'       => 'Core\Controller\ManterLocalPage',
-		    
-		    'Core\Controller\FilterIngrediente' => 'Core\Controller\FilterIngredientePage',
-			'Core\Controller\ManterIngrediente' => 'Core\Controller\ManterIngredientePage',
-		    
-		    'Core\Controller\FilterReceita'     => 'Core\Controller\FilterReceitaPage',
-			'Core\Controller\ManterReceita'     => 'Core\Controller\ManterReceitaPage',
-
-		    'Core\Controller\FilterUnidade'     => 'Core\Controller\FilterUnidadePage',
-			'Core\Controller\ManterUnidade'     => 'Core\Controller\ManterUnidadePage',
+			'Core\Controller\Index'      => 'Core\Controller\IndexController',
+			'Core\Controller\I18n'       => 'Core\Controller\I18nController',
+			'Core\Controller\Select2'    => 'Core\Controller\Select2Controller',
+			
+			'Core\Controller\UserFilter' => 'Core\Controller\UserFilterPage',
+			'Core\Controller\UserManter' => 'Core\Controller\UserManterPage',
 		),
 	),
 		
 	'service_manager' => array(
 		'invokables' => array(
 			// BOs
-		    'Core\BO\Local'       => 'Core\BO\LocalBO',
-		    'Core\BO\Ingrediente' => 'Core\BO\IngredienteBO',
-		    'Core\BO\Receita'     => 'Core\BO\ReceitaBO',
-		    'Core\BO\Unidade'     => 'Core\BO\UnidadeBO',
+		    'Core\BO\User'        => 'Core\BO\UserBO',
 		),
 		'factories' => array(
 			// Forms
@@ -53,262 +41,77 @@ return array(
 					),
 				),
 			),
-		    
-		    'select2' => array(
-		        'type' => 'Segment',
-		        'options' => array(
-		            'route'    => '/select2',
-		            'defaults' => array(
-		                'controller' => 'Core\Controller\Select2',
-		                'action'     => 'index',
-		            ),
-		        ),
-		        'priority' => 8010,
-		        'may_terminate' => true,
-		        'child_routes' => array(
-		            'ingrediente' => array(
-		                'type' => 'segment',
-		                'options' => array(
-		                    'route'    => '/ingrediente[/][:id]',
-		                    'defaults' => array(
-		                        'controller' => 'Core\Controller\Select2',
-		                        'action'     => 'ingrediente',
-		                    ),
-		                ),
-		            ),
-		            'unidade' => array(
-		                'type' => 'segment',
-		                'options' => array(
-		                    'route'    => '/unidade[/][:id]',
-		                    'defaults' => array(
-		                        'controller' => 'Core\Controller\Select2',
-		                        'action'     => 'unidade',
-		                    ),
-		                ),
-		            ),
-		        ),
-		    ),
-				
-			'local' => array(
+			
+			'select2' => array(
 				'type' => 'Segment',
 				'options' => array(
-					'route'    => '/local',
+					'route'    => '/select2',
 					'defaults' => array(
-						'controller' => 'Core\Controller\FilterLocal',
+						'controller' => 'Core\Controller\Select2',
+						'action'     => 'index',
+					),
+				),
+				'priority' => 8010,
+				'may_terminate' => true,
+				'child_routes' => array(
+				),
+			),
+			
+			'user' => array(
+				'type' => 'Segment',
+				'options' => array(
+					'route'    => '/user',
+					'defaults' => array(
+						'controller' => 'Core\Controller\UserFilter',
 						'action'     => 'index',
 					),
 				),
 				'priority' => 8100,
 				'may_terminate' => true,
 				'child_routes' => array(
-					'buscar' => array(
+					'search' => array(
 						'type' => 'Literal',
 						'options' => array(
-							'route'    => '/buscar',
+							'route'    => '/search',
 							'defaults' => array(
-								'controller' => 'Core\Controller\FilterLocal',
+								'controller' => 'Core\Controller\UserFilter',
 								'action'     => 'buscar',
 							),
 						),
 					),
-				    'novo' => array(
-				        'type' => 'Literal',
-				        'options' => array(
-				            'route'    => '/novo',
-				            'defaults' => array(
-				                'controller' => 'Core\Controller\ManterLocal',
-				                'action'     => 'index',
-				            ),
-				        ),
-				    ),
-				    'editar' => array(
-				        'type' => 'Segment',
-				        'options' => array(
-				            'route'    => '/editar/:id',
-				            'defaults' => array(
-				                'controller' => 'Core\Controller\ManterLocal',
-				                'action'     => 'index',
-				            ),
-				        ),
-				    ),
-				    'excluir' => array(
-				        'type' => 'Segment',
-				        'options' => array(
-				            'route'    => '/excluir/:id',
-				            'defaults' => array(
-				                'controller' => 'Core\Controller\ManterLocal',
-				                'action'     => 'excluir',
-				            ),
-				        ),
-				    ),
-				),
-			),
-				
-			'ingrediente' => array(
-				'type' => 'Segment',
-				'options' => array(
-					'route'    => '/ingrediente',
-					'defaults' => array(
-						'controller' => 'Core\Controller\FilterIngrediente',
-						'action'     => 'index',
-					),
-				),
-				'priority' => 8101,
-				'may_terminate' => true,
-				'child_routes' => array(
-					'buscar' => array(
+					'new' => array(
 						'type' => 'Literal',
 						'options' => array(
-							'route'    => '/buscar',
+							'route'    => '/new',
 							'defaults' => array(
-								'controller' => 'Core\Controller\FilterIngrediente',
-								'action'     => 'buscar',
+								'controller' => 'Core\Controller\UserManter',
+								'action'     => 'index',
 							),
 						),
 					),
-				    'novo' => array(
-				        'type' => 'Literal',
-				        'options' => array(
-				            'route'    => '/novo',
-				            'defaults' => array(
-				                'controller' => 'Core\Controller\ManterIngrediente',
-				                'action'     => 'index',
-				            ),
-				        ),
-				    ),
-				    'editar' => array(
-				        'type' => 'Segment',
-				        'options' => array(
-				            'route'    => '/editar/:id',
-				            'defaults' => array(
-				                'controller' => 'Core\Controller\ManterIngrediente',
-				                'action'     => 'index',
-				            ),
-				        ),
-				    ),
-				    'excluir' => array(
-				        'type' => 'Segment',
-				        'options' => array(
-				            'route'    => '/excluir/:id',
-				            'defaults' => array(
-				                'controller' => 'Core\Controller\ManterIngrediente',
-				                'action'     => 'excluir',
-				            ),
-				        ),
-				    ),
-				),
-			),
-		    
-			'receita' => array(
-				'type' => 'Segment',
-				'options' => array(
-					'route'    => '/receita',
-					'defaults' => array(
-						'controller' => 'Core\Controller\FilterReceita',
-						'action'     => 'index',
-					),
-				),
-				'priority' => 8102,
-				'may_terminate' => true,
-				'child_routes' => array(
-					'buscar' => array(
-						'type' => 'Literal',
+					'edit' => array(
+						'type' => 'Segment',
 						'options' => array(
-							'route'    => '/buscar',
+							'route'    => '/edit/:id',
 							'defaults' => array(
-								'controller' => 'Core\Controller\FilterReceita',
-								'action'     => 'buscar',
+								'controller' => 'Core\Controller\UserManter',
+								'action'     => 'index',
 							),
 						),
 					),
-				    'novo' => array(
-				        'type' => 'Literal',
-				        'options' => array(
-				            'route'    => '/novo',
-				            'defaults' => array(
-				                'controller' => 'Core\Controller\ManterReceita',
-				                'action'     => 'index',
-				            ),
-				        ),
-				    ),
-				    'editar' => array(
-				        'type' => 'Segment',
-				        'options' => array(
-				            'route'    => '/editar/:id',
-				            'defaults' => array(
-				                'controller' => 'Core\Controller\ManterReceita',
-				                'action'     => 'index',
-				            ),
-				        ),
-				    ),
-				    'excluir' => array(
-				        'type' => 'Segment',
-				        'options' => array(
-				            'route'    => '/excluir/:id',
-				            'defaults' => array(
-				                'controller' => 'Core\Controller\ManterReceita',
-				                'action'     => 'excluir',
-				            ),
-				        ),
-				    ),
-				),
-			),
-		    
-			'unidade' => array(
-				'type' => 'Segment',
-				'options' => array(
-					'route'    => '/unidade',
-					'defaults' => array(
-						'controller' => 'Core\Controller\FilterUnidade',
-						'action'     => 'index',
-					),
-				),
-				'priority' => 8103,
-				'may_terminate' => true,
-				'child_routes' => array(
-					'buscar' => array(
-						'type' => 'Literal',
+					'delete' => array(
+						'type' => 'Segment',
 						'options' => array(
-							'route'    => '/buscar',
+							'route'    => '/delete/:id',
 							'defaults' => array(
-								'controller' => 'Core\Controller\FilterUnidade',
-								'action'     => 'buscar',
+								'controller' => 'Core\Controller\UserManter',
+								'action'     => 'excluir',
 							),
 						),
 					),
-				    'novo' => array(
-				        'type' => 'Literal',
-				        'options' => array(
-				            'route'    => '/novo',
-				            'defaults' => array(
-				                'controller' => 'Core\Controller\ManterUnidade',
-				                'action'     => 'index',
-				            ),
-				        ),
-				    ),
-				    'editar' => array(
-				        'type' => 'Segment',
-				        'options' => array(
-				            'route'    => '/editar/:id',
-				            'defaults' => array(
-				                'controller' => 'Core\Controller\ManterUnidade',
-				                'action'     => 'index',
-				            ),
-				        ),
-				    ),
-				    'excluir' => array(
-				        'type' => 'Segment',
-				        'options' => array(
-				            'route'    => '/excluir/:id',
-				            'defaults' => array(
-				                'controller' => 'Core\Controller\ManterUnidade',
-				                'action'     => 'excluir',
-				            ),
-				        ),
-				    ),
 				),
 			),
-				
+			
 			'i18n' => array(
 				'type' => 'Segment',
 				'options' => array(

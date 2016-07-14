@@ -4,24 +4,24 @@ namespace Core\Controller;
 
 use Core\Controller\Base\FilterPage;
 use Core\Form\Base\Form;
-use Core\Form\FilterUnidadeForm;
-use Zend\View\Model\ViewModel;
+use Core\Form\UserFilterForm;
 use Core\Model\TableHeader;
 use Util\Util;
+use Zend\View\Model\ViewModel;
 
 /**
- * Classe Core\Controller$FilterUnidadePage
+ * Classe Core\Controller$UserFilterPage
  * @author <a href="mailto:bruno@flek.com.br">Bruno Saliba</a>
- * @since 21/09/2015 23:43:20
+ * @since 25/05/2016 09:17:30
  */
-class FilterUnidadePage extends FilterPage {
-	
+class UserFilterPage extends FilterPage {
+
 	/**
 	 * (non-PHPdoc)
 	 * @see \Core\Controller\Base\FilterPage::getPageTitle()
 	 */
 	protected function getPageTitle() {
-		return _('Unidades');
+		return $this->_('Usuários');
 	}
 	
 	/**
@@ -29,7 +29,7 @@ class FilterUnidadePage extends FilterPage {
 	 * @see \Core\Controller\Base\FilterPage::getPageImage()
 	 */
 	protected function getPageImage() {
-		return 'fa-balance-scale';
+		return 'fa-users';
 	}
 	
 	/**
@@ -37,8 +37,8 @@ class FilterUnidadePage extends FilterPage {
 	 * @see \Core\Controller\Base\FilterPage::getFiltroForm()
 	 */
 	protected function getFiltroForm() {
-		$form = new FilterUnidadeForm();
-		$form->setActionBuscar($this->url()->fromRoute('unidade/buscar'));
+		$form = new UserFilterForm();
+		$form->setActionBuscar($this->url()->fromRoute('user/search'));
 		return $form;
 	}
 	
@@ -47,7 +47,7 @@ class FilterUnidadePage extends FilterPage {
 	 * @see \Core\Controller\Base\FilterPage::addButtons()
 	 */
 	protected function addButtons(ViewModel $view) {
-		$this->adicionarHeaderControl($view, $this->_('Adicionar'), $this->url()->fromRoute('unidade/novo'), 'fa-plus', 'btn-primary');
+		$this->adicionarHeaderControl($view, $this->_('Adicionar'), $this->url()->fromRoute('user/new'), 'fa-plus', 'btn-primary');
 	}
 	
 	/**
@@ -55,7 +55,7 @@ class FilterUnidadePage extends FilterPage {
 	 * @see \Core\Controller\Base\FilterPage::getGridRows()
 	 */
 	protected function getGridRows(Form $form, $start, $linhas, $orderBy = null, $orderType = null) {
-		return $this->getUnidadeBO()->listAll($form->get('nome')->getValue(), $start, $linhas, $orderBy, $orderType);
+		return $this->getUserBO()->listUsers($form->get('email')->getValue(), $start, $linhas, $orderBy, $orderType);
 	}
 	
 	/**
@@ -65,8 +65,7 @@ class FilterUnidadePage extends FilterPage {
 	protected function getGridHeaders() {
 		return array(
 			new TableHeader('#'),
-			new TableHeader('Nome'),
-			new TableHeader('Sigla'),
+			new TableHeader($this->_('Nome')),
 			new TableHeader('', 24, false)
 		);
 	}
@@ -79,18 +78,17 @@ class FilterUnidadePage extends FilterPage {
 		$retorno = array();
 		foreach($list as $l) {
 			$acoes = array(
-			    'editar' => $this->url()->fromRoute('unidade/editar', array('id' => $l->getId())),
-			    'excluir' => $this->url()->fromRoute('unidade/excluir', array('id' => $l->getId())),
+				'editar' => $this->url()->fromRoute('user/edit', array('id' => $l->getIdUser())),
+				'excluir' => $this->url()->fromRoute('user/delete', array('id' => $l->getIdUser())),
 			);
 			
 			$retorno[] = array(
-				$l->getId(),
-				$l->getNome(),
-				$l->getSigla(),
+				$l->getIdUser(),
+				$l->getName(),
 				$this->adicionarAcoesTable($acoes),
 			);
 		}
-
+		
 		return $retorno;
 	}
 }

@@ -8,9 +8,9 @@
                 "default": {
                     "adapter": "mysql",
                     "classname": "Propel\\Runtime\\Connection\\DebugPDO",
-                    "dsn": "mysql:host=localhost;dbname=quintina",
-                    "user": "quintina",
-                    "password": "quintina",
+                    "dsn": "mysql:host=localhost;dbname=espacopalavra",
+                    "user": "espacopalavrause",
+                    "password": "espacopalavrapwd",
                     "attributes": [],
                     "settings": {
                     	"charset": "utf8",

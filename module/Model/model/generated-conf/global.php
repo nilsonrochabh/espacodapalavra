@@ -15,8 +15,8 @@ use Monolog\Logger;
 
 return array(
 	'host' => 'localhost',
-	'db' => 'skeleton',
-    'user' => 'skeleton',
-	'password' => 'skeleton',
+	'db' => 'espacopalavra',
+    'user' => 'espacopalavrause',
+	'password' => 'espacopalavrapwd',
 	'logger_level' => Logger::DEBUG,
 );
