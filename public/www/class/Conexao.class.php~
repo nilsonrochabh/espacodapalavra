@@ -1,0 +1,20 @@
+<?php
+function __autoload($class){require_once"($class).class.php";}
+
+abstract class Conexaos 
+{
+	private static $cnx;
+
+	private function setConexao()
+	{
+		return 
+		is_null(self::$cnx)?
+			    self::$cnx = new PDO('mysql:host=localhost;dbname=espaco','nilson','123456'):
+			    self::$cnx;
+	}
+	public function getConexao()
+	{return $this->setConexao();}
+}
+$crud = new CRUD();
+$crud->insert('nome=?','foto=?','email=?','atuacao=?','genero=?','senha=?','confirmaSenha=?','cep=?','cidade=?','estado=?','	descricao=?', array('nilson','x','nilson@gmail.com','prof','maculino','1234','1234','33200000','vespasiano','mg','bla bla bla '));
+?>
