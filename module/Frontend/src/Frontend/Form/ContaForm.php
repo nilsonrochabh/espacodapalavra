@@ -261,26 +261,17 @@ class ContaForm extends Form implements InputFilterProviderInterface {
 				),
 			),
 			'senha' => array(
-				'required' => true,
+				'required' => false,
 				'filters'  => array(
 					array('name' => 'StripTags'),
 					array('name' => 'StringTrim'),
 				),
 				'validators' => array(
 					array(
-						'name'    => 'NotEmpty',
-						'options' => array(
-							'messages' => array(
-								\Zend\Validator\NotEmpty::IS_EMPTY => 'A senha é obrigatória.'
-							),
-							'break_chain_on_failure' => true,
-						),
-					),
-					array(
 						'name'    => 'StringLength',
 						'options' => array(
 							'encoding' => 'UTF-8',
-							'min'      => 1,
+							'min'      => 0,
 							'max'      => 45,
 							'messages' => array(
 								'stringLengthTooLong' => 'Senha muito grande. (Máx. 45)'
@@ -290,26 +281,17 @@ class ContaForm extends Form implements InputFilterProviderInterface {
 				),
 			),
 			'confirmarsenha' => array(
-				'required' => true,
+				'required' => false,
 				'filters'  => array(
 					array('name' => 'StripTags'),
 					array('name' => 'StringTrim'),
 				),
 				'validators' => array(
 					array(
-						'name'    => 'NotEmpty',
-						'options' => array(
-							'messages' => array(
-								\Zend\Validator\NotEmpty::IS_EMPTY => 'A confirmação de senha é obrigatória.'
-							),
-							'break_chain_on_failure' => true,
-						),
-					),
-					array(
 						'name'    => 'StringLength',
 						'options' => array(
 							'encoding' => 'UTF-8',
-							'min'      => 1,
+							'min'      => 0,
 							'max'      => 45,
 							'messages' => array(
 								'stringLengthTooLong' => 'Confirmação de senha muito grande. (Máx. 45)'
@@ -320,7 +302,7 @@ class ContaForm extends Form implements InputFilterProviderInterface {
 					array(
 						'name'    => 'Identical',
 						'options' => array(
-							'token' => 'senha',
+							'token' => 'nova-senha',
 							'message' => 'As senhas não conferem.',
 						),
 					),
@@ -328,7 +310,7 @@ class ContaForm extends Form implements InputFilterProviderInterface {
 			),
 			'foto' => array(
 				'type' => 'Zend\InputFilter\FileInput',
-				'required' => true,
+				'required' => false,
 				'allow_empty' => false,
 				'filters'  => array(
 					array(

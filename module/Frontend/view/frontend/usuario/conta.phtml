@@ -1,8 +1,17 @@
+<?php
+use Util\Util;
+?>
 <main class="login">
 	<div class="container">
 		<div class="col-full">
 			<form action="" method="post" name="cadastroForm" enctype="multipart/form-data">
 				<h2>Atualizar Cadastro</h2>
+				
+				<?php if(!Util::IsNullOrEmptyString($this->userIdentity()['usuario']->getImagemProfile())): ?>
+				<div class="photo-profile">
+					<img src="<?php echo $this->basePath(); ?>/uploads/<?php echo $this->userIdentity()['usuario']->getImagemProfile(); ?>">
+				</div>
+				<?php endif; ?>
 				
 				<?php echo $this->formLabel($this->form->get('nome')); ?>
 				<?php echo $this->formElement($this->form->get('nome')); ?>
@@ -49,13 +58,17 @@
 		<br />
 		<br />
 		<br />
-	</div>
-</main>
-<main class="home">
-	<div class="container">
+		
 		<div class="col-full">
 			<h2>Minhas Proposições</h2>
-			<?php echo $this->partial('frontend/index/foreachProposicao', array('lista' => $this->lista)); ?>
+			<table class="list">
+				<?php foreach($this->lista as $l): ?>
+				<tr>
+					<td><?php echo $l->getNome(); ?></td>
+					<td class="position"><a href="<?php echo $this->url('publique', array('idProposicao' => $l->getId())); ?>">Editar</a></td>
+				</tr>
+				<?php endforeach; ?>
+			</table>
 		</div>
 	</div>
 </main>

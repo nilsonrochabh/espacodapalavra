@@ -2,6 +2,7 @@
 namespace Core\BO;
 
 use Core\BO\Base\BO;
+use Core\Exception\CoreException;
 use Model\Map\UsuarioTableMap;
 use Model\Usuario;
 use Model\UsuarioQuery;
@@ -110,6 +111,77 @@ class UsuarioBO extends BO {
 			$usuario->setGenero($genero);
 			$usuario->setDescricaoContexto($sobre);
 			$usuario->setImagemProfile(basename($foto));
+			
+			$usuario->save($con);
+			
+			$con->commit();
+		} catch (\Exception $e) {
+			$con->rollback();
+			throw $e;
+		}
+		
+		return $usuario;
+	}
+	
+	/**
+	 * Método editar
+	 * @author <a href="mailto:bsaliba@gmail.com">Bruno Saliba</a>
+	 * @since 17/07/2016 10:18:13
+	 * @param string $nome
+	 * @param string $email
+	 * @param string $atuacao
+	 * @param string $genero
+	 * @param string $senha
+	 * @param string $sobre
+	 * @throws Exception
+	 * @return boolean
+	 */
+	public function editar($id, $nome, $email, $atuacao, $genero, $senha, $sobre, $foto) {
+		$usuario = $this->getByPK($id);
+		if($usuario == null) {
+			throw new CoreException('Usuário não encontrado.');
+		}
+		
+		$this->checkEmailExiste($email, $id);
+		
+		$config = $this->getServiceLocator()->get('Config');
+		$salt = $config['security']['salt'];
+		
+		$email = filter_var($email, FILTER_SANITIZE_SPECIAL_CHARS);
+		if(!Util::IsNullOrEmptyString($senha)) {
+			$senha = filter_var($senha, FILTER_SANITIZE_SPECIAL_CHARS);
+			if($senha) {
+				$senha = Util::crypt($senha, $salt);
+			}
+			
+			$usuario->setSenha($senha);
+		}
+		
+		// Resize Image
+		if(!Util::IsNullOrEmptyString($foto)) {
+			try {
+				$thumbnailer = $this->getServiceLocator()->get('WebinoImageThumb');
+				$thumb = $thumbnailer->create($foto, $options = [], $plugins = []);
+				$thumb->resize(160, 160);
+				$thumb->save($foto);
+			} catch (\Exception $e) {
+				$this->handleException($e);
+			}
+			
+			$usuario->setImagemProfile(basename($foto));
+		}
+		
+		$con = Propel::getWriteConnection(UsuarioTableMap::DATABASE_NAME);
+		$con->beginTransaction();
+		
+		try {
+			$usuario->setNome($nome);
+			$usuario->setEmail($email);
+			$usuario->setDataCadastro(Util::agora());
+			$usuario->setIsAdmin(0);
+			$usuario->setAtuacao($atuacao);
+			$usuario->setGenero($genero);
+			$usuario->setDescricaoContexto($sobre);
 			
 			$usuario->save($con);
 			

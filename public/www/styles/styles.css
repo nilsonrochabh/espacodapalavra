@@ -1167,22 +1167,22 @@ form ul li {
 	background: #be6701;
 }
 
-.form-publique table {
+table.list {
 	border-bottom: 1px solid #e6e7e8;
 	width: 100%;
 }
-.form-publique table tr {
+table.list tr {
 	border-top: 1px solid #e6e7e8;
 }
-.form-publique table tr td {
+table.list tr td {
 	padding: 5px;
 }
-.form-publique table tr td.position {
+table.list tr td.position {
 	font-weight: bold;
 	color: #df268a;
 	width: 16px;
 }
-.form-publique table tr td.position a {
+table.list tr td.position a {
 	font-weight: bold;
 	color: #df268a;
 	text-decoration: none;

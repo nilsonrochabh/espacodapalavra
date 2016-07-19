@@ -76,15 +76,19 @@ use Util\Util;
 						<h4><?php echo $this->userIdentity()['usuario']->getNome(); ?></h4>
 					</div>
 					<div class="comment-box">
-						<textarea></textarea>
-						<div class="comment-options">
-							<p class="comment-policy">
-								Temos uma política de gentileza.<br />
-								Por favor seja positivo e construtivo.
-							</p>
+						<form name="comentarioForm" action="#comentarios" method="post">
+							<?php echo $this->formElement($this->form->get('comentario')); ?>
+							<?php echo $this->formElementErrors()->render($this->form->get('comentario')); ?>
 							
-							<input type="submit" value="ENVIAR"/>
-						</div>
+							<div class="comment-options">
+								<p class="comment-policy">
+									Temos uma política de gentileza.<br />
+									Por favor seja positivo e construtivo.
+								</p>
+								
+								<input type="submit" value="ENVIAR"/>
+							</div>
+						</form>
 					</div>
 					<?php else: ?>
 					<div style="text-align: center;">

@@ -3,6 +3,7 @@
 namespace Frontend\Controller;
 
 use Core\Mvc\Controller\BaseController;
+use Frontend\Form\ComentarioForm;
 use Model\Proposicao;
 use Util\Util;
 use Zend\View\Model\ViewModel;
@@ -49,10 +50,36 @@ class IndexController extends BaseController {
 			return $this->redirect()->toRoute('home');
 		}
 		
+		$form = new ComentarioForm();
+		
+		$request = $this->getRequest();
+		if($request->isPost()) {
+			$form->setData($request->getPost());
+			
+			try {
+				if($form->isValid()) {
+					$data = $form->getData();
+					
+					$this->getProposicaoBO()->adicionarComentario($proposicao, $this->getIdUsuarioLogado(), $data['comentario']);
+					$this->flashMessenger()->addSuccessMessage('Comentário enviado com sucesso.');
+					
+					$form = new ComentarioForm();
+				}
+			} catch(EmailExistenteException $e) {
+				$this->flashMessenger()->addErrorMessage($e->getMessage());
+				$form->get('email')->setMessages(array($e->getMessage()));
+			} catch(CoreException $e) {
+				$this->flashMessenger()->addErrorMessage($e->getMessage());
+			} catch(\Exception $e) {
+				$this->handleException($e);
+			}
+		}
+		
 		$proposicao->calcularTempoTotal();
 		
 		return new ViewModel(array(
-			'proposicao' => $proposicao
+			'proposicao' => $proposicao,
+			'form' => $form,
 		));
 	}
 }

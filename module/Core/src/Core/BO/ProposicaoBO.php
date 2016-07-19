@@ -5,6 +5,7 @@ use Core\BO\Base\BO;
 use Core\Exception\CoreException;
 use Model\AmbienteProposicao;
 use Model\AmbienteProposicaoQuery;
+use Model\Comentario;
 use Model\HabilidadeProposicao;
 use Model\HabilidadeProposicaoQuery;
 use Model\Map\ProposicaoTableMap;
@@ -301,5 +302,33 @@ class ProposicaoBO extends BO {
 	 */
 	public function minhaLista() {
 		return ProposicaoQuery::create()->orderByNome()->find();
+	}
+	
+	/**
+	 * Método adicionarComentario
+	 * @author <a href="mailto:bsaliba@gmail.com">Bruno Saliba</a>
+	 * @since 24/05/2016 21:14:55
+	 * @throws Exception
+	 */
+	public function adicionarComentario(Proposicao $proposicao, $idUsuarioLogado, $textoComentario) {
+		$con = Propel::getWriteConnection(ProposicaoTableMap::DATABASE_NAME);
+		$con->beginTransaction();
+		
+		try {
+			$comentario = new Comentario();
+			$comentario->setIdUsuario($idUsuarioLogado);
+			$comentario->setDataCadastro(Util::agora());
+			$comentario->setComentario($textoComentario);
+			$comentario->setIdProposicao($proposicao->getId());
+			$comentario->save();
+			
+			$con->commit();
+			return true;
+		} catch (\Exception $e) {
+			$con->rollback();
+			throw $e;
+		}
+		
+		return false;
 	}
 }

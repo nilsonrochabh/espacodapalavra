@@ -7,6 +7,7 @@ use Core\Exception\EmailExistenteException;
 use Core\Mvc\Controller\BaseController;
 use Frontend\Form\ContaForm;
 use Frontend\Form\RegistrarForm;
+use Util\Util;
 use Zend\View\Model\ViewModel;
 
 /**
@@ -128,6 +129,26 @@ class UsuarioController extends BaseController {
 				try {
 					$data = $form->getData();
 					
+					$usuario = $this->getUsuarioBO()->editar(
+						$this->getIdUsuarioLogado(),
+						$data['nome'],
+						$data['email'],
+						$data['atuacao'],
+						$data['genero'],
+						null,
+						$data['sobre'],
+						$data['foto'] ? $data['foto']['tmp_name'] : null
+					);
+					
+					$identity = array(
+						'id' => $usuario->getId(),
+						'usuario' => $usuario,
+					);
+					
+					$this->getAuthService()->getStorage()->write($identity);
+					
+					$this->flashMessenger()->addSuccessMessage('Dados salvos com sucesso.');
+					return $this->redirect()->toRoute('conta');
 				} catch(CoreException $e) {
 					$this->flashMessenger()->addErrorMessage($e->getMessage());
 				} catch(\Exception $e) {

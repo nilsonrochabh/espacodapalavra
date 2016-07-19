@@ -43,13 +43,13 @@
 			<div class="clearthis"></div>
 			
 			<?php if($this->passos): ?>
-			<table>
+			<table class="list">
 				<?php $i = 1; ?>
 				<?php foreach($this->passos as $p): ?>
 				<tr>
 					<td class="position"><?php echo $i++; ?></td>
 					<td><?php echo $p->getTitulo(); ?></td>
-					<td class="position"><a href="<?php echo $this->url('publique', array('idProposicao' => $this->proposicao->getId(), 'action' => 'montagem', 'passo' => $p->getId())); ?>">E</a></td>
+					<td class="position"><a href="<?php echo $this->url('publique', array('idProposicao' => $this->proposicao->getId(), 'action' => 'montagem', 'passo' => $p->getId())); ?>">Editar</a></td>
 					<td class="position"><a href="<?php echo $this->url('passo_delete', array('idProposicao' => $this->proposicao->getId(), 'passo' => $p->getId())); ?>" onclick="return confirm('<?php echo $this->translate('Tem certeza que deseja excluir esse passo?'); ?>');">X</a></td>
 				</tr>
 				<?php endforeach; ?>
