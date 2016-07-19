@@ -1,0 +1,48 @@
+<main class="publique">
+	<div class="steps-publish">
+		<?php if(!$this->proposicao): ?>
+		<ul>
+			<li class="steps-item ativo"><?php echo $this->translate('Passo 01 - Informações'); ?></li>
+			<li class="steps-item"><?php echo $this->translate('Passo 02 - Montagem'); ?></li>
+			<li class="steps-item"><?php echo $this->translate('Passo 03 - Categorização'); ?></li>
+		</ul>
+		<?php else: ?>
+		<ul>
+			<li class="steps-item ativo">
+				<?php echo $this->translate('Passo 01 - Informações'); ?>
+			</li>
+			<li class="steps-item">
+				<a href="<?php echo $this->url('publique', array('idProposicao' => $this->proposicao->getId(), 'action' => 'montagem')); ?>">
+					<?php echo $this->translate('Passo 02 - Montagem'); ?>
+				</a>
+			</li>
+			<li class="steps-item">
+				<a href="<?php echo $this->url('publique', array('idProposicao' => $this->proposicao->getId(), 'action' => 'categorizacao')); ?>">
+					<?php echo $this->translate('Passo 03 - Categorização'); ?>
+				</a>
+			</li>
+		</ul>
+		<?php endif; ?>
+	</div>
+	
+	<form action="" class="form-publique" method="post">
+		<div id="formstep1">
+			<?php echo $this->formLabel($this->form->get('nome')); ?>
+			<span class="desc"><?php echo $this->translate('Dê um nome para sua proposição que torne fácil entender o que ela é: (evite nomes como "a aula do século" ou "minha aula")'); ?></span>
+			<?php echo $this->formElement($this->form->get('nome')); ?>
+			<?php echo $this->formElementErrors()->render($this->form->get('nome')); ?>
+			
+			<?php echo $this->formLabel($this->form->get('objetivo')); ?>
+			<span class="desc"><?php echo $this->translate('Quais são seus objetivos pedagógicos com essa proposição? (o que quer alcançar com os estudantes?)'); ?></span>
+			<?php echo $this->formElement($this->form->get('objetivo')); ?>
+			<?php echo $this->formElementErrors()->render($this->form->get('objetivo')); ?>
+			
+			<?php echo $this->formLabel($this->form->get('start')); ?>
+			<span class="desc"><?php echo $this->translate('Explique como ela começa: (como você provocará uma inquietação nos estudantes?)'); ?></span>
+			<?php echo $this->formElement($this->form->get('start')); ?>
+			<?php echo $this->formElementErrors()->render($this->form->get('start')); ?>
+			
+			<?php echo $this->formElement($this->form->get('submit')); ?>
+		</div>
+	</form>
+</main>

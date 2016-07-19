@@ -1,0 +1,16 @@
+<!doctype html>
+<html class="no-js" lang="">
+	<head>
+		<?php echo $this->partial('frontend/layout/head', $this); ?>
+  	</head>
+	<body>
+		<?php echo $this->partial('frontend/layout/header', $this); ?>
+		
+		<?php echo $this->content; ?>
+		
+		<?php echo $this->partial('frontend/layout/footer', $this); ?>
+		
+		<?php echo $this->partial('frontend/layout/scripts', $this); ?>
+		<?php echo $this->partial('frontend/layout/messages', $this); ?>
+	</body>
+</html>

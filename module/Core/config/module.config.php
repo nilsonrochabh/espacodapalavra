@@ -22,7 +22,8 @@ return array(
 	'service_manager' => array(
 		'invokables' => array(
 			// BOs
-		    'Core\BO\User'        => 'Core\BO\UserBO',
+		    'Core\BO\Usuario'        => 'Core\BO\UsuarioBO',
+			'Core\BO\Proposicao'     => 'Core\BO\ProposicaoBO',
 		),
 		'factories' => array(
 			// Forms
@@ -31,17 +32,6 @@ return array(
 		
 	'router' => array(
 		'routes' => array(
-			'home' => array(
-				'type' => 'Literal',
-				'options' => array(
-					'route'    => '/',
-					'defaults' => array(
-						'controller' => 'Core\Controller\Index',
-						'action'     => 'index',
-					),
-				),
-			),
-			
 			'select2' => array(
 				'type' => 'Segment',
 				'options' => array(

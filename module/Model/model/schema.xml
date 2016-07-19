@@ -1,3 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
 <database name="default" defaultIdMethod="native" defaultPhpNamingMethod="underscore" namespace="Model" package="Model">
+  <table name="ambiente" idMethod="native" phpName="Ambiente">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="descricao" phpName="Descricao" type="VARCHAR" size="45" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="ambiente_proposicao" idMethod="native" phpName="AmbienteProposicao">
+    <column name="id_ambiente" phpName="IdAmbiente" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" required="true"/>
+    <column name="id_proposicao" phpName="IdProposicao" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" required="true"/>
+    <foreign-key foreignTable="ambiente" name="fk_ambiente_proposicao_ambiente1" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="id_ambiente" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="proposicao" name="fk_ambiente_proposicao_proposicao1" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="id_proposicao" foreign="id"/>
+    </foreign-key>
+    <index name="fk_ambiente_proposicao_proposicao1_idx">
+      <index-column name="id_proposicao"/>
+    </index>
+    <index name="fk_ambiente_proposicao_ambiente1_idx">
+      <index-column name="id_ambiente"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="comentario" idMethod="native" phpName="Comentario">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_usuario" phpName="IdUsuario" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="id_proposicao" phpName="IdProposicao" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="data_cadastro" phpName="DataCadastro" type="TIMESTAMP" required="true"/>
+	<column name="comentario" phpName="Comentario" type="LONGVARCHAR" required="true"/>
+    <foreign-key foreignTable="usuario" name="fk_comentario_usuario1" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="id_usuario" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="proposicao" name="fk_comentario_proposicao1" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="id_proposicao" foreign="id"/>
+    </foreign-key>
+    <index name="fk_comentario_usuario1_idx">
+      <index-column name="id_usuario"/>
+    </index>
+    <index name="fk_comentario_proposicao1_idx">
+      <index-column name="id_proposicao"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="curtir" idMethod="native" phpName="Curtir">
+    <column name="id_proposicao" phpName="IdProposicao" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" required="true"/>
+    <column name="id_usuario" phpName="IdUsuario" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" required="true"/>
+    <column name="data_cadastro" phpName="DataCadastro" type="TIMESTAMP" required="true"/>
+    <foreign-key foreignTable="proposicao" name="fk_curtir_proposicao1" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="id_proposicao" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="usuario" name="fk_curtir_usuario1" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="id_usuario" foreign="id"/>
+    </foreign-key>
+    <index name="fk_curtir_usuario1_idx">
+      <index-column name="id_usuario"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="habilidade" idMethod="native" phpName="Habilidade">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="descricao" phpName="Descricao" type="VARCHAR" size="45" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="habilidade_proposicao" idMethod="native" phpName="HabilidadeProposicao">
+    <column name="id_habilidade" phpName="IdHabilidade" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" required="true"/>
+    <column name="id_proposicao" phpName="IdProposicao" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" required="true"/>
+    <foreign-key foreignTable="habilidade" name="fk_habilidade_proposicao_habilidade1" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="id_habilidade" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="proposicao" name="fk_habilidade_proposicao_proposicao1" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="id_proposicao" foreign="id"/>
+    </foreign-key>
+    <index name="fk_habilidade_proposicao_proposicao1_idx">
+      <index-column name="id_proposicao"/>
+    </index>
+    <index name="fk_habilidade_proposicao_habilidade1_idx">
+      <index-column name="id_habilidade"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="passo" idMethod="native" phpName="Passo">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_proposicao" phpName="IdProposicao" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="posicao" phpName="Posicao" type="TINYINT" size="3" sqlType="tinyint(3) unsigned" required="true"/>
+    <column name="titulo" phpName="Titulo" type="VARCHAR" size="100" required="true"/>
+    <column name="local" phpName="Local" type="VARCHAR" size="100"/>
+    <column name="duracao" phpName="Duracao" type="VARCHAR" required="true"/>
+    <column name="materiais_necessarios" phpName="MateriaisNecessarios" type="VARCHAR" size="100"/>
+    <column name="texto" phpName="Texto" type="LONGVARCHAR" required="true"/>
+    <foreign-key foreignTable="proposicao" name="fk_passo_proposicao1" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="id_proposicao" foreign="id"/>
+    </foreign-key>
+    <index name="fk_passo_proposicao1_idx">
+      <index-column name="id_proposicao"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="proposicao" idMethod="native" phpName="Proposicao">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_usuario" phpName="IdUsuario" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="nome" phpName="Nome" type="VARCHAR" size="250" required="true"/>
+    <column name="objetivo" phpName="Objetivo" type="LONGVARCHAR" required="true"/>
+    <column name="start" phpName="Start" type="LONGVARCHAR"/>
+    <column name="imagem" phpName="Imagem" type="BLOB"/>
+    <column name="tempo_total" phpName="TempoTotal" type="VARCHAR"/>
+    <column name="data_cadastro" phpName="DataCadastro" type="TIMESTAMP" required="true"/>
+	<column name="is_rascunho" phpName="IsRascunho" type="BOOLEAN" size="1" required="true" defaultValue="true"/>
+	<column name="categoria" phpName="Categoria" type="CHAR" sqlType="enum('S','J','P')" required="true"/>
+    <behavior id="aggregate_custo_producao" name="aggregate_column">
+      <parameter name="name" value="tempo_total" />
+      <parameter name="foreign_table" value="passo" />
+      <parameter name="expression" value="SUM(duracao)" />
+    </behavior>
+    <foreign-key foreignTable="usuario" name="fk_proposicao_usuario" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="id_usuario" foreign="id"/>
+    </foreign-key>
+    <index name="fk_proposicao_usuario_idx">
+      <index-column name="id_usuario"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="recurso" idMethod="native" phpName="Recurso">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="descricao" phpName="Descricao" type="VARCHAR" size="45" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="recurso_proposicao" idMethod="native" phpName="RecursoProposicao">
+    <column name="id_recurso" phpName="IdRecurso" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" required="true"/>
+    <column name="id_proposicao" phpName="IdProposicao" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" required="true"/>
+    <foreign-key foreignTable="recurso" name="fk_recurso_has_proposicao_recurso1" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="id_recurso" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="proposicao" name="fk_recurso_has_proposicao_proposicao1" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="id_proposicao" foreign="id"/>
+    </foreign-key>
+    <index name="fk_recurso_has_proposicao_proposicao1_idx">
+      <index-column name="id_proposicao"/>
+    </index>
+    <index name="fk_recurso_has_proposicao_recurso1_idx">
+      <index-column name="id_recurso"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="reset_senha" idMethod="native" phpName="ResetSenha">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="id_usuario" phpName="IdUsuario" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="codigo" phpName="Codigo" type="VARCHAR" size="255" required="true"/>
+    <column name="data_cadastro" phpName="DataCadastro" type="TIMESTAMP" required="true"/>
+    <foreign-key foreignTable="usuario" name="fk_reset_senha_usuario1">
+      <reference local="id_usuario" foreign="id"/>
+    </foreign-key>
+    <index name="fk_reset_senha_usuario1_idx">
+      <index-column name="id_usuario"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="tamanho_turma" idMethod="native" phpName="TamanhoTurma">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="descricao" phpName="Descricao" type="VARCHAR" size="45" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="tamanho_turma_proposicao" idMethod="native" phpName="TamanhoTurmaProposicao">
+    <column name="id_tamanho_turma" phpName="IdTamanhoTurma" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" required="true"/>
+    <column name="id_proposicao" phpName="IdProposicao" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" required="true"/>
+    <foreign-key foreignTable="tamanho_turma" name="fk_tamanho_turma_proposicao_tamanho_turma1" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="id_tamanho_turma" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="proposicao" name="fk_tamanho_turma_proposicao_proposicao1" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="id_proposicao" foreign="id"/>
+    </foreign-key>
+    <index name="fk_tamanho_turma_proposicao_proposicao1_idx">
+      <index-column name="id_proposicao"/>
+    </index>
+    <index name="fk_tamanho_turma_proposicao_tamanho_turma1_idx">
+      <index-column name="id_tamanho_turma"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="usuario" idMethod="native" phpName="Usuario">
+    <column name="id" phpName="Id" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="nome" phpName="Nome" type="VARCHAR" size="100" required="true"/>
+    <column name="email" phpName="Email" type="VARCHAR" size="200" required="true"/>
+    <column name="atuacao" phpName="Atuacao" type="VARCHAR" size="100"/>
+    <column name="genero" phpName="Genero" type="VARCHAR" size="100"/>
+    <column name="senha" phpName="Senha" type="VARCHAR" size="250"/>
+    <column name="descricao_contexto" phpName="DescricaoContexto" type="VARCHAR" size="250"/>
+    <column name="data_cadastro" phpName="DataCadastro" type="TIMESTAMP" required="true"/>
+    <column name="is_admin" phpName="IsAdmin" type="BOOLEAN" size="1" required="true" defaultValue="false"/>
+	<column name="imagem_profile" phpName="ImagemProfile" type="VARCHAR" size="200"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
 </database>

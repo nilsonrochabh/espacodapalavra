@@ -1,12 +1,14 @@
-<h3 class="text-center title"><?php echo $this->translate('Esqueci a senha'); ?></h3>
-<form class="m-t" action="<?php echo $this->url('login/esqueci') ?>" class="validate-form" method="post">
-	<div class="form-group">
-		<div class="controls with-icon-over-input">
-			<input value="" placeholder="<?php echo $this->translate('Email'); ?>" class="form-control" data-rule-required="true" name="email" type="text" />
-			<i class="icon-envelope text-muted"></i>
+<main class="login">
+	<div class="container">
+		<div class="col-full">
+			<form action="<?php echo $this->url('login/esqueci') ?>" method="post">
+				<h2><?php echo $this->translate('Esqueci a senha'); ?></h2>
+				
+				<label for="email"><?php echo $this->translate('E-mail:'); ?></label>
+				<input id="email" name="email" type="text" value="">
+				
+				<input name="submit" type="submit" value="<?php echo $this->translate('Enviar'); ?>">
+			</form>
 		</div>
 	</div>
-	<button class="btn block full-width m-b"><?php echo $this->translate('Enviar'); ?></button>
-	
-	<a href="<?php echo $this->url('login/entrar') ?>"><small><?php echo $this->translate('Voltar'); ?></small></a>
-</form>
+</main>

@@ -8,6 +8,8 @@ $modules = array(
 	'Core',
 	'Util',
 	'EdpModuleLayouts',
+	'Frontend',
+	'WebinoImageThumb',
 );
 
 if($env == 'development') {

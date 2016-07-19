@@ -38,48 +38,4 @@ abstract class BasePage extends BaseController {
 	 * @since 21/08/2015 15:14:00
 	 */
 	abstract protected function addButtons(ViewModel $view);
-	
-	// ------------------------- BO --------------------------------------------
-	
-	/**
-	 * Método getLocalBO
-	 * @author <a href="mailto:bruno@flek.com.br">Bruno Saliba</a>
-	 * @since 04/09/2015 00:11:52
-	 * @return \Core\BO\LocalBO
-	 */
-	protected function getLocalBO() {
-	    return $this->getServiceLocator()->get('Core\BO\Local');
-	}
-	
-	/**
-	 * Método getIngredienteBO
-	 * @author <a href="mailto:bruno@flek.com.br">Bruno Saliba</a>
-	 * @since 07/09/2015 23:21:39
-	 * @return \Core\BO\IngredienteBO
-	 */
-	protected function getIngredienteBO() {
-	    return $this->getServiceLocator()->get('Core\BO\Ingrediente');
-	}
-	
-	/**
-	 * Método getReceitaBO
-	 * @author <a href="mailto:bruno@flek.com.br">Bruno Saliba</a>
-	 * @since 07/09/2015 23:51:55
-	 * @return \Core\BO\ReceitaBO
-	 */
-	protected function getReceitaBO() {
-	    return $this->getServiceLocator()->get('Core\BO\Receita');
-	}
-	
-	/**
-	 * Método getUnidadeBO
-	 * @author <a href="mailto:bruno@flek.com.br">Bruno Saliba</a>
-	 * @since 21/09/2015 23:46:07
-	 * @return \Core\BO\UnidadeBO
-	 */
-	protected function getUnidadeBO() {
-	    return $this->getServiceLocator()->get('Core\BO\Unidade');
-	}
-	
-	// ------------------------- -- --------------------------------------------
 }

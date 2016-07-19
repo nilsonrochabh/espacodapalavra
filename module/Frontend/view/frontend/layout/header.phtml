@@ -1,0 +1,85 @@
+<?php
+$identity = $this->userIdentity();
+?>
+
+<header>
+	<div class="container">
+		<div class="logo">
+			<h1>
+				<img src="<?php echo $this->basePath(); ?>/www/img/espaco-da-palavra.svg" alt="<?php echo $this->translate('Espaço da Palavra (Logo)'); ?>" />
+			</h1>
+		</div>
+		
+		<div class="menu">
+			<div class="login">
+				<?php if(!$identity): ?>
+				<a href="<?php echo $this->url('login'); ?>">
+					<span class="icon-profile"></span> <span class="text-login"><?php echo $this->translate('Acessar ou cadastrar'); ?></span>
+				</a>
+				<?php else: ?>
+				<a href="<?php echo $this->url('login/sair'); ?>">
+					<span class="icon-profile"></span> <span class="text-login"><?php echo $this->translate('Sair'); ?></span>
+				</a>
+				<?php endif; ?>
+			</div>
+			
+			<div class="pesquisar">
+				<form action="<?php echo $this->url('busca'); ?>">
+					<input type="search" name="q" placeholder="<?php echo $this->translate('Pesquisar...'); ?>" />
+				</form>
+			</div>
+			
+			<div class="menu-itens">
+				<ul>
+					<li class="conheca">
+						<a href="#" id="call-conheca"><?php echo $this->translate('Conheça'); ?></a>
+					</li>
+					<li class="explore">
+						<a href="#" id="call-explore"><?php echo $this->translate('Explore'); ?></a>
+					</li>
+					<li class="publique">
+						<a href="<?php echo $this->url('publique');?>"><?php echo $this->translate('Publique'); ?></a>
+					</li>
+				</ul>
+			</div>
+			
+			<div class="sub-menu" id="sub-menu">
+				<div class="menu-conheca">
+					<ul>
+						<li class="o-que-e">
+							<a class="inline" href="#o-que-e-box"><?php echo $this->translate('O que é?'); ?></a>
+						</li>
+						<li class="como-funciona">
+							<a class="inline" href="#como-funciona-box"><?php echo $this->translate('Como funciona'); ?></a>
+						</li>
+						<li class="porque">
+							<a class="inline" href="#porque-box"><?php echo $this->translate('Por quê?'); ?></a>
+						</li>
+						<li class="metodologias">
+							<a href="metodologias.html"><?php echo $this->translate('Metodologias'); ?></a>
+						</li>
+						<li class="quem-faz">
+							<a class="inline" href="#quem-faz-box"><?php echo $this->translate('Quem faz'); ?></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="sub-menu-explore" id="sub-menu-explore">
+				<div class="menu-conheca">
+					<ul>
+						<li class="como-funciona">
+							<a href="<?php echo $this->url('home'); ?>"><?php echo $this->translate('Proposições'); ?></a>
+						</li>
+						<li class="porque">
+							<a href="explore-artistas.html"><?php echo $this->translate('Artistas'); ?></a>
+						</li>
+						<li class="quem-faz">
+							<a href="explore-leitura.html"><?php echo $this->translate('Leitura'); ?></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>

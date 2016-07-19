@@ -1,0 +1,112 @@
+<?php
+use Util\Util;
+?>
+<main class="proposicao">
+	<div class="container">
+		<div class="header-pr"></div>
+		
+		<div class="info-pr-1">
+			<h2><?php echo $this->proposicao->getNome(); ?></h2>
+			<h3>Objetivos</h3>
+			<p><?php echo nl2br($this->proposicao->getObjetivo()); ?></p>
+			
+			<h3>Resumo da Atividade:</h3>
+			<p><?php echo nl2br($this->proposicao->getStart()); ?></p>
+		</div>
+		
+		<div class="info-pr-2">
+			<h3>Recursos utilizados</h3>
+			<img src="<?php echo $this->basePath(); ?>/www/img/recursos-temp.jpg" />
+			
+			<h3>Duração total</h3>
+			<span class="icon-clock"></span><span class="duration-time"><?php echo substr($this->proposicao->getTempoTotal(), 0, -3); ?></span>
+		</div>
+		
+		<div class="author-pr">
+			<?php if(!Util::IsNullOrEmptyString($this->proposicao->getUsuario()->getImagemProfile())): ?>
+			<div class="photo-profile">
+				<img src="<?php echo $this->basePath(); ?>/uploads/<?php echo $this->proposicao->getUsuario()->getImagemProfile(); ?>">
+			</div>
+			<?php endif; ?>
+			<h2><?php echo $this->proposicao->getUsuario()->getNome(); ?></h2>
+			<span>12 Seguidores</span>
+			<a href="#">Seguir</a>
+		</div>
+		
+		<div id="tabs">
+			<ul>
+				<li class="passos"><a href="#passos">Passos</a></li>
+				<li class="comentarios"><a href="#comentarios">Comentários</a></li>
+			</ul>
+			
+			<div id="passos">
+				<ol class="passos">
+					<?php foreach($this->proposicao->getPassos() as $passo): ?>
+					<li class="passo">
+						<div class="title">
+							<h4><?php echo $passo->getTitulo(); ?></h4>
+							<span class="icon-clock"></span><span class="duration-time"><?php echo substr($passo->getDuracao(), 0, -3); ?></span>
+							<?php if(!Util::IsNullOrEmptyString($passo->getLocal())): ?>
+							<br />
+							<span class="local-atividade">Local: <?php echo $passo->getLocal(); ?></span>
+							<?php endif; ?>
+						</div>
+						
+						<ul class="recursos">
+							<li><?php echo $passo->getMateriaisNecessarios(); ?></li>
+						</ul>
+						
+						<p>
+							<?php echo nl2br($passo->getTexto()); ?>
+						</p>
+					</li>
+					<?php endforeach; ?>
+				</ol>
+			</div>
+			
+			<div id="comentarios">
+				<div class="comment-post">
+					<?php if($this->userIdentity()): ?>
+					<div class="comment-profile">
+						<div class="comment-user-photo">
+							<img src="<?php echo $this->basePath(); ?>/uploads/<?php echo $this->userIdentity()['usuario']->getImagemProfile(); ?>">
+						</div>
+						<h4><?php echo $this->userIdentity()['usuario']->getNome(); ?></h4>
+					</div>
+					<div class="comment-box">
+						<textarea></textarea>
+						<div class="comment-options">
+							<p class="comment-policy">
+								Temos uma política de gentileza.<br />
+								Por favor seja positivo e construtivo.
+							</p>
+							
+							<input type="submit" value="ENVIAR"/>
+						</div>
+					</div>
+					<?php else: ?>
+					<div style="text-align: center;">
+						Faça login para poder comentar.
+					</div>
+					<?php endif; ?>
+				</div>
+				
+				<?php foreach($this->proposicao->getComentarios() as $c): ?>
+				<div class="comment-posted">
+					<div class="comment-profile">
+						<div class="comment-user-photo">
+							<img src="<?php echo $this->basePath(); ?>/uploads/<?php echo $c->getUsuario()->getImagemProfile(); ?>">
+						</div>
+						<h4><?php echo $c->getUsuario()->getNome(); ?></h4>
+					</div>
+					<div class="comment-box">
+						<p class="comment-text">
+							<?php echo nl2br($c->getComentario()); ?>
+						</p>
+					</div>
+				</div>
+				<?php endforeach; ?>
+			</div>
+		</div>
+	</div>
+</main>

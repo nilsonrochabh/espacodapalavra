@@ -36,42 +36,18 @@ class MyAuthAdapter implements AdapterInterface {
 		$identity = array();
 		$messages = array();
 		
-		if($user !== NULL && $user->getHabilitado()) {
+		if($user !== NULL) {
 			$code = Authentication\Result::SUCCESS;
 			$identity = array(
 				'id' => $user->getId(),
 				'usuario' => $user,
-// 				'permissoes' => $this->getCodigos($user),
 			);
-		} elseif($user !== NULL && !$user->getHabilitado()) {
-			$code = Authentication\Result::FAILURE;
-			$messages[] = _('Usuário bloqueado.');
 		} else {
 			$code = Authentication\Result::FAILURE_CREDENTIAL_INVALID;
 			$messages[] = _('Email/Senha incorretos.');
 		}
 		
 		return new Authentication\Result($code, $identity, $messages);
-	}
-	
-	/**
-	 * Método getCodigos
-	 * @author <a href="mailto:bsaliba@gmail.com">Bruno Saliba</a>
-	 * @since 30/06/2014 16:20:56
-	 * @param unknown $permissoes
-	 * @return multitype:NULL
-	 */
-	private function getCodigos(Usuario $user) {
-		$codigos = array();
-		
-		$grupo = $user->getGrupo();
-		if($grupo != null) {
-			foreach($grupo->getGrupoPermissaos() as $p) {
-				$codigos[] = $p->getPermissao()->getCodigo();
-			}
-		}
-		
-		return $codigos;
 	}
 	
 	/**

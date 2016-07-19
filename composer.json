@@ -13,6 +13,7 @@
 		"zendframework/zendframework": "2.*",
 		"propel/propel": "~2.0@dev",
 		"monolog/monolog": ">=1.0",
-		"evandotpro/edp-module-layouts": "*"
+		"evandotpro/edp-module-layouts": "*",
+		"webino/webino-image-thumb": "*"
 	}
 }

@@ -488,7 +488,7 @@ main.login input, main.login textarea {
   box-sizing: border-box;
   outline: 0; }
 
-main.login input[type="submit"] {
+main.login input[type="submit"], main.login input[type="button"] {
   width: 176px;
   float: right;
   padding: 5px 0;
@@ -502,7 +502,7 @@ main.login input[type="submit"] {
   -moz-border-radius: 0px;
   border-radius: 0px;
   transition: all .4s ease; }
-  main.login input[type="submit"]:hover {
+  main.login input[type="submit"]:hover, main.login input[type="button"]:hover {
     background: #be6701; }
 
 main.login .bannercadastro {
@@ -1009,9 +1009,10 @@ label.checkbox {
   .form-publique textarea {
     resize: none;
     min-height: 150px; }
-  .form-publique a.button-next {
+  .form-publique .button-next {
     font-family: 'amaticbold';
     font-size: 25px;
+	width: auto;
     color: #ffffff;
     background: #df268a;
     padding: 10px 50px;
@@ -1021,7 +1022,7 @@ label.checkbox {
     float: right;
     margin: 35px 0;
     transition: background .4s ease; }
-    .form-publique a.button-next:hover {
+    .form-publique .button-next:hover {
       background: #b71b6f; }
   .form-publique .col-main {
     display: block;
@@ -1147,3 +1148,57 @@ label.checkbox {
   text-align: justify;
   font-size: 13px;
   margin: 40px 0 -40px 0; }
+
+form ul {
+	margin: 0;
+	padding: 0;
+}
+form ul li {
+	font-size: 15px;
+	color: #df3226;
+	list-style: none;
+}
+
+.form-publique .button-next.alternate-color {
+	background: #d77501;
+}
+
+.form-publique .button-next.alternate-color:hover {
+	background: #be6701;
+}
+
+.form-publique table {
+	border-bottom: 1px solid #e6e7e8;
+	width: 100%;
+}
+.form-publique table tr {
+	border-top: 1px solid #e6e7e8;
+}
+.form-publique table tr td {
+	padding: 5px;
+}
+.form-publique table tr td.position {
+	font-weight: bold;
+	color: #df268a;
+	width: 16px;
+}
+.form-publique table tr td.position a {
+	font-weight: bold;
+	color: #df268a;
+	text-decoration: none;
+}
+.steps-publish ul li.ativo a,
+.steps-publish ul li.ativo a:active,
+.steps-publish ul li.ativo a:hover,
+.steps-publish ul li.ativo a:visited {
+    color: #219fc9;
+	text-decoration: none;
+}
+
+.steps-publish ul li a,
+.steps-publish ul li a:active,
+.steps-publish ul li a:hover,
+.steps-publish ul li a:visited {
+    color: #cee5f0;
+	text-decoration: none;
+}

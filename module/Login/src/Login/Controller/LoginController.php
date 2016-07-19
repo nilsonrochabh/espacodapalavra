@@ -67,8 +67,6 @@ class LoginController extends AbstractActionController {
 	 * @since 10/03/2014 23:39:13
 	 */
 	public function loginAction() {
-		$this->layout('layout/login');
-		
 		if($this->getAuthService()->hasIdentity()) {
 			return $this->redirect()->toRoute('login/sucesso');
 		}
@@ -119,8 +117,6 @@ class LoginController extends AbstractActionController {
 						$this->getAuthService()->setStorage($this->getSessionStorage());
 					}
 					$this->getAuthService()->getStorage()->write($result->getIdentity());
-					
-					$this->flashmessenger()->addSuccessMessage($translator->translate("Sessão iniciada com sucesso"));
 				}
 			} else {
 				$this->flashmessenger()->addErrorMessage($translator->translate('Dados inválidos.'));
@@ -139,8 +135,6 @@ class LoginController extends AbstractActionController {
 		$this->getSessionStorage()->forgetMe();
 		$this->getAuthService()->clearIdentity();
 		
-		$translator = $this->getServiceLocator()->get('translator');
-		$this->flashmessenger()->addSuccessMessage($translator->translate("Sessão encerrada com sucesso"));
 		return $this->redirect()->toRoute('login');
 	}
 	

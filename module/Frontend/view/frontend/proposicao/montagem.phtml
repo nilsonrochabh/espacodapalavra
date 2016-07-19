@@ -1,0 +1,65 @@
+<main class="publique">
+	<div class="steps-publish">
+		<ul>
+			<li class="steps-item">
+				<a href="<?php echo $this->url('publique', array('idProposicao' => $this->proposicao->getId(), 'action' => 'informacoes')); ?>">
+					<?php echo $this->translate('Passo 01 - Informações'); ?>
+				</a>
+			</li>
+			<li class="steps-item ativo">
+				<?php echo $this->translate('Passo 02 - Montagem'); ?>
+			</li>
+			<li class="steps-item">
+				<a href="<?php echo $this->url('publique', array('idProposicao' => $this->proposicao->getId(), 'action' => 'categorizacao')); ?>">
+					<?php echo $this->translate('Passo 03 - Categorização'); ?>
+				</a>
+			</li>
+		</ul>
+	</div>
+	
+	<form action="" class="form-publique" method="post">
+		<div id="formstep1">
+			<div class="col-main">
+				<?php echo $this->formLabel($this->form->get('titulo')); ?>
+				<?php echo $this->formElement($this->form->get('titulo')); ?>
+				<?php echo $this->formElementErrors()->render($this->form->get('titulo')); ?>
+				
+				<?php echo $this->formElement($this->form->get('proposicao-conteudo')); ?>
+				<?php echo $this->formElementErrors()->render($this->form->get('proposicao-conteudo')); ?>
+			</div>
+			<div class="col-aside">
+				<?php echo $this->formLabel($this->form->get('duracao')); ?>
+				<?php echo $this->formElement($this->form->get('duracao')); ?>
+				<?php echo $this->formElementErrors()->render($this->form->get('duracao')); ?>
+				
+				<?php echo $this->formLabel($this->form->get('materiais')); ?>
+				<?php echo $this->formElement($this->form->get('materiais')); ?>
+				<?php echo $this->formElementErrors()->render($this->form->get('materiais')); ?>
+			</div>
+			<div class="clearthis"></div>
+			
+			<?php echo $this->formElement($this->form->get('submit')); ?>
+			
+			<div class="clearthis"></div>
+			
+			<?php if($this->passos): ?>
+			<table>
+				<?php $i = 1; ?>
+				<?php foreach($this->passos as $p): ?>
+				<tr>
+					<td class="position"><?php echo $i++; ?></td>
+					<td><?php echo $p->getTitulo(); ?></td>
+					<td class="position"><a href="<?php echo $this->url('publique', array('idProposicao' => $this->proposicao->getId(), 'action' => 'montagem', 'passo' => $p->getId())); ?>">E</a></td>
+					<td class="position"><a href="<?php echo $this->url('passo_delete', array('idProposicao' => $this->proposicao->getId(), 'passo' => $p->getId())); ?>" onclick="return confirm('<?php echo $this->translate('Tem certeza que deseja excluir esse passo?'); ?>');">X</a></td>
+				</tr>
+				<?php endforeach; ?>
+			</table>
+			
+			<?php endif; ?>
+			
+			<a href="<?php echo $this->url('publique', array('idProposicao' => $this->proposicao->getId(), 'action' => 'categorizacao')); ?>" class="button-next">
+				<?php echo $this->translate('Próximo'); ?>
+			</a>
+		</div>
+	</form>
+</main>

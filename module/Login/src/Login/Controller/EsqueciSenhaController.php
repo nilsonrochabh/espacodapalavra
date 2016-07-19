@@ -68,8 +68,6 @@ class EsqueciSenhaController extends AbstractActionController {
 	 * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
 	 */
 	public function indexAction() {
-		$this->layout('layout/login');
-		
 		if($this->getAuthService()->hasIdentity()) {
 			return $this->redirect()->toRoute('login/sucesso');
 		}
@@ -95,13 +93,13 @@ class EsqueciSenhaController extends AbstractActionController {
 						ResetSenhaQuery::create()->filterByIdUsuario($existente->getId())->delete($con);
 						$reset->save($con);
 						
-// 						$mail = new Mail("150.164.99.2", 587, "patrimonio", "5hasEHuqERAsWach");
+// 						$mail = new Mail("*******", 587, "*******", "*******");
 						
-// 						$remetente = new MailBox('Patrimônio', 'patrimonio@nescon.medicina.ufmg.br');
+// 						$remetente = new MailBox('*******', '*******');
 // 						$destinatario = new MailBox($existente->getNome(), $existente->getEmail());
-// 						$responderPara = new MailBox('Not Reply', 'nao-responda@nescon.medicina.ufmg.br');
+// 						$responderPara = new MailBox('Not Reply', 'nao-responda@*******');
 						
-// 						$assunto = $translator->translate("Patrimônio - Esqueci minha senha");
+// 						$assunto = $translator->translate("Esqueci minha senha");
 						
 // 						$event = $this->getEvent();
 // 						$request = $event->getRequest();
@@ -109,7 +107,7 @@ class EsqueciSenhaController extends AbstractActionController {
 // 						$uri = $router->getRequestUri();
 // 						$baseUrl = sprintf('%s://%s', $uri->getScheme(), $uri->getHost());
 						
-// 						$corpo = sprintf($translator->translate('Prezado(a) %1$s,<br /><br />Segue link para alterar sua senha do Patrimônio:<br /><a href="%2$s">Alterar Senha</a><br /><br />ou cole no browser (navegador web):<br />%2$s<br /><br />Esse link expira em 24 horas.<br /><br /><a href="https://www.nescon.medicina.ufmg.br/patrimonio">Patrimônio</a>'),
+// 						$corpo = sprintf($translator->translate('Prezado(a) %1$s,<br /><br />Segue link para alterar sua senha:<br /><a href="%2$s">Alterar Senha</a><br /><br />ou cole no browser (navegador web):<br />%2$s<br /><br />Esse link expira em 24 horas.'),
 // 								$existente->getNome(),
 // 								$baseUrl . $this->url()->fromRoute('login/codigo', array('codigo' => $reset->getCodigo())));
 						
@@ -146,8 +144,6 @@ class EsqueciSenhaController extends AbstractActionController {
 	 * @return \Zend\View\Model\ViewModel
 	 */
 	public function codigoAction() {
-		$this->layout('layout/login');
-		
 		$translator = $this->getServiceLocator()->get('translator');
 		$codigo = $this->params()->fromRoute('codigo', false);
 		if($codigo) {

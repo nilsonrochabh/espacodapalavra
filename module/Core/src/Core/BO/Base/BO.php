@@ -2,16 +2,20 @@
 
 namespace Core\BO\Base;
 
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Core\Model\DTO;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Util\Util;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * Classe Core\BO\Base$BO
  * @author <a href="mailto:bruno@flek.com.br">Bruno Saliba</a>
  * @since 21/08/2015 14:04:52
  */
-class BO {
+class BO implements ServiceLocatorAwareInterface {
+	
+	use ServiceLocatorAwareTrait;
 	
 	/**
 	 * Método createDTO
@@ -45,5 +49,19 @@ class BO {
 	protected function _($key) {
 		$translator = $this->getServiceLocator()->get('translator');
 		return $translator->translate($key);
+	}
+	
+	/**
+	 * Método handleException
+	 * @author <a href="mailto:bsaliba@gmail.com">Bruno Saliba</a>
+	 * @since 05/03/2016 23:10:58
+	 * @param Exception $e
+	 * @param bool $addErrorMessage
+	 */
+	protected function handleException(\Exception $e, $addErrorMessage = true) {
+		do {
+			$this->getServiceLocator()->get('LogBO')->debug($e->getMessage());
+			$this->getServiceLocator()->get('LogBO')->debug($e->getTraceAsString());
+		} while($e = $e->getPrevious());
 	}
 }

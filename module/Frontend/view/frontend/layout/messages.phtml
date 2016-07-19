@@ -1,0 +1,17 @@
+<?php
+// In any of your .phtml files:
+$flash = $this->flashMessenger();
+$flash->setMessageOpenFormat('<script>$(function(){toastr[%s]("')
+	->setMessageSeparatorString('");toastr[%s]("')
+	->setMessageCloseString('");});</script>');
+
+echo str_replace('toastr[ class=', 'toastr[', $flash->renderCurrent('error'));
+echo str_replace('toastr[ class=', 'toastr[', $flash->renderCurrent('info'));
+echo str_replace('toastr[ class=', 'toastr[', $flash->renderCurrent('warning'));
+echo str_replace('toastr[ class=', 'toastr[', $flash->renderCurrent('success'));
+$flash->getPluginFlashMessenger()->clearCurrentMessagesFromContainer();
+echo str_replace('toastr[ class=', 'toastr[', $flash->render('error'));
+echo str_replace('toastr[ class=', 'toastr[', $flash->render('info'));
+echo str_replace('toastr[ class=', 'toastr[', $flash->render('warning'));
+echo str_replace('toastr[ class=', 'toastr[', $flash->render('success'));
+?>

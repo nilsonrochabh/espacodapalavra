@@ -1,0 +1,43 @@
+<main class="login">
+	<div class="container">
+		<div class="col-full">
+			<form action="" method="post" name="cadastroForm" enctype="multipart/form-data">
+				<h2>Faça seu cadastro</h2>
+				
+				<?php echo $this->formLabel($this->form->get('nome')); ?>
+				<?php echo $this->formElement($this->form->get('nome')); ?>
+				<?php echo $this->formElementErrors()->render($this->form->get('nome')); ?>
+				
+				<?php echo $this->formLabel($this->form->get('email')); ?>
+				<?php echo $this->formElement($this->form->get('email')); ?>
+				<?php echo $this->formElementErrors()->render($this->form->get('email')); ?>
+				
+				<?php echo $this->formLabel($this->form->get('atuacao')); ?>
+				<?php echo $this->formElement($this->form->get('atuacao')); ?>
+				<?php echo $this->formElementErrors()->render($this->form->get('atuacao')); ?>
+				
+				<?php echo $this->formLabel($this->form->get('genero')); ?>
+				<?php echo $this->formElement($this->form->get('genero')); ?>
+				<?php echo $this->formElementErrors()->render($this->form->get('genero')); ?>
+				
+				<?php echo $this->formLabel($this->form->get('senha')); ?>
+				<?php echo $this->formElement($this->form->get('senha')); ?>
+				<?php echo $this->formElementErrors()->render($this->form->get('senha')); ?>
+				
+				<?php echo $this->formLabel($this->form->get('confirmarsenha')); ?>
+				<?php echo $this->formElement($this->form->get('confirmarsenha')); ?>
+				<?php echo $this->formElementErrors()->render($this->form->get('confirmarsenha')); ?>
+				
+				<?php echo $this->formLabel($this->form->get('sobre')); ?>
+				<?php echo $this->formElement($this->form->get('sobre')); ?>
+				<?php echo $this->formElementErrors()->render($this->form->get('sobre')); ?>
+				
+				<?php echo $this->formLabel($this->form->get('foto')); ?>
+				<?php echo $this->formElement($this->form->get('foto')); ?>
+				<?php echo $this->formElementErrors()->render($this->form->get('foto')); ?>
+				
+				<?php echo $this->formElement($this->form->get('submit')); ?>
+			</form>
+		</div>
+	</div>
+</main>

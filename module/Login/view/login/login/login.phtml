@@ -1,24 +1,19 @@
-<h3 class="text-center title"><?php echo $this->translate('Entrar'); ?></h3>
-<form class="m-t" action="<?php echo $this->url('login/autenticar') ?>" class="validate-form" method="post">
-	<div class="form-group">
-		<div class="controls with-icon-over-input">
-			<input value="" placeholder="<?php echo $this->translate('Email'); ?>" class="form-control" data-rule-required="true" name="usuario" type="text" />
-			<i class="fa fa-user fa-fw"></i>
+<main class="login">
+	<div class="container">
+		<div class="col-left">
+			<h2><?php echo $this->translate('Sou cadastrado'); ?></h2>
+			<form action="<?php echo $this->url('login/autenticar') ?>" class="validate-form" method="post">
+				<label for="email"><?php echo $this->translate('E-mail'); ?>:</label>
+				<input type="text" id="email" name="usuario">
+				<label for="senha"><?php echo $this->translate('Senha'); ?>:</label>
+				<input type="password" id="senha" name="senha">
+				<input type="submit" value="<?php echo $this->translate('Entrar'); ?>">
+			</form>
+		</div>
+		<div class="col-right">
+			<h2><?php echo $this->translate('Não sou cadastrado'); ?></h2>
+			<div class="bannercadastro"></div>
+			<input type="button" onclick="window.location = '<?php echo $this->url('cadastre'); ?>'" value="<?php echo $this->translate('Cadastrar'); ?>">
 		</div>
 	</div>
-	<div class="form-group">
-		<div class="controls with-icon-over-input">
-			<input value="" placeholder="<?php echo $this->translate('Senha'); ?>" class="form-control" data-rule-required="true" name="senha" type="password" />
-			<i class="fa fa-lock fa-fw"></i>
-		</div>
-	</div>
-	<div class="checkbox i-checks">
-		<label for="rememberme">
-			<input id="rememberme" name="rememberme" type="checkbox" value="1">
-			<?php echo $this->translate('Manter Conectado'); ?>
-		</label>
-	</div>
-	<button class="btn btn-primary block full-width m-b"><?php echo $this->translate('Entrar'); ?></button>
-	
-	<a href="<?php echo $this->url('login/esqueci') ?>"><small><?php echo $this->translate('Esqueceu a senha?'); ?></small></a>
-</form>
+</main>

@@ -15,6 +15,30 @@ class BaseController extends AbstractActionController {
 	
 	protected $_breadcrumb = null;
 	
+	// ------------------------- BO --------------------------------------------
+	
+	/**
+	 * Método getUsuarioBO
+	 * @author <a href="mailto:bruno@flek.com.br">Bruno Saliba</a>
+	 * @since 04/09/2015 00:11:52
+	 * @return \Core\BO\UsuarioBO
+	 */
+	protected function getUsuarioBO() {
+	    return $this->getServiceLocator()->get('Core\BO\Usuario');
+	}
+	
+	/**
+	 * Método getProposicaoBO
+	 * @author <a href="mailto:bruno@flek.com.br">Bruno Saliba</a>
+	 * @since 04/09/2015 00:11:52
+	 * @return \Core\BO\ProposicaoBO
+	 */
+	protected function getProposicaoBO() {
+	    return $this->getServiceLocator()->get('Core\BO\Proposicao');
+	}
+	
+	// ------------------------- -- --------------------------------------------
+	
 	/**
 	 * Método _
 	 * @author <a href="mailto:bsaliba@gmail.com">Bruno Saliba</a>
@@ -289,4 +313,21 @@ class BaseController extends AbstractActionController {
 		return $locale;
 	}
 	
+	/**
+	 * Método handleException
+	 * @author <a href="mailto:bsaliba@gmail.com">Bruno Saliba</a>
+	 * @since 05/03/2016 23:10:58
+	 * @param Exception $e
+	 * @param bool $addErrorMessage
+	 */
+	protected function handleException(\Exception $e, $addErrorMessage = true) {
+		do {
+			$this->getServiceLocator()->get('Logger')->debug($e->getMessage());
+			$this->getServiceLocator()->get('Logger')->debug($e->getTraceAsString());
+		} while($e = $e->getPrevious());
+		
+		if($addErrorMessage) {
+			$this->flashMessenger()->addErrorMessage($this->_('Ocorreu um erro inesperado. Caso persista, entre em contato conosco.'));
+		}
+	}
 }

@@ -1,0 +1,68 @@
+<?php
+
+if (!function_exists('renderRadioMultiCheckbox')) {
+	function renderRadioMultiCheckbox($element, $className) {
+		$html = '';
+		
+		foreach($element->getValueOptions() as $key => $value) {
+			$html .= '  <input class="checkbox-category-publish" ' . (in_array($value["value"], $element->getValue()) ? 'checked="checked"' : '') . ' type="' . $className . '" name="' . $element->getName() . '[]" id="' . $value['attributes']['id'] . '" value="' . $value["value"] . '" />' . PHP_EOL;
+			$html .= '  <label class="checkbox" for="' . $value['attributes']['id'] . '">' . $value['label'] . '</label>' . PHP_EOL;
+		}
+		
+		return $html;
+	}
+}
+
+?>
+<main class="publique">
+	<div class="steps-publish">
+		<ul>
+			<li class="steps-item">
+				<a href="<?php echo $this->url('publique', array('idProposicao' => $this->proposicao->getId(), 'action' => 'informacoes')); ?>">
+					<?php echo $this->translate('Passo 01 - Informações'); ?>
+				</a>
+			</li>
+			<li class="steps-item">
+				<a href="<?php echo $this->url('publique', array('idProposicao' => $this->proposicao->getId(), 'action' => 'montagem')); ?>">
+					<?php echo $this->translate('Passo 02 - Montagem'); ?>
+				</a>
+			</li>
+			<li class="steps-item ativo">
+				<?php echo $this->translate('Passo 03 - Categorização'); ?>
+			</li>
+		</ul>
+	</div>
+	
+	<form action="" class="form-publique" method="post">
+		<div id="formstep1">
+			<?php echo $this->formLabel($this->form->get('categoria')); ?>
+			<?php echo $this->formElement($this->form->get('categoria')); ?>
+			<?php echo $this->formElementErrors()->render($this->form->get('categoria')); ?>
+			<div class="clearthis"></div>
+			
+			<div class="col-category-publish">
+				<h2><?php echo $this->form->get('habilidade')->getLabel(); ?></h2>
+				<?php echo renderRadioMultiCheckbox($this->form->get('habilidade'), 'checkbox'); ?>
+				<?php echo $this->formElementErrors()->render($this->form->get('habilidade')); ?>
+			</div>
+			<div class="col-category-publish">
+				<h2><?php echo $this->form->get('ambiente')->getLabel(); ?></h2>
+				<?php echo renderRadioMultiCheckbox($this->form->get('ambiente'), 'checkbox'); ?>
+				<?php echo $this->formElementErrors()->render($this->form->get('ambiente')); ?>
+			</div>
+			<div class="col-category-publish">
+				<h2><?php echo $this->form->get('recurso')->getLabel(); ?></h2>
+				<?php echo renderRadioMultiCheckbox($this->form->get('recurso'), 'checkbox'); ?>
+				<?php echo $this->formElementErrors()->render($this->form->get('recurso')); ?>
+			</div>
+			<div class="col-category-publish">
+				<h2><?php echo $this->form->get('tamanho')->getLabel(); ?></h2>
+				<?php echo renderRadioMultiCheckbox($this->form->get('tamanho'), 'checkbox'); ?>
+				<?php echo $this->formElementErrors()->render($this->form->get('tamanho')); ?>
+			</div>
+			<div class="clearthis"></div>
+			
+			<?php echo $this->formElement($this->form->get('submit')); ?>
+		</div>
+	</form>
+</main>

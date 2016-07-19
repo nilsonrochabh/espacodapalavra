@@ -12,5 +12,26 @@
  */
 
 return array(
-    // ...
+    'module_layouts' => array(
+        'Core' => 'layout/layout',
+        'Frontend' => 'frontend/layout/layout',
+		'Login' => 'frontend/layout/simple',
+    ),
+    
+    'service_manager' => array(
+        'factories' => array(
+            'Logger' => function($sm) {
+                $logger = new \Zend\Log\Logger;
+                $writer = new \Zend\Log\Writer\Stream(ROOT_PATH . '/data/logs/' . date('Y-m-d') . '-error.log');
+                $logger->addWriter($writer);
+                return $logger;
+            },
+            'LogBO' => function($sm) {
+                $logger = new \Zend\Log\Logger;
+                $writer = new \Zend\Log\Writer\Stream(ROOT_PATH . '/data/logs/' . date('Y-m-d') . '-alert-bo.log');
+                $logger->addWriter($writer);
+                return $logger;
+            },
+        ),
+    ),
 );
