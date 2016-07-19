@@ -30,6 +30,10 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildProposicaoQuery orderByDataCadastro($order = Criteria::ASC) Order by the data_cadastro column
  * @method     ChildProposicaoQuery orderByIsRascunho($order = Criteria::ASC) Order by the is_rascunho column
  * @method     ChildProposicaoQuery orderByCategoria($order = Criteria::ASC) Order by the categoria column
+ * @method     ChildProposicaoQuery orderByQteComentarios($order = Criteria::ASC) Order by the qte_comentarios column
+ * @method     ChildProposicaoQuery orderByQteCurtidas($order = Criteria::ASC) Order by the qte_curtidas column
+ * @method     ChildProposicaoQuery orderByQteSeguidores($order = Criteria::ASC) Order by the qte_seguidores column
+ * @method     ChildProposicaoQuery orderByQteConcluidos($order = Criteria::ASC) Order by the qte_concluidos column
  *
  * @method     ChildProposicaoQuery groupById() Group by the id column
  * @method     ChildProposicaoQuery groupByIdUsuario() Group by the id_usuario column
@@ -41,6 +45,10 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildProposicaoQuery groupByDataCadastro() Group by the data_cadastro column
  * @method     ChildProposicaoQuery groupByIsRascunho() Group by the is_rascunho column
  * @method     ChildProposicaoQuery groupByCategoria() Group by the categoria column
+ * @method     ChildProposicaoQuery groupByQteComentarios() Group by the qte_comentarios column
+ * @method     ChildProposicaoQuery groupByQteCurtidas() Group by the qte_curtidas column
+ * @method     ChildProposicaoQuery groupByQteSeguidores() Group by the qte_seguidores column
+ * @method     ChildProposicaoQuery groupByQteConcluidos() Group by the qte_concluidos column
  *
  * @method     ChildProposicaoQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildProposicaoQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -79,6 +87,16 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildProposicaoQuery leftJoinWithComentario() Adds a LEFT JOIN clause and with to the query using the Comentario relation
  * @method     ChildProposicaoQuery rightJoinWithComentario() Adds a RIGHT JOIN clause and with to the query using the Comentario relation
  * @method     ChildProposicaoQuery innerJoinWithComentario() Adds a INNER JOIN clause and with to the query using the Comentario relation
+ *
+ * @method     ChildProposicaoQuery leftJoinConcluir($relationAlias = null) Adds a LEFT JOIN clause to the query using the Concluir relation
+ * @method     ChildProposicaoQuery rightJoinConcluir($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Concluir relation
+ * @method     ChildProposicaoQuery innerJoinConcluir($relationAlias = null) Adds a INNER JOIN clause to the query using the Concluir relation
+ *
+ * @method     ChildProposicaoQuery joinWithConcluir($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Concluir relation
+ *
+ * @method     ChildProposicaoQuery leftJoinWithConcluir() Adds a LEFT JOIN clause and with to the query using the Concluir relation
+ * @method     ChildProposicaoQuery rightJoinWithConcluir() Adds a RIGHT JOIN clause and with to the query using the Concluir relation
+ * @method     ChildProposicaoQuery innerJoinWithConcluir() Adds a INNER JOIN clause and with to the query using the Concluir relation
  *
  * @method     ChildProposicaoQuery leftJoinCurtir($relationAlias = null) Adds a LEFT JOIN clause to the query using the Curtir relation
  * @method     ChildProposicaoQuery rightJoinCurtir($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Curtir relation
@@ -120,6 +138,16 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildProposicaoQuery rightJoinWithRecursoProposicao() Adds a RIGHT JOIN clause and with to the query using the RecursoProposicao relation
  * @method     ChildProposicaoQuery innerJoinWithRecursoProposicao() Adds a INNER JOIN clause and with to the query using the RecursoProposicao relation
  *
+ * @method     ChildProposicaoQuery leftJoinSeguir($relationAlias = null) Adds a LEFT JOIN clause to the query using the Seguir relation
+ * @method     ChildProposicaoQuery rightJoinSeguir($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Seguir relation
+ * @method     ChildProposicaoQuery innerJoinSeguir($relationAlias = null) Adds a INNER JOIN clause to the query using the Seguir relation
+ *
+ * @method     ChildProposicaoQuery joinWithSeguir($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Seguir relation
+ *
+ * @method     ChildProposicaoQuery leftJoinWithSeguir() Adds a LEFT JOIN clause and with to the query using the Seguir relation
+ * @method     ChildProposicaoQuery rightJoinWithSeguir() Adds a RIGHT JOIN clause and with to the query using the Seguir relation
+ * @method     ChildProposicaoQuery innerJoinWithSeguir() Adds a INNER JOIN clause and with to the query using the Seguir relation
+ *
  * @method     ChildProposicaoQuery leftJoinTamanhoTurmaProposicao($relationAlias = null) Adds a LEFT JOIN clause to the query using the TamanhoTurmaProposicao relation
  * @method     ChildProposicaoQuery rightJoinTamanhoTurmaProposicao($relationAlias = null) Adds a RIGHT JOIN clause to the query using the TamanhoTurmaProposicao relation
  * @method     ChildProposicaoQuery innerJoinTamanhoTurmaProposicao($relationAlias = null) Adds a INNER JOIN clause to the query using the TamanhoTurmaProposicao relation
@@ -130,7 +158,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildProposicaoQuery rightJoinWithTamanhoTurmaProposicao() Adds a RIGHT JOIN clause and with to the query using the TamanhoTurmaProposicao relation
  * @method     ChildProposicaoQuery innerJoinWithTamanhoTurmaProposicao() Adds a INNER JOIN clause and with to the query using the TamanhoTurmaProposicao relation
  *
- * @method     \Model\UsuarioQuery|\Model\AmbienteProposicaoQuery|\Model\ComentarioQuery|\Model\CurtirQuery|\Model\HabilidadeProposicaoQuery|\Model\PassoQuery|\Model\RecursoProposicaoQuery|\Model\TamanhoTurmaProposicaoQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \Model\UsuarioQuery|\Model\AmbienteProposicaoQuery|\Model\ComentarioQuery|\Model\ConcluirQuery|\Model\CurtirQuery|\Model\HabilidadeProposicaoQuery|\Model\PassoQuery|\Model\RecursoProposicaoQuery|\Model\SeguirQuery|\Model\TamanhoTurmaProposicaoQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildProposicao findOne(ConnectionInterface $con = null) Return the first ChildProposicao matching the query
  * @method     ChildProposicao findOneOrCreate(ConnectionInterface $con = null) Return the first ChildProposicao matching the query, or a new ChildProposicao object populated from the query conditions when no match is found
@@ -140,11 +168,15 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildProposicao findOneByNome(string $nome) Return the first ChildProposicao filtered by the nome column
  * @method     ChildProposicao findOneByObjetivo(string $objetivo) Return the first ChildProposicao filtered by the objetivo column
  * @method     ChildProposicao findOneByStart(string $start) Return the first ChildProposicao filtered by the start column
- * @method     ChildProposicao findOneByImagem(resource $imagem) Return the first ChildProposicao filtered by the imagem column
+ * @method     ChildProposicao findOneByImagem(string $imagem) Return the first ChildProposicao filtered by the imagem column
  * @method     ChildProposicao findOneByTempoTotal(string $tempo_total) Return the first ChildProposicao filtered by the tempo_total column
  * @method     ChildProposicao findOneByDataCadastro(string $data_cadastro) Return the first ChildProposicao filtered by the data_cadastro column
  * @method     ChildProposicao findOneByIsRascunho(boolean $is_rascunho) Return the first ChildProposicao filtered by the is_rascunho column
- * @method     ChildProposicao findOneByCategoria(string $categoria) Return the first ChildProposicao filtered by the categoria column *
+ * @method     ChildProposicao findOneByCategoria(string $categoria) Return the first ChildProposicao filtered by the categoria column
+ * @method     ChildProposicao findOneByQteComentarios(int $qte_comentarios) Return the first ChildProposicao filtered by the qte_comentarios column
+ * @method     ChildProposicao findOneByQteCurtidas(int $qte_curtidas) Return the first ChildProposicao filtered by the qte_curtidas column
+ * @method     ChildProposicao findOneByQteSeguidores(int $qte_seguidores) Return the first ChildProposicao filtered by the qte_seguidores column
+ * @method     ChildProposicao findOneByQteConcluidos(int $qte_concluidos) Return the first ChildProposicao filtered by the qte_concluidos column *
 
  * @method     ChildProposicao requirePk($key, ConnectionInterface $con = null) Return the ChildProposicao by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildProposicao requireOne(ConnectionInterface $con = null) Return the first ChildProposicao matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -154,11 +186,15 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildProposicao requireOneByNome(string $nome) Return the first ChildProposicao filtered by the nome column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildProposicao requireOneByObjetivo(string $objetivo) Return the first ChildProposicao filtered by the objetivo column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildProposicao requireOneByStart(string $start) Return the first ChildProposicao filtered by the start column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildProposicao requireOneByImagem(resource $imagem) Return the first ChildProposicao filtered by the imagem column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildProposicao requireOneByImagem(string $imagem) Return the first ChildProposicao filtered by the imagem column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildProposicao requireOneByTempoTotal(string $tempo_total) Return the first ChildProposicao filtered by the tempo_total column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildProposicao requireOneByDataCadastro(string $data_cadastro) Return the first ChildProposicao filtered by the data_cadastro column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildProposicao requireOneByIsRascunho(boolean $is_rascunho) Return the first ChildProposicao filtered by the is_rascunho column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildProposicao requireOneByCategoria(string $categoria) Return the first ChildProposicao filtered by the categoria column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildProposicao requireOneByQteComentarios(int $qte_comentarios) Return the first ChildProposicao filtered by the qte_comentarios column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildProposicao requireOneByQteCurtidas(int $qte_curtidas) Return the first ChildProposicao filtered by the qte_curtidas column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildProposicao requireOneByQteSeguidores(int $qte_seguidores) Return the first ChildProposicao filtered by the qte_seguidores column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildProposicao requireOneByQteConcluidos(int $qte_concluidos) Return the first ChildProposicao filtered by the qte_concluidos column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildProposicao[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildProposicao objects based on current ModelCriteria
  * @method     ChildProposicao[]|ObjectCollection findById(int $id) Return ChildProposicao objects filtered by the id column
@@ -166,11 +202,15 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildProposicao[]|ObjectCollection findByNome(string $nome) Return ChildProposicao objects filtered by the nome column
  * @method     ChildProposicao[]|ObjectCollection findByObjetivo(string $objetivo) Return ChildProposicao objects filtered by the objetivo column
  * @method     ChildProposicao[]|ObjectCollection findByStart(string $start) Return ChildProposicao objects filtered by the start column
- * @method     ChildProposicao[]|ObjectCollection findByImagem(resource $imagem) Return ChildProposicao objects filtered by the imagem column
+ * @method     ChildProposicao[]|ObjectCollection findByImagem(string $imagem) Return ChildProposicao objects filtered by the imagem column
  * @method     ChildProposicao[]|ObjectCollection findByTempoTotal(string $tempo_total) Return ChildProposicao objects filtered by the tempo_total column
  * @method     ChildProposicao[]|ObjectCollection findByDataCadastro(string $data_cadastro) Return ChildProposicao objects filtered by the data_cadastro column
  * @method     ChildProposicao[]|ObjectCollection findByIsRascunho(boolean $is_rascunho) Return ChildProposicao objects filtered by the is_rascunho column
  * @method     ChildProposicao[]|ObjectCollection findByCategoria(string $categoria) Return ChildProposicao objects filtered by the categoria column
+ * @method     ChildProposicao[]|ObjectCollection findByQteComentarios(int $qte_comentarios) Return ChildProposicao objects filtered by the qte_comentarios column
+ * @method     ChildProposicao[]|ObjectCollection findByQteCurtidas(int $qte_curtidas) Return ChildProposicao objects filtered by the qte_curtidas column
+ * @method     ChildProposicao[]|ObjectCollection findByQteSeguidores(int $qte_seguidores) Return ChildProposicao objects filtered by the qte_seguidores column
+ * @method     ChildProposicao[]|ObjectCollection findByQteConcluidos(int $qte_concluidos) Return ChildProposicao objects filtered by the qte_concluidos column
  * @method     ChildProposicao[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -269,7 +309,7 @@ abstract class ProposicaoQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, id_usuario, nome, objetivo, start, imagem, tempo_total, data_cadastro, is_rascunho, categoria FROM proposicao WHERE id = :p0';
+        $sql = 'SELECT id, id_usuario, nome, objetivo, start, imagem, tempo_total, data_cadastro, is_rascunho, categoria, qte_comentarios, qte_curtidas, qte_seguidores, qte_concluidos FROM proposicao WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -524,13 +564,25 @@ abstract class ProposicaoQuery extends ModelCriteria
     /**
      * Filter the query on the imagem column
      *
-     * @param     mixed $imagem The value to use as filter
+     * Example usage:
+     * <code>
+     * $query->filterByImagem('fooValue');   // WHERE imagem = 'fooValue'
+     * $query->filterByImagem('%fooValue%'); // WHERE imagem LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $imagem The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return $this|ChildProposicaoQuery The current query, for fluid interface
      */
     public function filterByImagem($imagem = null, $comparison = null)
     {
+        if (null === $comparison) {
+            if (is_array($imagem)) {
+                $comparison = Criteria::IN;
+            }
+        }
 
         return $this->addUsingAlias(ProposicaoTableMap::COL_IMAGEM, $imagem, $comparison);
     }
@@ -655,6 +707,170 @@ abstract class ProposicaoQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(ProposicaoTableMap::COL_CATEGORIA, $categoria, $comparison);
+    }
+
+    /**
+     * Filter the query on the qte_comentarios column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByQteComentarios(1234); // WHERE qte_comentarios = 1234
+     * $query->filterByQteComentarios(array(12, 34)); // WHERE qte_comentarios IN (12, 34)
+     * $query->filterByQteComentarios(array('min' => 12)); // WHERE qte_comentarios > 12
+     * </code>
+     *
+     * @param     mixed $qteComentarios The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildProposicaoQuery The current query, for fluid interface
+     */
+    public function filterByQteComentarios($qteComentarios = null, $comparison = null)
+    {
+        if (is_array($qteComentarios)) {
+            $useMinMax = false;
+            if (isset($qteComentarios['min'])) {
+                $this->addUsingAlias(ProposicaoTableMap::COL_QTE_COMENTARIOS, $qteComentarios['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($qteComentarios['max'])) {
+                $this->addUsingAlias(ProposicaoTableMap::COL_QTE_COMENTARIOS, $qteComentarios['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(ProposicaoTableMap::COL_QTE_COMENTARIOS, $qteComentarios, $comparison);
+    }
+
+    /**
+     * Filter the query on the qte_curtidas column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByQteCurtidas(1234); // WHERE qte_curtidas = 1234
+     * $query->filterByQteCurtidas(array(12, 34)); // WHERE qte_curtidas IN (12, 34)
+     * $query->filterByQteCurtidas(array('min' => 12)); // WHERE qte_curtidas > 12
+     * </code>
+     *
+     * @param     mixed $qteCurtidas The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildProposicaoQuery The current query, for fluid interface
+     */
+    public function filterByQteCurtidas($qteCurtidas = null, $comparison = null)
+    {
+        if (is_array($qteCurtidas)) {
+            $useMinMax = false;
+            if (isset($qteCurtidas['min'])) {
+                $this->addUsingAlias(ProposicaoTableMap::COL_QTE_CURTIDAS, $qteCurtidas['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($qteCurtidas['max'])) {
+                $this->addUsingAlias(ProposicaoTableMap::COL_QTE_CURTIDAS, $qteCurtidas['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(ProposicaoTableMap::COL_QTE_CURTIDAS, $qteCurtidas, $comparison);
+    }
+
+    /**
+     * Filter the query on the qte_seguidores column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByQteSeguidores(1234); // WHERE qte_seguidores = 1234
+     * $query->filterByQteSeguidores(array(12, 34)); // WHERE qte_seguidores IN (12, 34)
+     * $query->filterByQteSeguidores(array('min' => 12)); // WHERE qte_seguidores > 12
+     * </code>
+     *
+     * @param     mixed $qteSeguidores The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildProposicaoQuery The current query, for fluid interface
+     */
+    public function filterByQteSeguidores($qteSeguidores = null, $comparison = null)
+    {
+        if (is_array($qteSeguidores)) {
+            $useMinMax = false;
+            if (isset($qteSeguidores['min'])) {
+                $this->addUsingAlias(ProposicaoTableMap::COL_QTE_SEGUIDORES, $qteSeguidores['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($qteSeguidores['max'])) {
+                $this->addUsingAlias(ProposicaoTableMap::COL_QTE_SEGUIDORES, $qteSeguidores['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(ProposicaoTableMap::COL_QTE_SEGUIDORES, $qteSeguidores, $comparison);
+    }
+
+    /**
+     * Filter the query on the qte_concluidos column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByQteConcluidos(1234); // WHERE qte_concluidos = 1234
+     * $query->filterByQteConcluidos(array(12, 34)); // WHERE qte_concluidos IN (12, 34)
+     * $query->filterByQteConcluidos(array('min' => 12)); // WHERE qte_concluidos > 12
+     * </code>
+     *
+     * @param     mixed $qteConcluidos The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildProposicaoQuery The current query, for fluid interface
+     */
+    public function filterByQteConcluidos($qteConcluidos = null, $comparison = null)
+    {
+        if (is_array($qteConcluidos)) {
+            $useMinMax = false;
+            if (isset($qteConcluidos['min'])) {
+                $this->addUsingAlias(ProposicaoTableMap::COL_QTE_CONCLUIDOS, $qteConcluidos['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($qteConcluidos['max'])) {
+                $this->addUsingAlias(ProposicaoTableMap::COL_QTE_CONCLUIDOS, $qteConcluidos['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(ProposicaoTableMap::COL_QTE_CONCLUIDOS, $qteConcluidos, $comparison);
     }
 
     /**
@@ -878,6 +1094,79 @@ abstract class ProposicaoQuery extends ModelCriteria
         return $this
             ->joinComentario($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Comentario', '\Model\ComentarioQuery');
+    }
+
+    /**
+     * Filter the query by a related \Model\Concluir object
+     *
+     * @param \Model\Concluir|ObjectCollection $concluir the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildProposicaoQuery The current query, for fluid interface
+     */
+    public function filterByConcluir($concluir, $comparison = null)
+    {
+        if ($concluir instanceof \Model\Concluir) {
+            return $this
+                ->addUsingAlias(ProposicaoTableMap::COL_ID, $concluir->getIdProposicao(), $comparison);
+        } elseif ($concluir instanceof ObjectCollection) {
+            return $this
+                ->useConcluirQuery()
+                ->filterByPrimaryKeys($concluir->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByConcluir() only accepts arguments of type \Model\Concluir or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Concluir relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildProposicaoQuery The current query, for fluid interface
+     */
+    public function joinConcluir($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Concluir');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Concluir');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Concluir relation Concluir object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \Model\ConcluirQuery A secondary query class using the current class as primary query
+     */
+    public function useConcluirQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinConcluir($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Concluir', '\Model\ConcluirQuery');
     }
 
     /**
@@ -1170,6 +1459,79 @@ abstract class ProposicaoQuery extends ModelCriteria
         return $this
             ->joinRecursoProposicao($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'RecursoProposicao', '\Model\RecursoProposicaoQuery');
+    }
+
+    /**
+     * Filter the query by a related \Model\Seguir object
+     *
+     * @param \Model\Seguir|ObjectCollection $seguir the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildProposicaoQuery The current query, for fluid interface
+     */
+    public function filterBySeguir($seguir, $comparison = null)
+    {
+        if ($seguir instanceof \Model\Seguir) {
+            return $this
+                ->addUsingAlias(ProposicaoTableMap::COL_ID, $seguir->getIdProposicao(), $comparison);
+        } elseif ($seguir instanceof ObjectCollection) {
+            return $this
+                ->useSeguirQuery()
+                ->filterByPrimaryKeys($seguir->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterBySeguir() only accepts arguments of type \Model\Seguir or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Seguir relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildProposicaoQuery The current query, for fluid interface
+     */
+    public function joinSeguir($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Seguir');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Seguir');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Seguir relation Seguir object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \Model\SeguirQuery A secondary query class using the current class as primary query
+     */
+    public function useSeguirQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinSeguir($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Seguir', '\Model\SeguirQuery');
     }
 
     /**

@@ -17,8 +17,12 @@ $identity = $this->userIdentity();
 					<span class="icon-profile"></span> <span class="text-login"><?php echo $this->translate('Acessar ou cadastrar'); ?></span>
 				</a>
 				<?php else: ?>
+				<a href="<?php echo $this->url('conta'); ?>">
+					<span class="icon-profile"></span> <span class="text-login"><?php echo $this->translate('Minha Conta'); ?></span>
+				</a>
+				<span style="color: #df268a">|</span>
 				<a href="<?php echo $this->url('login/sair'); ?>">
-					<span class="icon-profile"></span> <span class="text-login"><?php echo $this->translate('Sair'); ?></span>
+					<span class="text-login"><?php echo $this->translate('Sair'); ?></span>
 				</a>
 				<?php endif; ?>
 			</div>

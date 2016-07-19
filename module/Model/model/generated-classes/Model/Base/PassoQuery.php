@@ -634,7 +634,7 @@ abstract class PassoQuery extends ModelCriteria
      */
     protected function basePreDelete(ConnectionInterface $con)
     {
-        // aggregate_column_relation_aggregate_custo_producao behavior
+        // aggregate_column_relation_aggregate_tempo_total behavior
         $this->findRelatedProposicaoTempoTotals($con);
 
         return $this->preDelete($con);
@@ -648,7 +648,7 @@ abstract class PassoQuery extends ModelCriteria
      */
     protected function basePostDelete($affectedRows, ConnectionInterface $con)
     {
-        // aggregate_column_relation_aggregate_custo_producao behavior
+        // aggregate_column_relation_aggregate_tempo_total behavior
         $this->updateRelatedProposicaoTempoTotals($con);
 
         return $this->postDelete($affectedRows, $con);
@@ -663,7 +663,7 @@ abstract class PassoQuery extends ModelCriteria
      */
     protected function basePreUpdate(&$values, ConnectionInterface $con, $forceIndividualSaves = false)
     {
-        // aggregate_column_relation_aggregate_custo_producao behavior
+        // aggregate_column_relation_aggregate_tempo_total behavior
         $this->findRelatedProposicaoTempoTotals($con);
 
         return $this->preUpdate($values, $con, $forceIndividualSaves);
@@ -677,7 +677,7 @@ abstract class PassoQuery extends ModelCriteria
      */
     protected function basePostUpdate($affectedRows, ConnectionInterface $con)
     {
-        // aggregate_column_relation_aggregate_custo_producao behavior
+        // aggregate_column_relation_aggregate_tempo_total behavior
         $this->updateRelatedProposicaoTempoTotals($con);
 
         return $this->postUpdate($affectedRows, $con);
@@ -744,7 +744,7 @@ abstract class PassoQuery extends ModelCriteria
         });
     }
 
-    // aggregate_column_relation_aggregate_custo_producao behavior
+    // aggregate_column_relation_aggregate_tempo_total behavior
 
     /**
      * Finds the related Proposicao objects and keep them for later

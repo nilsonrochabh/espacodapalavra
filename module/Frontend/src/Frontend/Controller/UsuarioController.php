@@ -5,6 +5,7 @@ namespace Frontend\Controller;
 use Core\Exception\CoreException;
 use Core\Exception\EmailExistenteException;
 use Core\Mvc\Controller\BaseController;
+use Frontend\Form\ContaForm;
 use Frontend\Form\RegistrarForm;
 use Zend\View\Model\ViewModel;
 
@@ -96,6 +97,56 @@ class UsuarioController extends BaseController {
 		
 		return new ViewModel(array(
 			'form' => $form,
+		));
+	}
+	
+	/**
+	 * Método contaAction
+	 * @author <a href="mailto:bsaliba@gmail.com">Bruno Saliba</a>
+	 * @since 23/03/2016 16:14:03
+	 * @return \Zend\View\Model\ViewModel
+	 */
+	public function contaAction() {
+		$form = new ContaForm();
+		
+		$request = $this->getRequest();
+		if($request->isPost()) {
+			$files = $request->getFiles()->toArray();
+			if(isset($files['foto']['name']) &&
+				!Util::IsNullOrEmptyString($files['foto']['name'])) {
+				$post = array_merge_recursive(
+					$request->getPost()->toArray(),
+					$files
+				);
+			} else {
+				$post = $request->getPost();
+			}
+			
+			$form->setData($post);
+			
+			if($form->isValid()) {
+				try {
+					$data = $form->getData();
+					
+				} catch(CoreException $e) {
+					$this->flashMessenger()->addErrorMessage($e->getMessage());
+				} catch(\Exception $e) {
+					$this->handleException($e);
+				}
+			}
+		} else {
+			$form->get('nome')->setValue($this->getUsuarioLogado()->getNome());
+			$form->get('email')->setValue($this->getUsuarioLogado()->getEmail());
+			$form->get('atuacao')->setValue($this->getUsuarioLogado()->getAtuacao());
+			$form->get('genero')->setValue($this->getUsuarioLogado()->getGenero());
+			$form->get('sobre')->setValue($this->getUsuarioLogado()->getDescricaoContexto());
+		}
+		
+		$lista = $this->getProposicaoBO()->minhaLista();
+		
+		return new ViewModel(array(
+			'form' => $form,
+			'lista' => $lista,
 		));
 	}
 }

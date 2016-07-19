@@ -25,7 +25,7 @@
 		<?php endif; ?>
 	</div>
 	
-	<form action="" class="form-publique" method="post">
+	<form action="" class="form-publique" method="post" enctype="multipart/form-data">
 		<div id="formstep1">
 			<?php echo $this->formLabel($this->form->get('nome')); ?>
 			<span class="desc"><?php echo $this->translate('Dê um nome para sua proposição que torne fácil entender o que ela é: (evite nomes como "a aula do século" ou "minha aula")'); ?></span>
@@ -41,6 +41,11 @@
 			<span class="desc"><?php echo $this->translate('Explique como ela começa: (como você provocará uma inquietação nos estudantes?)'); ?></span>
 			<?php echo $this->formElement($this->form->get('start')); ?>
 			<?php echo $this->formElementErrors()->render($this->form->get('start')); ?>
+			
+			<?php echo $this->formLabel($this->form->get('imagem')); ?>
+			<span class="desc"><?php echo $this->translate('A imagem deve ter 1146 x 302 pixels para melhor otimização.'); ?></span>
+			<?php echo $this->formElement($this->form->get('imagem')); ?>
+			<?php echo $this->formElementErrors()->render($this->form->get('imagem')); ?>
 			
 			<?php echo $this->formElement($this->form->get('submit')); ?>
 		</div>

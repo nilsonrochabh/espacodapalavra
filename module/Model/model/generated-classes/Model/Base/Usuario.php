@@ -7,18 +7,24 @@ use \Exception;
 use \PDO;
 use Model\Comentario as ChildComentario;
 use Model\ComentarioQuery as ChildComentarioQuery;
+use Model\Concluir as ChildConcluir;
+use Model\ConcluirQuery as ChildConcluirQuery;
 use Model\Curtir as ChildCurtir;
 use Model\CurtirQuery as ChildCurtirQuery;
 use Model\Proposicao as ChildProposicao;
 use Model\ProposicaoQuery as ChildProposicaoQuery;
 use Model\ResetSenha as ChildResetSenha;
 use Model\ResetSenhaQuery as ChildResetSenhaQuery;
+use Model\Seguir as ChildSeguir;
+use Model\SeguirQuery as ChildSeguirQuery;
 use Model\Usuario as ChildUsuario;
 use Model\UsuarioQuery as ChildUsuarioQuery;
 use Model\Map\ComentarioTableMap;
+use Model\Map\ConcluirTableMap;
 use Model\Map\CurtirTableMap;
 use Model\Map\ProposicaoTableMap;
 use Model\Map\ResetSenhaTableMap;
+use Model\Map\SeguirTableMap;
 use Model\Map\UsuarioTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -153,6 +159,12 @@ abstract class Usuario implements ActiveRecordInterface
     protected $collComentariosPartial;
 
     /**
+     * @var        ObjectCollection|ChildConcluir[] Collection to store aggregation of ChildConcluir objects.
+     */
+    protected $collConcluirs;
+    protected $collConcluirsPartial;
+
+    /**
      * @var        ObjectCollection|ChildCurtir[] Collection to store aggregation of ChildCurtir objects.
      */
     protected $collCurtirs;
@@ -171,6 +183,12 @@ abstract class Usuario implements ActiveRecordInterface
     protected $collResetSenhasPartial;
 
     /**
+     * @var        ObjectCollection|ChildSeguir[] Collection to store aggregation of ChildSeguir objects.
+     */
+    protected $collSeguirs;
+    protected $collSeguirsPartial;
+
+    /**
      * Flag to prevent endless save loop, if this object is referenced
      * by another object which falls in this transaction.
      *
@@ -183,6 +201,12 @@ abstract class Usuario implements ActiveRecordInterface
      * @var ObjectCollection|ChildComentario[]
      */
     protected $comentariosScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildConcluir[]
+     */
+    protected $concluirsScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -201,6 +225,12 @@ abstract class Usuario implements ActiveRecordInterface
      * @var ObjectCollection|ChildResetSenha[]
      */
     protected $resetSenhasScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildSeguir[]
+     */
+    protected $seguirsScheduledForDeletion = null;
 
     /**
      * Applies default values to this object.
@@ -911,11 +941,15 @@ abstract class Usuario implements ActiveRecordInterface
 
             $this->collComentarios = null;
 
+            $this->collConcluirs = null;
+
             $this->collCurtirs = null;
 
             $this->collProposicaos = null;
 
             $this->collResetSenhas = null;
+
+            $this->collSeguirs = null;
 
         } // if (deep)
     }
@@ -1044,6 +1078,23 @@ abstract class Usuario implements ActiveRecordInterface
                 }
             }
 
+            if ($this->concluirsScheduledForDeletion !== null) {
+                if (!$this->concluirsScheduledForDeletion->isEmpty()) {
+                    \Model\ConcluirQuery::create()
+                        ->filterByPrimaryKeys($this->concluirsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->concluirsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collConcluirs !== null) {
+                foreach ($this->collConcluirs as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
             if ($this->curtirsScheduledForDeletion !== null) {
                 if (!$this->curtirsScheduledForDeletion->isEmpty()) {
                     \Model\CurtirQuery::create()
@@ -1089,6 +1140,23 @@ abstract class Usuario implements ActiveRecordInterface
 
             if ($this->collResetSenhas !== null) {
                 foreach ($this->collResetSenhas as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->seguirsScheduledForDeletion !== null) {
+                if (!$this->seguirsScheduledForDeletion->isEmpty()) {
+                    \Model\SeguirQuery::create()
+                        ->filterByPrimaryKeys($this->seguirsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->seguirsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collSeguirs !== null) {
+                foreach ($this->collSeguirs as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -1350,6 +1418,21 @@ abstract class Usuario implements ActiveRecordInterface
 
                 $result[$key] = $this->collComentarios->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
+            if (null !== $this->collConcluirs) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'concluirs';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'concluirs';
+                        break;
+                    default:
+                        $key = 'Concluirs';
+                }
+
+                $result[$key] = $this->collConcluirs->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
             if (null !== $this->collCurtirs) {
 
                 switch ($keyType) {
@@ -1394,6 +1477,21 @@ abstract class Usuario implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->collResetSenhas->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collSeguirs) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'seguirs';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'seguirs';
+                        break;
+                    default:
+                        $key = 'Seguirs';
+                }
+
+                $result[$key] = $this->collSeguirs->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
         }
 
@@ -1693,6 +1791,12 @@ abstract class Usuario implements ActiveRecordInterface
                 }
             }
 
+            foreach ($this->getConcluirs() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addConcluir($relObj->copy($deepCopy));
+                }
+            }
+
             foreach ($this->getCurtirs() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addCurtir($relObj->copy($deepCopy));
@@ -1708,6 +1812,12 @@ abstract class Usuario implements ActiveRecordInterface
             foreach ($this->getResetSenhas() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addResetSenha($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getSeguirs() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addSeguir($relObj->copy($deepCopy));
                 }
             }
 
@@ -1755,6 +1865,9 @@ abstract class Usuario implements ActiveRecordInterface
         if ('Comentario' == $relationName) {
             return $this->initComentarios();
         }
+        if ('Concluir' == $relationName) {
+            return $this->initConcluirs();
+        }
         if ('Curtir' == $relationName) {
             return $this->initCurtirs();
         }
@@ -1763,6 +1876,9 @@ abstract class Usuario implements ActiveRecordInterface
         }
         if ('ResetSenha' == $relationName) {
             return $this->initResetSenhas();
+        }
+        if ('Seguir' == $relationName) {
+            return $this->initSeguirs();
         }
     }
 
@@ -2014,6 +2130,259 @@ abstract class Usuario implements ActiveRecordInterface
         $query->joinWith('Proposicao', $joinBehavior);
 
         return $this->getComentarios($query, $con);
+    }
+
+    /**
+     * Clears out the collConcluirs collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addConcluirs()
+     */
+    public function clearConcluirs()
+    {
+        $this->collConcluirs = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collConcluirs collection loaded partially.
+     */
+    public function resetPartialConcluirs($v = true)
+    {
+        $this->collConcluirsPartial = $v;
+    }
+
+    /**
+     * Initializes the collConcluirs collection.
+     *
+     * By default this just sets the collConcluirs collection to an empty array (like clearcollConcluirs());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initConcluirs($overrideExisting = true)
+    {
+        if (null !== $this->collConcluirs && !$overrideExisting) {
+            return;
+        }
+
+        $collectionClassName = ConcluirTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collConcluirs = new $collectionClassName;
+        $this->collConcluirs->setModel('\Model\Concluir');
+    }
+
+    /**
+     * Gets an array of ChildConcluir objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildUsuario is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildConcluir[] List of ChildConcluir objects
+     * @throws PropelException
+     */
+    public function getConcluirs(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collConcluirsPartial && !$this->isNew();
+        if (null === $this->collConcluirs || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collConcluirs) {
+                // return empty collection
+                $this->initConcluirs();
+            } else {
+                $collConcluirs = ChildConcluirQuery::create(null, $criteria)
+                    ->filterByUsuario($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collConcluirsPartial && count($collConcluirs)) {
+                        $this->initConcluirs(false);
+
+                        foreach ($collConcluirs as $obj) {
+                            if (false == $this->collConcluirs->contains($obj)) {
+                                $this->collConcluirs->append($obj);
+                            }
+                        }
+
+                        $this->collConcluirsPartial = true;
+                    }
+
+                    return $collConcluirs;
+                }
+
+                if ($partial && $this->collConcluirs) {
+                    foreach ($this->collConcluirs as $obj) {
+                        if ($obj->isNew()) {
+                            $collConcluirs[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collConcluirs = $collConcluirs;
+                $this->collConcluirsPartial = false;
+            }
+        }
+
+        return $this->collConcluirs;
+    }
+
+    /**
+     * Sets a collection of ChildConcluir objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $concluirs A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildUsuario The current object (for fluent API support)
+     */
+    public function setConcluirs(Collection $concluirs, ConnectionInterface $con = null)
+    {
+        /** @var ChildConcluir[] $concluirsToDelete */
+        $concluirsToDelete = $this->getConcluirs(new Criteria(), $con)->diff($concluirs);
+
+
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->concluirsScheduledForDeletion = clone $concluirsToDelete;
+
+        foreach ($concluirsToDelete as $concluirRemoved) {
+            $concluirRemoved->setUsuario(null);
+        }
+
+        $this->collConcluirs = null;
+        foreach ($concluirs as $concluir) {
+            $this->addConcluir($concluir);
+        }
+
+        $this->collConcluirs = $concluirs;
+        $this->collConcluirsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Concluir objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related Concluir objects.
+     * @throws PropelException
+     */
+    public function countConcluirs(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collConcluirsPartial && !$this->isNew();
+        if (null === $this->collConcluirs || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collConcluirs) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getConcluirs());
+            }
+
+            $query = ChildConcluirQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByUsuario($this)
+                ->count($con);
+        }
+
+        return count($this->collConcluirs);
+    }
+
+    /**
+     * Method called to associate a ChildConcluir object to this object
+     * through the ChildConcluir foreign key attribute.
+     *
+     * @param  ChildConcluir $l ChildConcluir
+     * @return $this|\Model\Usuario The current object (for fluent API support)
+     */
+    public function addConcluir(ChildConcluir $l)
+    {
+        if ($this->collConcluirs === null) {
+            $this->initConcluirs();
+            $this->collConcluirsPartial = true;
+        }
+
+        if (!$this->collConcluirs->contains($l)) {
+            $this->doAddConcluir($l);
+
+            if ($this->concluirsScheduledForDeletion and $this->concluirsScheduledForDeletion->contains($l)) {
+                $this->concluirsScheduledForDeletion->remove($this->concluirsScheduledForDeletion->search($l));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildConcluir $concluir The ChildConcluir object to add.
+     */
+    protected function doAddConcluir(ChildConcluir $concluir)
+    {
+        $this->collConcluirs[]= $concluir;
+        $concluir->setUsuario($this);
+    }
+
+    /**
+     * @param  ChildConcluir $concluir The ChildConcluir object to remove.
+     * @return $this|ChildUsuario The current object (for fluent API support)
+     */
+    public function removeConcluir(ChildConcluir $concluir)
+    {
+        if ($this->getConcluirs()->contains($concluir)) {
+            $pos = $this->collConcluirs->search($concluir);
+            $this->collConcluirs->remove($pos);
+            if (null === $this->concluirsScheduledForDeletion) {
+                $this->concluirsScheduledForDeletion = clone $this->collConcluirs;
+                $this->concluirsScheduledForDeletion->clear();
+            }
+            $this->concluirsScheduledForDeletion[]= clone $concluir;
+            $concluir->setUsuario(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Usuario is new, it will return
+     * an empty collection; or if this Usuario has previously
+     * been saved, it will retrieve related Concluirs from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Usuario.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildConcluir[] List of ChildConcluir objects
+     */
+    public function getConcluirsJoinProposicao(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildConcluirQuery::create(null, $criteria);
+        $query->joinWith('Proposicao', $joinBehavior);
+
+        return $this->getConcluirs($query, $con);
     }
 
     /**
@@ -2720,6 +3089,259 @@ abstract class Usuario implements ActiveRecordInterface
     }
 
     /**
+     * Clears out the collSeguirs collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addSeguirs()
+     */
+    public function clearSeguirs()
+    {
+        $this->collSeguirs = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collSeguirs collection loaded partially.
+     */
+    public function resetPartialSeguirs($v = true)
+    {
+        $this->collSeguirsPartial = $v;
+    }
+
+    /**
+     * Initializes the collSeguirs collection.
+     *
+     * By default this just sets the collSeguirs collection to an empty array (like clearcollSeguirs());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initSeguirs($overrideExisting = true)
+    {
+        if (null !== $this->collSeguirs && !$overrideExisting) {
+            return;
+        }
+
+        $collectionClassName = SeguirTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collSeguirs = new $collectionClassName;
+        $this->collSeguirs->setModel('\Model\Seguir');
+    }
+
+    /**
+     * Gets an array of ChildSeguir objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildUsuario is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildSeguir[] List of ChildSeguir objects
+     * @throws PropelException
+     */
+    public function getSeguirs(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collSeguirsPartial && !$this->isNew();
+        if (null === $this->collSeguirs || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collSeguirs) {
+                // return empty collection
+                $this->initSeguirs();
+            } else {
+                $collSeguirs = ChildSeguirQuery::create(null, $criteria)
+                    ->filterByUsuario($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collSeguirsPartial && count($collSeguirs)) {
+                        $this->initSeguirs(false);
+
+                        foreach ($collSeguirs as $obj) {
+                            if (false == $this->collSeguirs->contains($obj)) {
+                                $this->collSeguirs->append($obj);
+                            }
+                        }
+
+                        $this->collSeguirsPartial = true;
+                    }
+
+                    return $collSeguirs;
+                }
+
+                if ($partial && $this->collSeguirs) {
+                    foreach ($this->collSeguirs as $obj) {
+                        if ($obj->isNew()) {
+                            $collSeguirs[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collSeguirs = $collSeguirs;
+                $this->collSeguirsPartial = false;
+            }
+        }
+
+        return $this->collSeguirs;
+    }
+
+    /**
+     * Sets a collection of ChildSeguir objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $seguirs A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildUsuario The current object (for fluent API support)
+     */
+    public function setSeguirs(Collection $seguirs, ConnectionInterface $con = null)
+    {
+        /** @var ChildSeguir[] $seguirsToDelete */
+        $seguirsToDelete = $this->getSeguirs(new Criteria(), $con)->diff($seguirs);
+
+
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->seguirsScheduledForDeletion = clone $seguirsToDelete;
+
+        foreach ($seguirsToDelete as $seguirRemoved) {
+            $seguirRemoved->setUsuario(null);
+        }
+
+        $this->collSeguirs = null;
+        foreach ($seguirs as $seguir) {
+            $this->addSeguir($seguir);
+        }
+
+        $this->collSeguirs = $seguirs;
+        $this->collSeguirsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Seguir objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related Seguir objects.
+     * @throws PropelException
+     */
+    public function countSeguirs(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collSeguirsPartial && !$this->isNew();
+        if (null === $this->collSeguirs || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collSeguirs) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getSeguirs());
+            }
+
+            $query = ChildSeguirQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByUsuario($this)
+                ->count($con);
+        }
+
+        return count($this->collSeguirs);
+    }
+
+    /**
+     * Method called to associate a ChildSeguir object to this object
+     * through the ChildSeguir foreign key attribute.
+     *
+     * @param  ChildSeguir $l ChildSeguir
+     * @return $this|\Model\Usuario The current object (for fluent API support)
+     */
+    public function addSeguir(ChildSeguir $l)
+    {
+        if ($this->collSeguirs === null) {
+            $this->initSeguirs();
+            $this->collSeguirsPartial = true;
+        }
+
+        if (!$this->collSeguirs->contains($l)) {
+            $this->doAddSeguir($l);
+
+            if ($this->seguirsScheduledForDeletion and $this->seguirsScheduledForDeletion->contains($l)) {
+                $this->seguirsScheduledForDeletion->remove($this->seguirsScheduledForDeletion->search($l));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildSeguir $seguir The ChildSeguir object to add.
+     */
+    protected function doAddSeguir(ChildSeguir $seguir)
+    {
+        $this->collSeguirs[]= $seguir;
+        $seguir->setUsuario($this);
+    }
+
+    /**
+     * @param  ChildSeguir $seguir The ChildSeguir object to remove.
+     * @return $this|ChildUsuario The current object (for fluent API support)
+     */
+    public function removeSeguir(ChildSeguir $seguir)
+    {
+        if ($this->getSeguirs()->contains($seguir)) {
+            $pos = $this->collSeguirs->search($seguir);
+            $this->collSeguirs->remove($pos);
+            if (null === $this->seguirsScheduledForDeletion) {
+                $this->seguirsScheduledForDeletion = clone $this->collSeguirs;
+                $this->seguirsScheduledForDeletion->clear();
+            }
+            $this->seguirsScheduledForDeletion[]= clone $seguir;
+            $seguir->setUsuario(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Usuario is new, it will return
+     * an empty collection; or if this Usuario has previously
+     * been saved, it will retrieve related Seguirs from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Usuario.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildSeguir[] List of ChildSeguir objects
+     */
+    public function getSeguirsJoinProposicao(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildSeguirQuery::create(null, $criteria);
+        $query->joinWith('Proposicao', $joinBehavior);
+
+        return $this->getSeguirs($query, $con);
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
@@ -2760,6 +3382,11 @@ abstract class Usuario implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collConcluirs) {
+                foreach ($this->collConcluirs as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collCurtirs) {
                 foreach ($this->collCurtirs as $o) {
                     $o->clearAllReferences($deep);
@@ -2775,12 +3402,19 @@ abstract class Usuario implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collSeguirs) {
+                foreach ($this->collSeguirs as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
         $this->collComentarios = null;
+        $this->collConcluirs = null;
         $this->collCurtirs = null;
         $this->collProposicaos = null;
         $this->collResetSenhas = null;
+        $this->collSeguirs = null;
     }
 
     /**

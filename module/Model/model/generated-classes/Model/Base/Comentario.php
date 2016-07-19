@@ -118,6 +118,12 @@ abstract class Comentario implements ActiveRecordInterface
      */
     protected $alreadyInSave = false;
 
+    // aggregate_column_relation_aggregate_comentarios behavior
+    /**
+     * @var ChildProposicao
+     */
+    protected $oldProposicaoQteComentarios;
+
     /**
      * Initializes internal state of Model\Base\Comentario object.
      */
@@ -714,6 +720,8 @@ abstract class Comentario implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
+                // aggregate_column_relation_aggregate_comentarios behavior
+                $this->updateRelatedProposicaoQteComentarios($con);
                 ComentarioTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
@@ -1314,6 +1322,10 @@ abstract class Comentario implements ActiveRecordInterface
      */
     public function setProposicao(ChildProposicao $v = null)
     {
+        // aggregate_column_relation behavior
+        if (null !== $this->aProposicao && $v !== $this->aProposicao) {
+            $this->oldProposicaoQteComentarios = $this->aProposicao;
+        }
         if ($v === null) {
             $this->setIdProposicao(NULL);
         } else {
@@ -1406,6 +1418,24 @@ abstract class Comentario implements ActiveRecordInterface
     public function __toString()
     {
         return (string) $this->exportTo(ComentarioTableMap::DEFAULT_STRING_FORMAT);
+    }
+
+    // aggregate_column_relation_aggregate_comentarios behavior
+
+    /**
+     * Update the aggregate column in the related Proposicao object
+     *
+     * @param ConnectionInterface $con A connection object
+     */
+    protected function updateRelatedProposicaoQteComentarios(ConnectionInterface $con)
+    {
+        if ($proposicao = $this->getProposicao()) {
+            $proposicao->updateQteComentarios($con);
+        }
+        if ($this->oldProposicaoQteComentarios) {
+            $this->oldProposicaoQteComentarios->updateQteComentarios($con);
+            $this->oldProposicaoQteComentarios = null;
+        }
     }
 
     /**

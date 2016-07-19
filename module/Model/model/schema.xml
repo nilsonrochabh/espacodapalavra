@@ -48,6 +48,23 @@
       <parameter name="Engine" value="InnoDB"/>
     </vendor>
   </table>
+  <table name="concluir" idMethod="native" phpName="Concluir">
+    <column name="id_proposicao" phpName="IdProposicao" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" required="true"/>
+    <column name="id_usuario" phpName="IdUsuario" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" required="true"/>
+    <column name="data_cadastro" phpName="DataCadastro" type="TIMESTAMP" required="true"/>
+    <foreign-key foreignTable="proposicao" name="fk_concluir_proposicao1">
+      <reference local="id_proposicao" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="usuario" name="fk_concluir_usuario1">
+      <reference local="id_usuario" foreign="id"/>
+    </foreign-key>
+    <index name="fk_concluir_usuario1_idx">
+      <index-column name="id_usuario"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
   <table name="curtir" idMethod="native" phpName="Curtir">
     <column name="id_proposicao" phpName="IdProposicao" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" required="true"/>
     <column name="id_usuario" phpName="IdUsuario" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" required="true"/>
@@ -116,15 +133,39 @@
     <column name="nome" phpName="Nome" type="VARCHAR" size="250" required="true"/>
     <column name="objetivo" phpName="Objetivo" type="LONGVARCHAR" required="true"/>
     <column name="start" phpName="Start" type="LONGVARCHAR"/>
-    <column name="imagem" phpName="Imagem" type="BLOB"/>
+    <column name="imagem" phpName="Imagem" type="VARCHAR" size="200"/>
     <column name="tempo_total" phpName="TempoTotal" type="VARCHAR"/>
     <column name="data_cadastro" phpName="DataCadastro" type="TIMESTAMP" required="true"/>
 	<column name="is_rascunho" phpName="IsRascunho" type="BOOLEAN" size="1" required="true" defaultValue="true"/>
 	<column name="categoria" phpName="Categoria" type="CHAR" sqlType="enum('S','J','P')" required="true"/>
-    <behavior id="aggregate_custo_producao" name="aggregate_column">
+	<column name="qte_comentarios" phpName="QteComentarios" type="INTEGER" size="10" required="true" defaultValue="0"/>
+    <column name="qte_curtidas" phpName="QteCurtidas" type="INTEGER" size="10" required="true" defaultValue="0"/>
+	<column name="qte_seguidores" phpName="QteSeguidores" type="INTEGER" size="10" required="true" defaultValue="0"/>
+	<column name="qte_concluidos" phpName="QteConcluidos" type="INTEGER" size="10" required="true" defaultValue="0"/>
+    <behavior id="aggregate_tempo_total" name="aggregate_column">
       <parameter name="name" value="tempo_total" />
       <parameter name="foreign_table" value="passo" />
       <parameter name="expression" value="SUM(duracao)" />
+    </behavior>
+	<behavior id="aggregate_comentarios" name="aggregate_column">
+      <parameter name="name" value="qte_comentarios" />
+      <parameter name="foreign_table" value="comentario" />
+      <parameter name="expression" value="COUNT(id)" />
+    </behavior>
+	<behavior id="aggregate_curtir" name="aggregate_column">
+      <parameter name="name" value="qte_curtidas" />
+      <parameter name="foreign_table" value="curtir" />
+      <parameter name="expression" value="COUNT(id)" />
+    </behavior>
+	<behavior id="aggregate_seguir" name="aggregate_column">
+      <parameter name="name" value="qte_seguidores" />
+      <parameter name="foreign_table" value="seguir" />
+      <parameter name="expression" value="COUNT(id)" />
+    </behavior>
+	<behavior id="aggregate_concluir" name="aggregate_column">
+      <parameter name="name" value="qte_concluidos" />
+      <parameter name="foreign_table" value="concluir" />
+      <parameter name="expression" value="COUNT(id)" />
     </behavior>
     <foreign-key foreignTable="usuario" name="fk_proposicao_usuario" onDelete="CASCADE" onUpdate="CASCADE">
       <reference local="id_usuario" foreign="id"/>
@@ -171,6 +212,23 @@
       <reference local="id_usuario" foreign="id"/>
     </foreign-key>
     <index name="fk_reset_senha_usuario1_idx">
+      <index-column name="id_usuario"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="seguir" idMethod="native" phpName="Seguir">
+    <column name="id_proposicao" phpName="IdProposicao" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" required="true"/>
+    <column name="id_usuario" phpName="IdUsuario" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" required="true"/>
+    <column name="data_cadastro" phpName="DataCadastro" type="TIMESTAMP" required="true"/>
+    <foreign-key foreignTable="proposicao" name="fk_seguir_proposicao1">
+      <reference local="id_proposicao" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="usuario" name="fk_seguir_usuario1">
+      <reference local="id_usuario" foreign="id"/>
+    </foreign-key>
+    <index name="fk_seguir_usuario1_idx">
       <index-column name="id_usuario"/>
     </index>
     <vendor type="mysql">

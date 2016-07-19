@@ -9,6 +9,8 @@ use Model\AmbienteProposicao as ChildAmbienteProposicao;
 use Model\AmbienteProposicaoQuery as ChildAmbienteProposicaoQuery;
 use Model\Comentario as ChildComentario;
 use Model\ComentarioQuery as ChildComentarioQuery;
+use Model\Concluir as ChildConcluir;
+use Model\ConcluirQuery as ChildConcluirQuery;
 use Model\Curtir as ChildCurtir;
 use Model\CurtirQuery as ChildCurtirQuery;
 use Model\HabilidadeProposicao as ChildHabilidadeProposicao;
@@ -19,17 +21,21 @@ use Model\Proposicao as ChildProposicao;
 use Model\ProposicaoQuery as ChildProposicaoQuery;
 use Model\RecursoProposicao as ChildRecursoProposicao;
 use Model\RecursoProposicaoQuery as ChildRecursoProposicaoQuery;
+use Model\Seguir as ChildSeguir;
+use Model\SeguirQuery as ChildSeguirQuery;
 use Model\TamanhoTurmaProposicao as ChildTamanhoTurmaProposicao;
 use Model\TamanhoTurmaProposicaoQuery as ChildTamanhoTurmaProposicaoQuery;
 use Model\Usuario as ChildUsuario;
 use Model\UsuarioQuery as ChildUsuarioQuery;
 use Model\Map\AmbienteProposicaoTableMap;
 use Model\Map\ComentarioTableMap;
+use Model\Map\ConcluirTableMap;
 use Model\Map\CurtirTableMap;
 use Model\Map\HabilidadeProposicaoTableMap;
 use Model\Map\PassoTableMap;
 use Model\Map\ProposicaoTableMap;
 use Model\Map\RecursoProposicaoTableMap;
+use Model\Map\SeguirTableMap;
 use Model\Map\TamanhoTurmaProposicaoTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -124,7 +130,7 @@ abstract class Proposicao implements ActiveRecordInterface
     /**
      * The value for the imagem field.
      *
-     * @var        resource
+     * @var        string
      */
     protected $imagem;
 
@@ -158,6 +164,38 @@ abstract class Proposicao implements ActiveRecordInterface
     protected $categoria;
 
     /**
+     * The value for the qte_comentarios field.
+     *
+     * Note: this column has a database default value of: 0
+     * @var        int
+     */
+    protected $qte_comentarios;
+
+    /**
+     * The value for the qte_curtidas field.
+     *
+     * Note: this column has a database default value of: 0
+     * @var        int
+     */
+    protected $qte_curtidas;
+
+    /**
+     * The value for the qte_seguidores field.
+     *
+     * Note: this column has a database default value of: 0
+     * @var        int
+     */
+    protected $qte_seguidores;
+
+    /**
+     * The value for the qte_concluidos field.
+     *
+     * Note: this column has a database default value of: 0
+     * @var        int
+     */
+    protected $qte_concluidos;
+
+    /**
      * @var        ChildUsuario
      */
     protected $aUsuario;
@@ -173,6 +211,12 @@ abstract class Proposicao implements ActiveRecordInterface
      */
     protected $collComentarios;
     protected $collComentariosPartial;
+
+    /**
+     * @var        ObjectCollection|ChildConcluir[] Collection to store aggregation of ChildConcluir objects.
+     */
+    protected $collConcluirs;
+    protected $collConcluirsPartial;
 
     /**
      * @var        ObjectCollection|ChildCurtir[] Collection to store aggregation of ChildCurtir objects.
@@ -197,6 +241,12 @@ abstract class Proposicao implements ActiveRecordInterface
      */
     protected $collRecursoProposicaos;
     protected $collRecursoProposicaosPartial;
+
+    /**
+     * @var        ObjectCollection|ChildSeguir[] Collection to store aggregation of ChildSeguir objects.
+     */
+    protected $collSeguirs;
+    protected $collSeguirsPartial;
 
     /**
      * @var        ObjectCollection|ChildTamanhoTurmaProposicao[] Collection to store aggregation of ChildTamanhoTurmaProposicao objects.
@@ -226,6 +276,12 @@ abstract class Proposicao implements ActiveRecordInterface
 
     /**
      * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildConcluir[]
+     */
+    protected $concluirsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
      * @var ObjectCollection|ChildCurtir[]
      */
     protected $curtirsScheduledForDeletion = null;
@@ -250,6 +306,12 @@ abstract class Proposicao implements ActiveRecordInterface
 
     /**
      * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildSeguir[]
+     */
+    protected $seguirsScheduledForDeletion = null;
+
+    /**
+     * An array of objects scheduled for deletion.
      * @var ObjectCollection|ChildTamanhoTurmaProposicao[]
      */
     protected $tamanhoTurmaProposicaosScheduledForDeletion = null;
@@ -263,6 +325,10 @@ abstract class Proposicao implements ActiveRecordInterface
     public function applyDefaultValues()
     {
         $this->is_rascunho = true;
+        $this->qte_comentarios = 0;
+        $this->qte_curtidas = 0;
+        $this->qte_seguidores = 0;
+        $this->qte_concluidos = 0;
     }
 
     /**
@@ -545,7 +611,7 @@ abstract class Proposicao implements ActiveRecordInterface
     /**
      * Get the [imagem] column value.
      *
-     * @return resource
+     * @return string
      */
     public function getImagem()
     {
@@ -610,6 +676,46 @@ abstract class Proposicao implements ActiveRecordInterface
     public function getCategoria()
     {
         return $this->categoria;
+    }
+
+    /**
+     * Get the [qte_comentarios] column value.
+     *
+     * @return int
+     */
+    public function getQteComentarios()
+    {
+        return $this->qte_comentarios;
+    }
+
+    /**
+     * Get the [qte_curtidas] column value.
+     *
+     * @return int
+     */
+    public function getQteCurtidas()
+    {
+        return $this->qte_curtidas;
+    }
+
+    /**
+     * Get the [qte_seguidores] column value.
+     *
+     * @return int
+     */
+    public function getQteSeguidores()
+    {
+        return $this->qte_seguidores;
+    }
+
+    /**
+     * Get the [qte_concluidos] column value.
+     *
+     * @return int
+     */
+    public function getQteConcluidos()
+    {
+        return $this->qte_concluidos;
     }
 
     /**
@@ -719,22 +825,19 @@ abstract class Proposicao implements ActiveRecordInterface
     /**
      * Set the value of [imagem] column.
      *
-     * @param resource $v new value
+     * @param string $v new value
      * @return $this|\Model\Proposicao The current object (for fluent API support)
      */
     public function setImagem($v)
     {
-        // Because BLOB columns are streams in PDO we have to assume that they are
-        // always modified when a new value is passed in.  For example, the contents
-        // of the stream itself may have changed externally.
-        if (!is_resource($v) && $v !== null) {
-            $this->imagem = fopen('php://memory', 'r+');
-            fwrite($this->imagem, $v);
-            rewind($this->imagem);
-        } else { // it's already a stream
-            $this->imagem = $v;
+        if ($v !== null) {
+            $v = (string) $v;
         }
-        $this->modifiedColumns[ProposicaoTableMap::COL_IMAGEM] = true;
+
+        if ($this->imagem !== $v) {
+            $this->imagem = $v;
+            $this->modifiedColumns[ProposicaoTableMap::COL_IMAGEM] = true;
+        }
 
         return $this;
     } // setImagem()
@@ -828,6 +931,86 @@ abstract class Proposicao implements ActiveRecordInterface
     } // setCategoria()
 
     /**
+     * Set the value of [qte_comentarios] column.
+     *
+     * @param int $v new value
+     * @return $this|\Model\Proposicao The current object (for fluent API support)
+     */
+    public function setQteComentarios($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->qte_comentarios !== $v) {
+            $this->qte_comentarios = $v;
+            $this->modifiedColumns[ProposicaoTableMap::COL_QTE_COMENTARIOS] = true;
+        }
+
+        return $this;
+    } // setQteComentarios()
+
+    /**
+     * Set the value of [qte_curtidas] column.
+     *
+     * @param int $v new value
+     * @return $this|\Model\Proposicao The current object (for fluent API support)
+     */
+    public function setQteCurtidas($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->qte_curtidas !== $v) {
+            $this->qte_curtidas = $v;
+            $this->modifiedColumns[ProposicaoTableMap::COL_QTE_CURTIDAS] = true;
+        }
+
+        return $this;
+    } // setQteCurtidas()
+
+    /**
+     * Set the value of [qte_seguidores] column.
+     *
+     * @param int $v new value
+     * @return $this|\Model\Proposicao The current object (for fluent API support)
+     */
+    public function setQteSeguidores($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->qte_seguidores !== $v) {
+            $this->qte_seguidores = $v;
+            $this->modifiedColumns[ProposicaoTableMap::COL_QTE_SEGUIDORES] = true;
+        }
+
+        return $this;
+    } // setQteSeguidores()
+
+    /**
+     * Set the value of [qte_concluidos] column.
+     *
+     * @param int $v new value
+     * @return $this|\Model\Proposicao The current object (for fluent API support)
+     */
+    public function setQteConcluidos($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->qte_concluidos !== $v) {
+            $this->qte_concluidos = $v;
+            $this->modifiedColumns[ProposicaoTableMap::COL_QTE_CONCLUIDOS] = true;
+        }
+
+        return $this;
+    } // setQteConcluidos()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -838,6 +1021,22 @@ abstract class Proposicao implements ActiveRecordInterface
     public function hasOnlyDefaultValues()
     {
             if ($this->is_rascunho !== true) {
+                return false;
+            }
+
+            if ($this->qte_comentarios !== 0) {
+                return false;
+            }
+
+            if ($this->qte_curtidas !== 0) {
+                return false;
+            }
+
+            if ($this->qte_seguidores !== 0) {
+                return false;
+            }
+
+            if ($this->qte_concluidos !== 0) {
                 return false;
             }
 
@@ -883,13 +1082,7 @@ abstract class Proposicao implements ActiveRecordInterface
             $this->start = (null !== $col) ? (string) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : ProposicaoTableMap::translateFieldName('Imagem', TableMap::TYPE_PHPNAME, $indexType)];
-            if (null !== $col) {
-                $this->imagem = fopen('php://memory', 'r+');
-                fwrite($this->imagem, $col);
-                rewind($this->imagem);
-            } else {
-                $this->imagem = null;
-            }
+            $this->imagem = (null !== $col) ? (string) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : ProposicaoTableMap::translateFieldName('TempoTotal', TableMap::TYPE_PHPNAME, $indexType)];
             $this->tempo_total = (null !== $col) ? (string) $col : null;
@@ -905,6 +1098,18 @@ abstract class Proposicao implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : ProposicaoTableMap::translateFieldName('Categoria', TableMap::TYPE_PHPNAME, $indexType)];
             $this->categoria = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : ProposicaoTableMap::translateFieldName('QteComentarios', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->qte_comentarios = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : ProposicaoTableMap::translateFieldName('QteCurtidas', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->qte_curtidas = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 12 + $startcol : ProposicaoTableMap::translateFieldName('QteSeguidores', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->qte_seguidores = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 13 + $startcol : ProposicaoTableMap::translateFieldName('QteConcluidos', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->qte_concluidos = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -913,7 +1118,7 @@ abstract class Proposicao implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 10; // 10 = ProposicaoTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 14; // 14 = ProposicaoTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Model\\Proposicao'), 0, $e);
@@ -982,6 +1187,8 @@ abstract class Proposicao implements ActiveRecordInterface
 
             $this->collComentarios = null;
 
+            $this->collConcluirs = null;
+
             $this->collCurtirs = null;
 
             $this->collHabilidadeProposicaos = null;
@@ -989,6 +1196,8 @@ abstract class Proposicao implements ActiveRecordInterface
             $this->collPassos = null;
 
             $this->collRecursoProposicaos = null;
+
+            $this->collSeguirs = null;
 
             $this->collTamanhoTurmaProposicaos = null;
 
@@ -1111,11 +1320,6 @@ abstract class Proposicao implements ActiveRecordInterface
                 } else {
                     $affectedRows += $this->doUpdate($con);
                 }
-                // Rewind the imagem LOB column, since PDO does not rewind after inserting value.
-                if ($this->imagem !== null && is_resource($this->imagem)) {
-                    rewind($this->imagem);
-                }
-
                 $this->resetModified();
             }
 
@@ -1147,6 +1351,23 @@ abstract class Proposicao implements ActiveRecordInterface
 
             if ($this->collComentarios !== null) {
                 foreach ($this->collComentarios as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->concluirsScheduledForDeletion !== null) {
+                if (!$this->concluirsScheduledForDeletion->isEmpty()) {
+                    \Model\ConcluirQuery::create()
+                        ->filterByPrimaryKeys($this->concluirsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->concluirsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collConcluirs !== null) {
+                foreach ($this->collConcluirs as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -1215,6 +1436,23 @@ abstract class Proposicao implements ActiveRecordInterface
 
             if ($this->collRecursoProposicaos !== null) {
                 foreach ($this->collRecursoProposicaos as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
+            }
+
+            if ($this->seguirsScheduledForDeletion !== null) {
+                if (!$this->seguirsScheduledForDeletion->isEmpty()) {
+                    \Model\SeguirQuery::create()
+                        ->filterByPrimaryKeys($this->seguirsScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->seguirsScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collSeguirs !== null) {
+                foreach ($this->collSeguirs as $referrerFK) {
                     if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
                         $affectedRows += $referrerFK->save($con);
                     }
@@ -1294,6 +1532,18 @@ abstract class Proposicao implements ActiveRecordInterface
         if ($this->isColumnModified(ProposicaoTableMap::COL_CATEGORIA)) {
             $modifiedColumns[':p' . $index++]  = 'categoria';
         }
+        if ($this->isColumnModified(ProposicaoTableMap::COL_QTE_COMENTARIOS)) {
+            $modifiedColumns[':p' . $index++]  = 'qte_comentarios';
+        }
+        if ($this->isColumnModified(ProposicaoTableMap::COL_QTE_CURTIDAS)) {
+            $modifiedColumns[':p' . $index++]  = 'qte_curtidas';
+        }
+        if ($this->isColumnModified(ProposicaoTableMap::COL_QTE_SEGUIDORES)) {
+            $modifiedColumns[':p' . $index++]  = 'qte_seguidores';
+        }
+        if ($this->isColumnModified(ProposicaoTableMap::COL_QTE_CONCLUIDOS)) {
+            $modifiedColumns[':p' . $index++]  = 'qte_concluidos';
+        }
 
         $sql = sprintf(
             'INSERT INTO proposicao (%s) VALUES (%s)',
@@ -1321,10 +1571,7 @@ abstract class Proposicao implements ActiveRecordInterface
                         $stmt->bindValue($identifier, $this->start, PDO::PARAM_STR);
                         break;
                     case 'imagem':
-                        if (is_resource($this->imagem)) {
-                            rewind($this->imagem);
-                        }
-                        $stmt->bindValue($identifier, $this->imagem, PDO::PARAM_LOB);
+                        $stmt->bindValue($identifier, $this->imagem, PDO::PARAM_STR);
                         break;
                     case 'tempo_total':
                         $stmt->bindValue($identifier, $this->tempo_total, PDO::PARAM_STR);
@@ -1337,6 +1584,18 @@ abstract class Proposicao implements ActiveRecordInterface
                         break;
                     case 'categoria':
                         $stmt->bindValue($identifier, $this->categoria, PDO::PARAM_STR);
+                        break;
+                    case 'qte_comentarios':
+                        $stmt->bindValue($identifier, $this->qte_comentarios, PDO::PARAM_INT);
+                        break;
+                    case 'qte_curtidas':
+                        $stmt->bindValue($identifier, $this->qte_curtidas, PDO::PARAM_INT);
+                        break;
+                    case 'qte_seguidores':
+                        $stmt->bindValue($identifier, $this->qte_seguidores, PDO::PARAM_INT);
+                        break;
+                    case 'qte_concluidos':
+                        $stmt->bindValue($identifier, $this->qte_concluidos, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -1430,6 +1689,18 @@ abstract class Proposicao implements ActiveRecordInterface
             case 9:
                 return $this->getCategoria();
                 break;
+            case 10:
+                return $this->getQteComentarios();
+                break;
+            case 11:
+                return $this->getQteCurtidas();
+                break;
+            case 12:
+                return $this->getQteSeguidores();
+                break;
+            case 13:
+                return $this->getQteConcluidos();
+                break;
             default:
                 return null;
                 break;
@@ -1470,6 +1741,10 @@ abstract class Proposicao implements ActiveRecordInterface
             $keys[7] => $this->getDataCadastro(),
             $keys[8] => $this->getIsRascunho(),
             $keys[9] => $this->getCategoria(),
+            $keys[10] => $this->getQteComentarios(),
+            $keys[11] => $this->getQteCurtidas(),
+            $keys[12] => $this->getQteSeguidores(),
+            $keys[13] => $this->getQteConcluidos(),
         );
         if ($result[$keys[7]] instanceof \DateTime) {
             $result[$keys[7]] = $result[$keys[7]]->format('c');
@@ -1525,6 +1800,21 @@ abstract class Proposicao implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->collComentarios->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collConcluirs) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'concluirs';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'concluirs';
+                        break;
+                    default:
+                        $key = 'Concluirs';
+                }
+
+                $result[$key] = $this->collConcluirs->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collCurtirs) {
 
@@ -1585,6 +1875,21 @@ abstract class Proposicao implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->collRecursoProposicaos->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+            if (null !== $this->collSeguirs) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'seguirs';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'seguirs';
+                        break;
+                    default:
+                        $key = 'Seguirs';
+                }
+
+                $result[$key] = $this->collSeguirs->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collTamanhoTurmaProposicaos) {
 
@@ -1665,6 +1970,18 @@ abstract class Proposicao implements ActiveRecordInterface
             case 9:
                 $this->setCategoria($value);
                 break;
+            case 10:
+                $this->setQteComentarios($value);
+                break;
+            case 11:
+                $this->setQteCurtidas($value);
+                break;
+            case 12:
+                $this->setQteSeguidores($value);
+                break;
+            case 13:
+                $this->setQteConcluidos($value);
+                break;
         } // switch()
 
         return $this;
@@ -1720,6 +2037,18 @@ abstract class Proposicao implements ActiveRecordInterface
         }
         if (array_key_exists($keys[9], $arr)) {
             $this->setCategoria($arr[$keys[9]]);
+        }
+        if (array_key_exists($keys[10], $arr)) {
+            $this->setQteComentarios($arr[$keys[10]]);
+        }
+        if (array_key_exists($keys[11], $arr)) {
+            $this->setQteCurtidas($arr[$keys[11]]);
+        }
+        if (array_key_exists($keys[12], $arr)) {
+            $this->setQteSeguidores($arr[$keys[12]]);
+        }
+        if (array_key_exists($keys[13], $arr)) {
+            $this->setQteConcluidos($arr[$keys[13]]);
         }
     }
 
@@ -1791,6 +2120,18 @@ abstract class Proposicao implements ActiveRecordInterface
         }
         if ($this->isColumnModified(ProposicaoTableMap::COL_CATEGORIA)) {
             $criteria->add(ProposicaoTableMap::COL_CATEGORIA, $this->categoria);
+        }
+        if ($this->isColumnModified(ProposicaoTableMap::COL_QTE_COMENTARIOS)) {
+            $criteria->add(ProposicaoTableMap::COL_QTE_COMENTARIOS, $this->qte_comentarios);
+        }
+        if ($this->isColumnModified(ProposicaoTableMap::COL_QTE_CURTIDAS)) {
+            $criteria->add(ProposicaoTableMap::COL_QTE_CURTIDAS, $this->qte_curtidas);
+        }
+        if ($this->isColumnModified(ProposicaoTableMap::COL_QTE_SEGUIDORES)) {
+            $criteria->add(ProposicaoTableMap::COL_QTE_SEGUIDORES, $this->qte_seguidores);
+        }
+        if ($this->isColumnModified(ProposicaoTableMap::COL_QTE_CONCLUIDOS)) {
+            $criteria->add(ProposicaoTableMap::COL_QTE_CONCLUIDOS, $this->qte_concluidos);
         }
 
         return $criteria;
@@ -1887,6 +2228,10 @@ abstract class Proposicao implements ActiveRecordInterface
         $copyObj->setDataCadastro($this->getDataCadastro());
         $copyObj->setIsRascunho($this->getIsRascunho());
         $copyObj->setCategoria($this->getCategoria());
+        $copyObj->setQteComentarios($this->getQteComentarios());
+        $copyObj->setQteCurtidas($this->getQteCurtidas());
+        $copyObj->setQteSeguidores($this->getQteSeguidores());
+        $copyObj->setQteConcluidos($this->getQteConcluidos());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -1902,6 +2247,12 @@ abstract class Proposicao implements ActiveRecordInterface
             foreach ($this->getComentarios() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addComentario($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getConcluirs() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addConcluir($relObj->copy($deepCopy));
                 }
             }
 
@@ -1926,6 +2277,12 @@ abstract class Proposicao implements ActiveRecordInterface
             foreach ($this->getRecursoProposicaos() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addRecursoProposicao($relObj->copy($deepCopy));
+                }
+            }
+
+            foreach ($this->getSeguirs() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addSeguir($relObj->copy($deepCopy));
                 }
             }
 
@@ -2033,6 +2390,9 @@ abstract class Proposicao implements ActiveRecordInterface
         if ('Comentario' == $relationName) {
             return $this->initComentarios();
         }
+        if ('Concluir' == $relationName) {
+            return $this->initConcluirs();
+        }
         if ('Curtir' == $relationName) {
             return $this->initCurtirs();
         }
@@ -2044,6 +2404,9 @@ abstract class Proposicao implements ActiveRecordInterface
         }
         if ('RecursoProposicao' == $relationName) {
             return $this->initRecursoProposicaos();
+        }
+        if ('Seguir' == $relationName) {
+            return $this->initSeguirs();
         }
         if ('TamanhoTurmaProposicao' == $relationName) {
             return $this->initTamanhoTurmaProposicaos();
@@ -2551,6 +2914,259 @@ abstract class Proposicao implements ActiveRecordInterface
         $query->joinWith('Usuario', $joinBehavior);
 
         return $this->getComentarios($query, $con);
+    }
+
+    /**
+     * Clears out the collConcluirs collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addConcluirs()
+     */
+    public function clearConcluirs()
+    {
+        $this->collConcluirs = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collConcluirs collection loaded partially.
+     */
+    public function resetPartialConcluirs($v = true)
+    {
+        $this->collConcluirsPartial = $v;
+    }
+
+    /**
+     * Initializes the collConcluirs collection.
+     *
+     * By default this just sets the collConcluirs collection to an empty array (like clearcollConcluirs());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initConcluirs($overrideExisting = true)
+    {
+        if (null !== $this->collConcluirs && !$overrideExisting) {
+            return;
+        }
+
+        $collectionClassName = ConcluirTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collConcluirs = new $collectionClassName;
+        $this->collConcluirs->setModel('\Model\Concluir');
+    }
+
+    /**
+     * Gets an array of ChildConcluir objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildProposicao is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildConcluir[] List of ChildConcluir objects
+     * @throws PropelException
+     */
+    public function getConcluirs(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collConcluirsPartial && !$this->isNew();
+        if (null === $this->collConcluirs || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collConcluirs) {
+                // return empty collection
+                $this->initConcluirs();
+            } else {
+                $collConcluirs = ChildConcluirQuery::create(null, $criteria)
+                    ->filterByProposicao($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collConcluirsPartial && count($collConcluirs)) {
+                        $this->initConcluirs(false);
+
+                        foreach ($collConcluirs as $obj) {
+                            if (false == $this->collConcluirs->contains($obj)) {
+                                $this->collConcluirs->append($obj);
+                            }
+                        }
+
+                        $this->collConcluirsPartial = true;
+                    }
+
+                    return $collConcluirs;
+                }
+
+                if ($partial && $this->collConcluirs) {
+                    foreach ($this->collConcluirs as $obj) {
+                        if ($obj->isNew()) {
+                            $collConcluirs[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collConcluirs = $collConcluirs;
+                $this->collConcluirsPartial = false;
+            }
+        }
+
+        return $this->collConcluirs;
+    }
+
+    /**
+     * Sets a collection of ChildConcluir objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $concluirs A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildProposicao The current object (for fluent API support)
+     */
+    public function setConcluirs(Collection $concluirs, ConnectionInterface $con = null)
+    {
+        /** @var ChildConcluir[] $concluirsToDelete */
+        $concluirsToDelete = $this->getConcluirs(new Criteria(), $con)->diff($concluirs);
+
+
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->concluirsScheduledForDeletion = clone $concluirsToDelete;
+
+        foreach ($concluirsToDelete as $concluirRemoved) {
+            $concluirRemoved->setProposicao(null);
+        }
+
+        $this->collConcluirs = null;
+        foreach ($concluirs as $concluir) {
+            $this->addConcluir($concluir);
+        }
+
+        $this->collConcluirs = $concluirs;
+        $this->collConcluirsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Concluir objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related Concluir objects.
+     * @throws PropelException
+     */
+    public function countConcluirs(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collConcluirsPartial && !$this->isNew();
+        if (null === $this->collConcluirs || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collConcluirs) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getConcluirs());
+            }
+
+            $query = ChildConcluirQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByProposicao($this)
+                ->count($con);
+        }
+
+        return count($this->collConcluirs);
+    }
+
+    /**
+     * Method called to associate a ChildConcluir object to this object
+     * through the ChildConcluir foreign key attribute.
+     *
+     * @param  ChildConcluir $l ChildConcluir
+     * @return $this|\Model\Proposicao The current object (for fluent API support)
+     */
+    public function addConcluir(ChildConcluir $l)
+    {
+        if ($this->collConcluirs === null) {
+            $this->initConcluirs();
+            $this->collConcluirsPartial = true;
+        }
+
+        if (!$this->collConcluirs->contains($l)) {
+            $this->doAddConcluir($l);
+
+            if ($this->concluirsScheduledForDeletion and $this->concluirsScheduledForDeletion->contains($l)) {
+                $this->concluirsScheduledForDeletion->remove($this->concluirsScheduledForDeletion->search($l));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildConcluir $concluir The ChildConcluir object to add.
+     */
+    protected function doAddConcluir(ChildConcluir $concluir)
+    {
+        $this->collConcluirs[]= $concluir;
+        $concluir->setProposicao($this);
+    }
+
+    /**
+     * @param  ChildConcluir $concluir The ChildConcluir object to remove.
+     * @return $this|ChildProposicao The current object (for fluent API support)
+     */
+    public function removeConcluir(ChildConcluir $concluir)
+    {
+        if ($this->getConcluirs()->contains($concluir)) {
+            $pos = $this->collConcluirs->search($concluir);
+            $this->collConcluirs->remove($pos);
+            if (null === $this->concluirsScheduledForDeletion) {
+                $this->concluirsScheduledForDeletion = clone $this->collConcluirs;
+                $this->concluirsScheduledForDeletion->clear();
+            }
+            $this->concluirsScheduledForDeletion[]= clone $concluir;
+            $concluir->setProposicao(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Proposicao is new, it will return
+     * an empty collection; or if this Proposicao has previously
+     * been saved, it will retrieve related Concluirs from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Proposicao.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildConcluir[] List of ChildConcluir objects
+     */
+    public function getConcluirsJoinUsuario(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildConcluirQuery::create(null, $criteria);
+        $query->joinWith('Usuario', $joinBehavior);
+
+        return $this->getConcluirs($query, $con);
     }
 
     /**
@@ -3538,6 +4154,259 @@ abstract class Proposicao implements ActiveRecordInterface
     }
 
     /**
+     * Clears out the collSeguirs collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addSeguirs()
+     */
+    public function clearSeguirs()
+    {
+        $this->collSeguirs = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collSeguirs collection loaded partially.
+     */
+    public function resetPartialSeguirs($v = true)
+    {
+        $this->collSeguirsPartial = $v;
+    }
+
+    /**
+     * Initializes the collSeguirs collection.
+     *
+     * By default this just sets the collSeguirs collection to an empty array (like clearcollSeguirs());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initSeguirs($overrideExisting = true)
+    {
+        if (null !== $this->collSeguirs && !$overrideExisting) {
+            return;
+        }
+
+        $collectionClassName = SeguirTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collSeguirs = new $collectionClassName;
+        $this->collSeguirs->setModel('\Model\Seguir');
+    }
+
+    /**
+     * Gets an array of ChildSeguir objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildProposicao is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildSeguir[] List of ChildSeguir objects
+     * @throws PropelException
+     */
+    public function getSeguirs(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collSeguirsPartial && !$this->isNew();
+        if (null === $this->collSeguirs || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collSeguirs) {
+                // return empty collection
+                $this->initSeguirs();
+            } else {
+                $collSeguirs = ChildSeguirQuery::create(null, $criteria)
+                    ->filterByProposicao($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collSeguirsPartial && count($collSeguirs)) {
+                        $this->initSeguirs(false);
+
+                        foreach ($collSeguirs as $obj) {
+                            if (false == $this->collSeguirs->contains($obj)) {
+                                $this->collSeguirs->append($obj);
+                            }
+                        }
+
+                        $this->collSeguirsPartial = true;
+                    }
+
+                    return $collSeguirs;
+                }
+
+                if ($partial && $this->collSeguirs) {
+                    foreach ($this->collSeguirs as $obj) {
+                        if ($obj->isNew()) {
+                            $collSeguirs[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collSeguirs = $collSeguirs;
+                $this->collSeguirsPartial = false;
+            }
+        }
+
+        return $this->collSeguirs;
+    }
+
+    /**
+     * Sets a collection of ChildSeguir objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $seguirs A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildProposicao The current object (for fluent API support)
+     */
+    public function setSeguirs(Collection $seguirs, ConnectionInterface $con = null)
+    {
+        /** @var ChildSeguir[] $seguirsToDelete */
+        $seguirsToDelete = $this->getSeguirs(new Criteria(), $con)->diff($seguirs);
+
+
+        //since at least one column in the foreign key is at the same time a PK
+        //we can not just set a PK to NULL in the lines below. We have to store
+        //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
+        $this->seguirsScheduledForDeletion = clone $seguirsToDelete;
+
+        foreach ($seguirsToDelete as $seguirRemoved) {
+            $seguirRemoved->setProposicao(null);
+        }
+
+        $this->collSeguirs = null;
+        foreach ($seguirs as $seguir) {
+            $this->addSeguir($seguir);
+        }
+
+        $this->collSeguirs = $seguirs;
+        $this->collSeguirsPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Seguir objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related Seguir objects.
+     * @throws PropelException
+     */
+    public function countSeguirs(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collSeguirsPartial && !$this->isNew();
+        if (null === $this->collSeguirs || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collSeguirs) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getSeguirs());
+            }
+
+            $query = ChildSeguirQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByProposicao($this)
+                ->count($con);
+        }
+
+        return count($this->collSeguirs);
+    }
+
+    /**
+     * Method called to associate a ChildSeguir object to this object
+     * through the ChildSeguir foreign key attribute.
+     *
+     * @param  ChildSeguir $l ChildSeguir
+     * @return $this|\Model\Proposicao The current object (for fluent API support)
+     */
+    public function addSeguir(ChildSeguir $l)
+    {
+        if ($this->collSeguirs === null) {
+            $this->initSeguirs();
+            $this->collSeguirsPartial = true;
+        }
+
+        if (!$this->collSeguirs->contains($l)) {
+            $this->doAddSeguir($l);
+
+            if ($this->seguirsScheduledForDeletion and $this->seguirsScheduledForDeletion->contains($l)) {
+                $this->seguirsScheduledForDeletion->remove($this->seguirsScheduledForDeletion->search($l));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildSeguir $seguir The ChildSeguir object to add.
+     */
+    protected function doAddSeguir(ChildSeguir $seguir)
+    {
+        $this->collSeguirs[]= $seguir;
+        $seguir->setProposicao($this);
+    }
+
+    /**
+     * @param  ChildSeguir $seguir The ChildSeguir object to remove.
+     * @return $this|ChildProposicao The current object (for fluent API support)
+     */
+    public function removeSeguir(ChildSeguir $seguir)
+    {
+        if ($this->getSeguirs()->contains($seguir)) {
+            $pos = $this->collSeguirs->search($seguir);
+            $this->collSeguirs->remove($pos);
+            if (null === $this->seguirsScheduledForDeletion) {
+                $this->seguirsScheduledForDeletion = clone $this->collSeguirs;
+                $this->seguirsScheduledForDeletion->clear();
+            }
+            $this->seguirsScheduledForDeletion[]= clone $seguir;
+            $seguir->setProposicao(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Proposicao is new, it will return
+     * an empty collection; or if this Proposicao has previously
+     * been saved, it will retrieve related Seguirs from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Proposicao.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildSeguir[] List of ChildSeguir objects
+     */
+    public function getSeguirsJoinUsuario(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildSeguirQuery::create(null, $criteria);
+        $query->joinWith('Usuario', $joinBehavior);
+
+        return $this->getSeguirs($query, $con);
+    }
+
+    /**
      * Clears out the collTamanhoTurmaProposicaos collection
      *
      * This does not modify the database; however, it will remove any associated objects, causing
@@ -3810,6 +4679,10 @@ abstract class Proposicao implements ActiveRecordInterface
         $this->data_cadastro = null;
         $this->is_rascunho = null;
         $this->categoria = null;
+        $this->qte_comentarios = null;
+        $this->qte_curtidas = null;
+        $this->qte_seguidores = null;
+        $this->qte_concluidos = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->applyDefaultValues();
@@ -3839,6 +4712,11 @@ abstract class Proposicao implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collConcluirs) {
+                foreach ($this->collConcluirs as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collCurtirs) {
                 foreach ($this->collCurtirs as $o) {
                     $o->clearAllReferences($deep);
@@ -3859,6 +4737,11 @@ abstract class Proposicao implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collSeguirs) {
+                foreach ($this->collSeguirs as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collTamanhoTurmaProposicaos) {
                 foreach ($this->collTamanhoTurmaProposicaos as $o) {
                     $o->clearAllReferences($deep);
@@ -3868,10 +4751,12 @@ abstract class Proposicao implements ActiveRecordInterface
 
         $this->collAmbienteProposicaos = null;
         $this->collComentarios = null;
+        $this->collConcluirs = null;
         $this->collCurtirs = null;
         $this->collHabilidadeProposicaos = null;
         $this->collPassos = null;
         $this->collRecursoProposicaos = null;
+        $this->collSeguirs = null;
         $this->collTamanhoTurmaProposicaos = null;
         $this->aUsuario = null;
     }
@@ -3886,7 +4771,7 @@ abstract class Proposicao implements ActiveRecordInterface
         return (string) $this->exportTo(ProposicaoTableMap::DEFAULT_STRING_FORMAT);
     }
 
-    // aggregate_custo_producao behavior
+    // aggregate_tempo_total behavior
 
     /**
      * Computes the value of the aggregate column tempo_total *
@@ -3910,6 +4795,114 @@ abstract class Proposicao implements ActiveRecordInterface
     public function updateTempoTotal(ConnectionInterface $con)
     {
         $this->setTempoTotal($this->computeTempoTotal($con));
+        $this->save($con);
+    }
+
+    // aggregate_comentarios behavior
+
+    /**
+     * Computes the value of the aggregate column qte_comentarios *
+     * @param ConnectionInterface $con A connection object
+     *
+     * @return mixed The scalar result from the aggregate query
+     */
+    public function computeQteComentarios(ConnectionInterface $con)
+    {
+        $stmt = $con->prepare('SELECT COUNT(id) FROM comentario WHERE comentario.ID_PROPOSICAO = :p1');
+        $stmt->bindValue(':p1', $this->getId());
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+
+    /**
+     * Updates the aggregate column qte_comentarios *
+     * @param ConnectionInterface $con A connection object
+     */
+    public function updateQteComentarios(ConnectionInterface $con)
+    {
+        $this->setQteComentarios($this->computeQteComentarios($con));
+        $this->save($con);
+    }
+
+    // aggregate_curtir behavior
+
+    /**
+     * Computes the value of the aggregate column qte_curtidas *
+     * @param ConnectionInterface $con A connection object
+     *
+     * @return mixed The scalar result from the aggregate query
+     */
+    public function computeQteCurtidas(ConnectionInterface $con)
+    {
+        $stmt = $con->prepare('SELECT COUNT(id) FROM curtir WHERE curtir.ID_PROPOSICAO = :p1');
+        $stmt->bindValue(':p1', $this->getId());
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+
+    /**
+     * Updates the aggregate column qte_curtidas *
+     * @param ConnectionInterface $con A connection object
+     */
+    public function updateQteCurtidas(ConnectionInterface $con)
+    {
+        $this->setQteCurtidas($this->computeQteCurtidas($con));
+        $this->save($con);
+    }
+
+    // aggregate_seguir behavior
+
+    /**
+     * Computes the value of the aggregate column qte_seguidores *
+     * @param ConnectionInterface $con A connection object
+     *
+     * @return mixed The scalar result from the aggregate query
+     */
+    public function computeQteSeguidores(ConnectionInterface $con)
+    {
+        $stmt = $con->prepare('SELECT COUNT(id) FROM seguir WHERE seguir.ID_PROPOSICAO = :p1');
+        $stmt->bindValue(':p1', $this->getId());
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+
+    /**
+     * Updates the aggregate column qte_seguidores *
+     * @param ConnectionInterface $con A connection object
+     */
+    public function updateQteSeguidores(ConnectionInterface $con)
+    {
+        $this->setQteSeguidores($this->computeQteSeguidores($con));
+        $this->save($con);
+    }
+
+    // aggregate_concluir behavior
+
+    /**
+     * Computes the value of the aggregate column qte_concluidos *
+     * @param ConnectionInterface $con A connection object
+     *
+     * @return mixed The scalar result from the aggregate query
+     */
+    public function computeQteConcluidos(ConnectionInterface $con)
+    {
+        $stmt = $con->prepare('SELECT COUNT(id) FROM concluir WHERE concluir.ID_PROPOSICAO = :p1');
+        $stmt->bindValue(':p1', $this->getId());
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+
+    /**
+     * Updates the aggregate column qte_concluidos *
+     * @param ConnectionInterface $con A connection object
+     */
+    public function updateQteConcluidos(ConnectionInterface $con)
+    {
+        $this->setQteConcluidos($this->computeQteConcluidos($con));
         $this->save($con);
     }
 

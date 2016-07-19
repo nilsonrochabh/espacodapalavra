@@ -64,6 +64,17 @@ return array(
 					),
 				),
 			),
+	
+			'conta' => array(
+				'type' => 'Literal',
+				'options' => array(
+					'route'    => '/conta',
+					'defaults' => array(
+						'controller' => 'Frontend\Controller\Usuario',
+						'action'     => 'conta',
+					),
+				),
+			),
 			
 			'publique' => array(
 				'type' => 'Segment',

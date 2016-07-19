@@ -195,6 +195,13 @@ class UsuarioTableMap extends TableMap
     1 => ':id',
   ),
 ), 'CASCADE', 'CASCADE', 'Comentarios', false);
+        $this->addRelation('Concluir', '\\Model\\Concluir', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':id_usuario',
+    1 => ':id',
+  ),
+), null, null, 'Concluirs', false);
         $this->addRelation('Curtir', '\\Model\\Curtir', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
@@ -216,6 +223,13 @@ class UsuarioTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, 'ResetSenhas', false);
+        $this->addRelation('Seguir', '\\Model\\Seguir', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':id_usuario',
+    1 => ':id',
+  ),
+), null, null, 'Seguirs', false);
     } // buildRelations()
     /**
      * Method to invalidate the instance pool of all tables related to usuario     * by a foreign key with ON DELETE CASCADE

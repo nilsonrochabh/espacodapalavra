@@ -23,67 +23,6 @@
 </aside>
 <main class="home">
 	<div class="container">
-		<ul>
-			<?php foreach($this->lista as $l): ?>
-			<a class="inline" href="#proposicao-<?php echo $l->getId(); ?>">
-				<li>
-					<h2><?php echo $l->getNome(); ?></h2>
-					<div class="thumb">
-						<div class="hover-info">
-							<ul>
-								<li>
-									<div class="icon">
-										<span class="icon-heart"></span>
-									</div>
-									<div class="info">
-										<span class="number">06</span>
-										<span class="text"><?php echo $this->translate('curtidas'); ?></span>
-									</div>
-								</li>
-								<li>
-									<div class="icon">
-										<span class="icon-check"></span>
-									</div>
-									<div class="info">
-										<span class="number">04</span>
-										<span class="text"><?php echo $this->translate('fizeram'); ?></span>
-									</div>
-								</li>
-								<li>
-									<div class="icon">
-										<span class="icon-chat"></span>
-									</div>
-									<div class="info">
-										<span class="number">08</span>
-										<span class="text"><?php echo $this->translate('comentários'); ?></span>
-									</div>
-								</li>
-								<li>
-									<div class="icon">
-										<span class="icon-anchor"></span>
-									</div>
-									<div class="info">
-										<span class="number">03</span>
-										<span class="text"><?php echo $this->translate('seguidores'); ?></span>
-									</div>
-								</li>
-							</ul>
-						</div>
-						<img src="<?php echo $this->basePath(); ?>/www/img/proposicoes/memoria-inventada-thumb.jpg" />
-					</div>
-				</li>
-			</a>
-			<div style='display:none'>
-				<div id='proposicao-<?php echo $l->getId(); ?>' class="modal-box ">
-					<img src="<?php echo $this->basePath(); ?>/www/img/proposicoes/memoria-inventada-cover.jpg" class="header" />
-					<h3><?php echo $l->getNome(); ?></h3>
-					<p><?php echo $l->getObjetivo(); ?></p>
-					<a href="<?php echo $this->url('proposicao', array('id' => $l->getId())); ?>" class="abrir">
-						<?php echo $this->translate('ABRIR'); ?>
-					</a>
-				</div>
-			</div>
-			<?php endforeach; ?>
-		</ul>
+		<?php echo $this->partial('foreachProposicao', array('lista' => $this->lista)); ?>
 	</div>
 </main>

@@ -59,10 +59,24 @@ class ProposicaoController extends BaseController {
 		
 		$request = $this->getRequest();
 		if($request->isPost()) {
-			$form->setData($request->getPost());
+			
+			$files = $request->getFiles()->toArray();
+			if(isset($files['imagem']['name']) &&
+				!Util::IsNullOrEmptyString($files['imagem']['name'])) {
+				$post = array_merge_recursive(
+					$request->getPost()->toArray(),
+					$files
+				);
+			} else {
+				$post = $request->getPost();
+			}
+			
+			$form->setData($post);
 			
 			if($form->isValid()) {
 				try {
+					$data = $form->getData();
+					
 					if($proposicao == null) {
 						$proposicao = new Proposicao();
 						$proposicao->setIdUsuario($this->getIdUsuarioLogado());
@@ -70,11 +84,11 @@ class ProposicaoController extends BaseController {
 						$proposicao->setDataCadastro(Util::agora());
 					}
 					
-					$proposicao->setNome($form->get('nome')->getValue());
-					$proposicao->setObjetivo($form->get('objetivo')->getValue());
-					$proposicao->setStart($form->get('start')->getValue());
+					$proposicao->setNome($data['nome']);
+					$proposicao->setObjetivo($data['objetivo']);
+					$proposicao->setStart($data['start']);
 					
-					$this->getProposicaoBO()->save($proposicao);
+					$this->getProposicaoBO()->save($proposicao, $data['imagem'] ? $data['imagem']['tmp_name'] : null);
 					
 					return $this->redirect()->toRoute('publique', array('action' => 'montagem', 'idProposicao' => $proposicao->getId()));
 				} catch(CoreException $e) {

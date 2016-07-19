@@ -130,7 +130,7 @@ abstract class Passo implements ActiveRecordInterface
      */
     protected $alreadyInSave = false;
 
-    // aggregate_column_relation_aggregate_custo_producao behavior
+    // aggregate_column_relation_aggregate_tempo_total behavior
     /**
      * @var ChildProposicao
      */
@@ -810,7 +810,7 @@ abstract class Passo implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                // aggregate_column_relation_aggregate_custo_producao behavior
+                // aggregate_column_relation_aggregate_tempo_total behavior
                 $this->updateRelatedProposicaoTempoTotal($con);
                 PassoTableMap::addInstanceToPool($this);
             } else {
@@ -1492,7 +1492,7 @@ abstract class Passo implements ActiveRecordInterface
         return (string) $this->exportTo(PassoTableMap::DEFAULT_STRING_FORMAT);
     }
 
-    // aggregate_column_relation_aggregate_custo_producao behavior
+    // aggregate_column_relation_aggregate_tempo_total behavior
 
     /**
      * Update the aggregate column in the related Proposicao object

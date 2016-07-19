@@ -55,6 +55,18 @@ class InformacoesForm extends Form implements InputFilterProviderInterface {
 		));
 		
 		$this->add(array(
+			'name' => 'imagem',
+			'attributes' => array(
+				'id'     => 'imagem',
+				'type'   => 'file',
+				'accept' => 'image/*',
+			),
+			'options' => array(
+				'label' => _('Imagem Capa'),
+			),
+		));
+		
+		$this->add(array(
 			'name' => 'submit',
 			'attributes' => array(
 				'type'  => 'submit',
@@ -156,6 +168,44 @@ class InformacoesForm extends Form implements InputFilterProviderInterface {
 								'stringLengthTooLong' => 'Start muito grande. (Máx. de 4000)'
 							),
 							'break_chain_on_failure' => true,
+						),
+					),
+				),
+			),
+			'imagem' => array(
+				'type' => 'Zend\InputFilter\FileInput',
+				'required' => false,
+				'allow_empty' => true,
+				'filters'  => array(
+					array(
+						'name' => 'File\RenameUpload',
+						'options' => array(
+							'target' => './public/uploads',
+							'randomize' => true,
+							'use_upload_extension' => true,
+						),
+					),
+				),
+				'validators' => array(
+					array(
+						'name' => '\Zend\Validator\File\IsImage',
+						'options' => array(
+							'messages' => array(
+								\Zend\Validator\File\IsImage::FALSE_TYPE => 'O arquivo não é uma imagem.',
+								\Zend\Validator\File\IsImage::NOT_DETECTED => 'Não foi possível identificar o tipo da imagem.',
+								\Zend\Validator\File\IsImage::NOT_READABLE => 'Arquivo não pode ser lido ou não existe.',
+							),
+						),
+					),
+					array(
+						'name' => '\Zend\Validator\File\FilesSize',
+						'options' => array(
+							'max' => 1 * 1024 * 1024, // 1MB
+							'messages' => array(
+								\Zend\Validator\File\FilesSize::TOO_BIG => 'O arquivo é muito grande. (Máx. 1MB)',
+								\Zend\Validator\File\FilesSize::TOO_SMALL => 'O arquivo está vazio.',
+								\Zend\Validator\File\FilesSize::NOT_READABLE => 'Arquivo não pode ser lido ou não existe.',
+							),
 						),
 					),
 				),

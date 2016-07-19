@@ -2,8 +2,8 @@
 
 namespace Model\Map;
 
-use Model\Curtir;
-use Model\CurtirQuery;
+use Model\Concluir;
+use Model\ConcluirQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'curtir' table.
+ * This class defines the structure of the 'concluir' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class CurtirTableMap extends TableMap
+class ConcluirTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class CurtirTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = 'Model.Map.CurtirTableMap';
+    const CLASS_NAME = 'Model.Map.ConcluirTableMap';
 
     /**
      * The default database name for this class
@@ -44,17 +44,17 @@ class CurtirTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'curtir';
+    const TABLE_NAME = 'concluir';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Model\\Curtir';
+    const OM_CLASS = '\\Model\\Concluir';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Model.Curtir';
+    const CLASS_DEFAULT = 'Model.Concluir';
 
     /**
      * The total number of columns
@@ -74,17 +74,17 @@ class CurtirTableMap extends TableMap
     /**
      * the column name for the id_proposicao field
      */
-    const COL_ID_PROPOSICAO = 'curtir.id_proposicao';
+    const COL_ID_PROPOSICAO = 'concluir.id_proposicao';
 
     /**
      * the column name for the id_usuario field
      */
-    const COL_ID_USUARIO = 'curtir.id_usuario';
+    const COL_ID_USUARIO = 'concluir.id_usuario';
 
     /**
      * the column name for the data_cadastro field
      */
-    const COL_DATA_CADASTRO = 'curtir.data_cadastro';
+    const COL_DATA_CADASTRO = 'concluir.data_cadastro';
 
     /**
      * The default string format for model objects of the related table
@@ -100,7 +100,7 @@ class CurtirTableMap extends TableMap
     protected static $fieldNames = array (
         self::TYPE_PHPNAME       => array('IdProposicao', 'IdUsuario', 'DataCadastro', ),
         self::TYPE_CAMELNAME     => array('idProposicao', 'idUsuario', 'dataCadastro', ),
-        self::TYPE_COLNAME       => array(CurtirTableMap::COL_ID_PROPOSICAO, CurtirTableMap::COL_ID_USUARIO, CurtirTableMap::COL_DATA_CADASTRO, ),
+        self::TYPE_COLNAME       => array(ConcluirTableMap::COL_ID_PROPOSICAO, ConcluirTableMap::COL_ID_USUARIO, ConcluirTableMap::COL_DATA_CADASTRO, ),
         self::TYPE_FIELDNAME     => array('id_proposicao', 'id_usuario', 'data_cadastro', ),
         self::TYPE_NUM           => array(0, 1, 2, )
     );
@@ -114,7 +114,7 @@ class CurtirTableMap extends TableMap
     protected static $fieldKeys = array (
         self::TYPE_PHPNAME       => array('IdProposicao' => 0, 'IdUsuario' => 1, 'DataCadastro' => 2, ),
         self::TYPE_CAMELNAME     => array('idProposicao' => 0, 'idUsuario' => 1, 'dataCadastro' => 2, ),
-        self::TYPE_COLNAME       => array(CurtirTableMap::COL_ID_PROPOSICAO => 0, CurtirTableMap::COL_ID_USUARIO => 1, CurtirTableMap::COL_DATA_CADASTRO => 2, ),
+        self::TYPE_COLNAME       => array(ConcluirTableMap::COL_ID_PROPOSICAO => 0, ConcluirTableMap::COL_ID_USUARIO => 1, ConcluirTableMap::COL_DATA_CADASTRO => 2, ),
         self::TYPE_FIELDNAME     => array('id_proposicao' => 0, 'id_usuario' => 1, 'data_cadastro' => 2, ),
         self::TYPE_NUM           => array(0, 1, 2, )
     );
@@ -129,10 +129,10 @@ class CurtirTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('curtir');
-        $this->setPhpName('Curtir');
+        $this->setName('concluir');
+        $this->setPhpName('Concluir');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Model\\Curtir');
+        $this->setClassName('\\Model\\Concluir');
         $this->setPackage('Model');
         $this->setUseIdGenerator(false);
         // columns
@@ -152,14 +152,14 @@ class CurtirTableMap extends TableMap
     0 => ':id_proposicao',
     1 => ':id',
   ),
-), 'CASCADE', 'CASCADE', null, false);
+), null, null, null, false);
         $this->addRelation('Usuario', '\\Model\\Usuario', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
     0 => ':id_usuario',
     1 => ':id',
   ),
-), 'CASCADE', 'CASCADE', null, false);
+), null, null, null, false);
     } // buildRelations()
 
     /**
@@ -171,7 +171,7 @@ class CurtirTableMap extends TableMap
     public function getBehaviors()
     {
         return array(
-            'aggregate_column_relation_aggregate_curtir' => array('foreign_table' => 'proposicao', 'update_method' => 'updateQteCurtidas', 'aggregate_name' => 'QteCurtidas', ),
+            'aggregate_column_relation_aggregate_concluir' => array('foreign_table' => 'proposicao', 'update_method' => 'updateQteConcluidos', 'aggregate_name' => 'QteConcluidos', ),
         );
     } // getBehaviors()
 
@@ -183,7 +183,7 @@ class CurtirTableMap extends TableMap
      * to the cache in order to ensure that the same objects are always returned by find*()
      * and findPk*() calls.
      *
-     * @param \Model\Curtir $obj A \Model\Curtir object.
+     * @param \Model\Concluir $obj A \Model\Concluir object.
      * @param string $key             (optional) key to use for instance map (for performance boost if key was already calculated externally).
      */
     public static function addInstanceToPool($obj, $key = null)
@@ -204,12 +204,12 @@ class CurtirTableMap extends TableMap
      * methods in your stub classes -- you may need to explicitly remove objects
      * from the cache in order to prevent returning objects that no longer exist.
      *
-     * @param mixed $value A \Model\Curtir object or a primary key value.
+     * @param mixed $value A \Model\Concluir object or a primary key value.
      */
     public static function removeInstanceFromPool($value)
     {
         if (Propel::isInstancePoolingEnabled() && null !== $value) {
-            if (is_object($value) && $value instanceof \Model\Curtir) {
+            if (is_object($value) && $value instanceof \Model\Concluir) {
                 $key = serialize([(null === $value->getIdProposicao() || is_scalar($value->getIdProposicao()) || is_callable([$value->getIdProposicao(), '__toString']) ? (string) $value->getIdProposicao() : $value->getIdProposicao()), (null === $value->getIdUsuario() || is_scalar($value->getIdUsuario()) || is_callable([$value->getIdUsuario(), '__toString']) ? (string) $value->getIdUsuario() : $value->getIdUsuario())]);
 
             } elseif (is_array($value) && count($value) === 2) {
@@ -220,7 +220,7 @@ class CurtirTableMap extends TableMap
 
                 return;
             } else {
-                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or \Model\Curtir object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value, true)));
+                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or \Model\Concluir object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value, true)));
                 throw $e;
             }
 
@@ -294,7 +294,7 @@ class CurtirTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? CurtirTableMap::CLASS_DEFAULT : CurtirTableMap::OM_CLASS;
+        return $withPrefix ? ConcluirTableMap::CLASS_DEFAULT : ConcluirTableMap::OM_CLASS;
     }
 
     /**
@@ -308,22 +308,22 @@ class CurtirTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Curtir object, last column rank)
+     * @return array           (Concluir object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = CurtirTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = CurtirTableMap::getInstanceFromPool($key))) {
+        $key = ConcluirTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = ConcluirTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + CurtirTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + ConcluirTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = CurtirTableMap::OM_CLASS;
-            /** @var Curtir $obj */
+            $cls = ConcluirTableMap::OM_CLASS;
+            /** @var Concluir $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            CurtirTableMap::addInstanceToPool($obj, $key);
+            ConcluirTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -346,18 +346,18 @@ class CurtirTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = CurtirTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = CurtirTableMap::getInstanceFromPool($key))) {
+            $key = ConcluirTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = ConcluirTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Curtir $obj */
+                /** @var Concluir $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                CurtirTableMap::addInstanceToPool($obj, $key);
+                ConcluirTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -378,9 +378,9 @@ class CurtirTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(CurtirTableMap::COL_ID_PROPOSICAO);
-            $criteria->addSelectColumn(CurtirTableMap::COL_ID_USUARIO);
-            $criteria->addSelectColumn(CurtirTableMap::COL_DATA_CADASTRO);
+            $criteria->addSelectColumn(ConcluirTableMap::COL_ID_PROPOSICAO);
+            $criteria->addSelectColumn(ConcluirTableMap::COL_ID_USUARIO);
+            $criteria->addSelectColumn(ConcluirTableMap::COL_DATA_CADASTRO);
         } else {
             $criteria->addSelectColumn($alias . '.id_proposicao');
             $criteria->addSelectColumn($alias . '.id_usuario');
@@ -397,7 +397,7 @@ class CurtirTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(CurtirTableMap::DATABASE_NAME)->getTable(CurtirTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(ConcluirTableMap::DATABASE_NAME)->getTable(ConcluirTableMap::TABLE_NAME);
     }
 
     /**
@@ -405,16 +405,16 @@ class CurtirTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(CurtirTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(CurtirTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new CurtirTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(ConcluirTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(ConcluirTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new ConcluirTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Curtir or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Concluir or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Curtir object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Concluir object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -425,17 +425,17 @@ class CurtirTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(CurtirTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(ConcluirTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Model\Curtir) { // it's a model object
+        } elseif ($values instanceof \Model\Concluir) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(CurtirTableMap::DATABASE_NAME);
+            $criteria = new Criteria(ConcluirTableMap::DATABASE_NAME);
             // primary key is composite; we therefore, expect
             // the primary key passed to be an array of pkey values
             if (count($values) == count($values, COUNT_RECURSIVE)) {
@@ -443,19 +443,19 @@ class CurtirTableMap extends TableMap
                 $values = array($values);
             }
             foreach ($values as $value) {
-                $criterion = $criteria->getNewCriterion(CurtirTableMap::COL_ID_PROPOSICAO, $value[0]);
-                $criterion->addAnd($criteria->getNewCriterion(CurtirTableMap::COL_ID_USUARIO, $value[1]));
+                $criterion = $criteria->getNewCriterion(ConcluirTableMap::COL_ID_PROPOSICAO, $value[0]);
+                $criterion->addAnd($criteria->getNewCriterion(ConcluirTableMap::COL_ID_USUARIO, $value[1]));
                 $criteria->addOr($criterion);
             }
         }
 
-        $query = CurtirQuery::create()->mergeWith($criteria);
+        $query = ConcluirQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            CurtirTableMap::clearInstancePool();
+            ConcluirTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                CurtirTableMap::removeInstanceFromPool($singleval);
+                ConcluirTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -463,20 +463,20 @@ class CurtirTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the curtir table.
+     * Deletes all rows from the concluir table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return CurtirQuery::create()->doDeleteAll($con);
+        return ConcluirQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Curtir or Criteria object.
+     * Performs an INSERT on the database, given a Concluir or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Curtir object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Concluir object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -485,18 +485,18 @@ class CurtirTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(CurtirTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(ConcluirTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Curtir object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Concluir object
         }
 
 
         // Set the correct dbName
-        $query = CurtirQuery::create()->mergeWith($criteria);
+        $query = ConcluirQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -505,7 +505,7 @@ class CurtirTableMap extends TableMap
         });
     }
 
-} // CurtirTableMap
+} // ConcluirTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-CurtirTableMap::buildTableMap();
+ConcluirTableMap::buildTableMap();

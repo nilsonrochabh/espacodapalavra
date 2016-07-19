@@ -60,6 +60,16 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUsuarioQuery rightJoinWithComentario() Adds a RIGHT JOIN clause and with to the query using the Comentario relation
  * @method     ChildUsuarioQuery innerJoinWithComentario() Adds a INNER JOIN clause and with to the query using the Comentario relation
  *
+ * @method     ChildUsuarioQuery leftJoinConcluir($relationAlias = null) Adds a LEFT JOIN clause to the query using the Concluir relation
+ * @method     ChildUsuarioQuery rightJoinConcluir($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Concluir relation
+ * @method     ChildUsuarioQuery innerJoinConcluir($relationAlias = null) Adds a INNER JOIN clause to the query using the Concluir relation
+ *
+ * @method     ChildUsuarioQuery joinWithConcluir($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Concluir relation
+ *
+ * @method     ChildUsuarioQuery leftJoinWithConcluir() Adds a LEFT JOIN clause and with to the query using the Concluir relation
+ * @method     ChildUsuarioQuery rightJoinWithConcluir() Adds a RIGHT JOIN clause and with to the query using the Concluir relation
+ * @method     ChildUsuarioQuery innerJoinWithConcluir() Adds a INNER JOIN clause and with to the query using the Concluir relation
+ *
  * @method     ChildUsuarioQuery leftJoinCurtir($relationAlias = null) Adds a LEFT JOIN clause to the query using the Curtir relation
  * @method     ChildUsuarioQuery rightJoinCurtir($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Curtir relation
  * @method     ChildUsuarioQuery innerJoinCurtir($relationAlias = null) Adds a INNER JOIN clause to the query using the Curtir relation
@@ -90,7 +100,17 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUsuarioQuery rightJoinWithResetSenha() Adds a RIGHT JOIN clause and with to the query using the ResetSenha relation
  * @method     ChildUsuarioQuery innerJoinWithResetSenha() Adds a INNER JOIN clause and with to the query using the ResetSenha relation
  *
- * @method     \Model\ComentarioQuery|\Model\CurtirQuery|\Model\ProposicaoQuery|\Model\ResetSenhaQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildUsuarioQuery leftJoinSeguir($relationAlias = null) Adds a LEFT JOIN clause to the query using the Seguir relation
+ * @method     ChildUsuarioQuery rightJoinSeguir($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Seguir relation
+ * @method     ChildUsuarioQuery innerJoinSeguir($relationAlias = null) Adds a INNER JOIN clause to the query using the Seguir relation
+ *
+ * @method     ChildUsuarioQuery joinWithSeguir($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Seguir relation
+ *
+ * @method     ChildUsuarioQuery leftJoinWithSeguir() Adds a LEFT JOIN clause and with to the query using the Seguir relation
+ * @method     ChildUsuarioQuery rightJoinWithSeguir() Adds a RIGHT JOIN clause and with to the query using the Seguir relation
+ * @method     ChildUsuarioQuery innerJoinWithSeguir() Adds a INNER JOIN clause and with to the query using the Seguir relation
+ *
+ * @method     \Model\ComentarioQuery|\Model\ConcluirQuery|\Model\CurtirQuery|\Model\ProposicaoQuery|\Model\ResetSenhaQuery|\Model\SeguirQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildUsuario findOne(ConnectionInterface $con = null) Return the first ChildUsuario matching the query
  * @method     ChildUsuario findOneOrCreate(ConnectionInterface $con = null) Return the first ChildUsuario matching the query, or a new ChildUsuario object populated from the query conditions when no match is found
@@ -686,6 +706,79 @@ abstract class UsuarioQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query by a related \Model\Concluir object
+     *
+     * @param \Model\Concluir|ObjectCollection $concluir the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildUsuarioQuery The current query, for fluid interface
+     */
+    public function filterByConcluir($concluir, $comparison = null)
+    {
+        if ($concluir instanceof \Model\Concluir) {
+            return $this
+                ->addUsingAlias(UsuarioTableMap::COL_ID, $concluir->getIdUsuario(), $comparison);
+        } elseif ($concluir instanceof ObjectCollection) {
+            return $this
+                ->useConcluirQuery()
+                ->filterByPrimaryKeys($concluir->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByConcluir() only accepts arguments of type \Model\Concluir or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Concluir relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildUsuarioQuery The current query, for fluid interface
+     */
+    public function joinConcluir($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Concluir');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Concluir');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Concluir relation Concluir object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \Model\ConcluirQuery A secondary query class using the current class as primary query
+     */
+    public function useConcluirQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinConcluir($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Concluir', '\Model\ConcluirQuery');
+    }
+
+    /**
      * Filter the query by a related \Model\Curtir object
      *
      * @param \Model\Curtir|ObjectCollection $curtir the related object to use as filter
@@ -902,6 +995,79 @@ abstract class UsuarioQuery extends ModelCriteria
         return $this
             ->joinResetSenha($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'ResetSenha', '\Model\ResetSenhaQuery');
+    }
+
+    /**
+     * Filter the query by a related \Model\Seguir object
+     *
+     * @param \Model\Seguir|ObjectCollection $seguir the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildUsuarioQuery The current query, for fluid interface
+     */
+    public function filterBySeguir($seguir, $comparison = null)
+    {
+        if ($seguir instanceof \Model\Seguir) {
+            return $this
+                ->addUsingAlias(UsuarioTableMap::COL_ID, $seguir->getIdUsuario(), $comparison);
+        } elseif ($seguir instanceof ObjectCollection) {
+            return $this
+                ->useSeguirQuery()
+                ->filterByPrimaryKeys($seguir->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterBySeguir() only accepts arguments of type \Model\Seguir or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Seguir relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildUsuarioQuery The current query, for fluid interface
+     */
+    public function joinSeguir($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Seguir');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Seguir');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Seguir relation Seguir object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \Model\SeguirQuery A secondary query class using the current class as primary query
+     */
+    public function useSeguirQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinSeguir($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Seguir', '\Model\SeguirQuery');
     }
 
     /**

@@ -5,12 +5,12 @@ namespace Model\Base;
 use \DateTime;
 use \Exception;
 use \PDO;
-use Model\CurtirQuery as ChildCurtirQuery;
 use Model\Proposicao as ChildProposicao;
 use Model\ProposicaoQuery as ChildProposicaoQuery;
+use Model\SeguirQuery as ChildSeguirQuery;
 use Model\Usuario as ChildUsuario;
 use Model\UsuarioQuery as ChildUsuarioQuery;
-use Model\Map\CurtirTableMap;
+use Model\Map\SeguirTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -25,18 +25,18 @@ use Propel\Runtime\Parser\AbstractParser;
 use Propel\Runtime\Util\PropelDateTime;
 
 /**
- * Base class that represents a row from the 'curtir' table.
+ * Base class that represents a row from the 'seguir' table.
  *
  *
  *
  * @package    propel.generator.Model.Base
  */
-abstract class Curtir implements ActiveRecordInterface
+abstract class Seguir implements ActiveRecordInterface
 {
     /**
      * TableMap class name
      */
-    const TABLE_MAP = '\\Model\\Map\\CurtirTableMap';
+    const TABLE_MAP = '\\Model\\Map\\SeguirTableMap';
 
 
     /**
@@ -104,14 +104,14 @@ abstract class Curtir implements ActiveRecordInterface
      */
     protected $alreadyInSave = false;
 
-    // aggregate_column_relation_aggregate_curtir behavior
+    // aggregate_column_relation_aggregate_seguir behavior
     /**
      * @var ChildProposicao
      */
-    protected $oldProposicaoQteCurtidas;
+    protected $oldProposicaoQteSeguidores;
 
     /**
-     * Initializes internal state of Model\Base\Curtir object.
+     * Initializes internal state of Model\Base\Seguir object.
      */
     public function __construct()
     {
@@ -206,9 +206,9 @@ abstract class Curtir implements ActiveRecordInterface
     }
 
     /**
-     * Compares this with another <code>Curtir</code> instance.  If
-     * <code>obj</code> is an instance of <code>Curtir</code>, delegates to
-     * <code>equals(Curtir)</code>.  Otherwise, returns <code>false</code>.
+     * Compares this with another <code>Seguir</code> instance.  If
+     * <code>obj</code> is an instance of <code>Seguir</code>, delegates to
+     * <code>equals(Seguir)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param  mixed   $obj The object to compare to.
      * @return boolean Whether equal to the object specified.
@@ -274,7 +274,7 @@ abstract class Curtir implements ActiveRecordInterface
      * @param string $name  The virtual column name
      * @param mixed  $value The value to give to the virtual column
      *
-     * @return $this|Curtir The current object, for fluid interface
+     * @return $this|Seguir The current object, for fluid interface
      */
     public function setVirtualColumn($name, $value)
     {
@@ -379,7 +379,7 @@ abstract class Curtir implements ActiveRecordInterface
      * Set the value of [id_proposicao] column.
      *
      * @param int $v new value
-     * @return $this|\Model\Curtir The current object (for fluent API support)
+     * @return $this|\Model\Seguir The current object (for fluent API support)
      */
     public function setIdProposicao($v)
     {
@@ -389,7 +389,7 @@ abstract class Curtir implements ActiveRecordInterface
 
         if ($this->id_proposicao !== $v) {
             $this->id_proposicao = $v;
-            $this->modifiedColumns[CurtirTableMap::COL_ID_PROPOSICAO] = true;
+            $this->modifiedColumns[SeguirTableMap::COL_ID_PROPOSICAO] = true;
         }
 
         if ($this->aProposicao !== null && $this->aProposicao->getId() !== $v) {
@@ -403,7 +403,7 @@ abstract class Curtir implements ActiveRecordInterface
      * Set the value of [id_usuario] column.
      *
      * @param int $v new value
-     * @return $this|\Model\Curtir The current object (for fluent API support)
+     * @return $this|\Model\Seguir The current object (for fluent API support)
      */
     public function setIdUsuario($v)
     {
@@ -413,7 +413,7 @@ abstract class Curtir implements ActiveRecordInterface
 
         if ($this->id_usuario !== $v) {
             $this->id_usuario = $v;
-            $this->modifiedColumns[CurtirTableMap::COL_ID_USUARIO] = true;
+            $this->modifiedColumns[SeguirTableMap::COL_ID_USUARIO] = true;
         }
 
         if ($this->aUsuario !== null && $this->aUsuario->getId() !== $v) {
@@ -428,7 +428,7 @@ abstract class Curtir implements ActiveRecordInterface
      *
      * @param  mixed $v string, integer (timestamp), or \DateTimeInterface value.
      *               Empty strings are treated as NULL.
-     * @return $this|\Model\Curtir The current object (for fluent API support)
+     * @return $this|\Model\Seguir The current object (for fluent API support)
      */
     public function setDataCadastro($v)
     {
@@ -436,7 +436,7 @@ abstract class Curtir implements ActiveRecordInterface
         if ($this->data_cadastro !== null || $dt !== null) {
             if ($this->data_cadastro === null || $dt === null || $dt->format("Y-m-d H:i:s.u") !== $this->data_cadastro->format("Y-m-d H:i:s.u")) {
                 $this->data_cadastro = $dt === null ? null : clone $dt;
-                $this->modifiedColumns[CurtirTableMap::COL_DATA_CADASTRO] = true;
+                $this->modifiedColumns[SeguirTableMap::COL_DATA_CADASTRO] = true;
             }
         } // if either are not null
 
@@ -479,13 +479,13 @@ abstract class Curtir implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : CurtirTableMap::translateFieldName('IdProposicao', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : SeguirTableMap::translateFieldName('IdProposicao', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id_proposicao = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : CurtirTableMap::translateFieldName('IdUsuario', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : SeguirTableMap::translateFieldName('IdUsuario', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id_usuario = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : CurtirTableMap::translateFieldName('DataCadastro', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : SeguirTableMap::translateFieldName('DataCadastro', TableMap::TYPE_PHPNAME, $indexType)];
             if ($col === '0000-00-00 00:00:00') {
                 $col = null;
             }
@@ -498,10 +498,10 @@ abstract class Curtir implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 3; // 3 = CurtirTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 3; // 3 = SeguirTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
-            throw new PropelException(sprintf('Error populating %s object', '\\Model\\Curtir'), 0, $e);
+            throw new PropelException(sprintf('Error populating %s object', '\\Model\\Seguir'), 0, $e);
         }
     }
 
@@ -549,13 +549,13 @@ abstract class Curtir implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(CurtirTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(SeguirTableMap::DATABASE_NAME);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        $dataFetcher = ChildCurtirQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
+        $dataFetcher = ChildSeguirQuery::create(null, $this->buildPkeyCriteria())->setFormatter(ModelCriteria::FORMAT_STATEMENT)->find($con);
         $row = $dataFetcher->fetch();
         $dataFetcher->close();
         if (!$row) {
@@ -576,8 +576,8 @@ abstract class Curtir implements ActiveRecordInterface
      * @param      ConnectionInterface $con
      * @return void
      * @throws PropelException
-     * @see Curtir::setDeleted()
-     * @see Curtir::isDeleted()
+     * @see Seguir::setDeleted()
+     * @see Seguir::isDeleted()
      */
     public function delete(ConnectionInterface $con = null)
     {
@@ -586,11 +586,11 @@ abstract class Curtir implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(CurtirTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(SeguirTableMap::DATABASE_NAME);
         }
 
         $con->transaction(function () use ($con) {
-            $deleteQuery = ChildCurtirQuery::create()
+            $deleteQuery = ChildSeguirQuery::create()
                 ->filterByPrimaryKey($this->getPrimaryKey());
             $ret = $this->preDelete($con);
             if ($ret) {
@@ -621,7 +621,7 @@ abstract class Curtir implements ActiveRecordInterface
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getWriteConnection(CurtirTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(SeguirTableMap::DATABASE_NAME);
         }
 
         return $con->transaction(function () use ($con) {
@@ -640,9 +640,9 @@ abstract class Curtir implements ActiveRecordInterface
                     $this->postUpdate($con);
                 }
                 $this->postSave($con);
-                // aggregate_column_relation_aggregate_curtir behavior
-                $this->updateRelatedProposicaoQteCurtidas($con);
-                CurtirTableMap::addInstanceToPool($this);
+                // aggregate_column_relation_aggregate_seguir behavior
+                $this->updateRelatedProposicaoQteSeguidores($con);
+                SeguirTableMap::addInstanceToPool($this);
             } else {
                 $affectedRows = 0;
             }
@@ -720,18 +720,18 @@ abstract class Curtir implements ActiveRecordInterface
 
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(CurtirTableMap::COL_ID_PROPOSICAO)) {
+        if ($this->isColumnModified(SeguirTableMap::COL_ID_PROPOSICAO)) {
             $modifiedColumns[':p' . $index++]  = 'id_proposicao';
         }
-        if ($this->isColumnModified(CurtirTableMap::COL_ID_USUARIO)) {
+        if ($this->isColumnModified(SeguirTableMap::COL_ID_USUARIO)) {
             $modifiedColumns[':p' . $index++]  = 'id_usuario';
         }
-        if ($this->isColumnModified(CurtirTableMap::COL_DATA_CADASTRO)) {
+        if ($this->isColumnModified(SeguirTableMap::COL_DATA_CADASTRO)) {
             $modifiedColumns[':p' . $index++]  = 'data_cadastro';
         }
 
         $sql = sprintf(
-            'INSERT INTO curtir (%s) VALUES (%s)',
+            'INSERT INTO seguir (%s) VALUES (%s)',
             implode(', ', $modifiedColumns),
             implode(', ', array_keys($modifiedColumns))
         );
@@ -788,7 +788,7 @@ abstract class Curtir implements ActiveRecordInterface
      */
     public function getByName($name, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = CurtirTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = SeguirTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
         $field = $this->getByPosition($pos);
 
         return $field;
@@ -837,11 +837,11 @@ abstract class Curtir implements ActiveRecordInterface
     public function toArray($keyType = TableMap::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array(), $includeForeignObjects = false)
     {
 
-        if (isset($alreadyDumpedObjects['Curtir'][$this->hashCode()])) {
+        if (isset($alreadyDumpedObjects['Seguir'][$this->hashCode()])) {
             return '*RECURSION*';
         }
-        $alreadyDumpedObjects['Curtir'][$this->hashCode()] = true;
-        $keys = CurtirTableMap::getFieldNames($keyType);
+        $alreadyDumpedObjects['Seguir'][$this->hashCode()] = true;
+        $keys = SeguirTableMap::getFieldNames($keyType);
         $result = array(
             $keys[0] => $this->getIdProposicao(),
             $keys[1] => $this->getIdUsuario(),
@@ -901,11 +901,11 @@ abstract class Curtir implements ActiveRecordInterface
      *                one of the class type constants TableMap::TYPE_PHPNAME, TableMap::TYPE_CAMELNAME
      *                TableMap::TYPE_COLNAME, TableMap::TYPE_FIELDNAME, TableMap::TYPE_NUM.
      *                Defaults to TableMap::TYPE_PHPNAME.
-     * @return $this|\Model\Curtir
+     * @return $this|\Model\Seguir
      */
     public function setByName($name, $value, $type = TableMap::TYPE_PHPNAME)
     {
-        $pos = CurtirTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
+        $pos = SeguirTableMap::translateFieldName($name, $type, TableMap::TYPE_NUM);
 
         return $this->setByPosition($pos, $value);
     }
@@ -916,7 +916,7 @@ abstract class Curtir implements ActiveRecordInterface
      *
      * @param  int $pos position in xml schema
      * @param  mixed $value field value
-     * @return $this|\Model\Curtir
+     * @return $this|\Model\Seguir
      */
     public function setByPosition($pos, $value)
     {
@@ -954,7 +954,7 @@ abstract class Curtir implements ActiveRecordInterface
      */
     public function fromArray($arr, $keyType = TableMap::TYPE_PHPNAME)
     {
-        $keys = CurtirTableMap::getFieldNames($keyType);
+        $keys = SeguirTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
             $this->setIdProposicao($arr[$keys[0]]);
@@ -984,7 +984,7 @@ abstract class Curtir implements ActiveRecordInterface
      * @param string $data The source data to import from
      * @param string $keyType The type of keys the array uses.
      *
-     * @return $this|\Model\Curtir The current object, for fluid interface
+     * @return $this|\Model\Seguir The current object, for fluid interface
      */
     public function importFrom($parser, $data, $keyType = TableMap::TYPE_PHPNAME)
     {
@@ -1004,16 +1004,16 @@ abstract class Curtir implements ActiveRecordInterface
      */
     public function buildCriteria()
     {
-        $criteria = new Criteria(CurtirTableMap::DATABASE_NAME);
+        $criteria = new Criteria(SeguirTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(CurtirTableMap::COL_ID_PROPOSICAO)) {
-            $criteria->add(CurtirTableMap::COL_ID_PROPOSICAO, $this->id_proposicao);
+        if ($this->isColumnModified(SeguirTableMap::COL_ID_PROPOSICAO)) {
+            $criteria->add(SeguirTableMap::COL_ID_PROPOSICAO, $this->id_proposicao);
         }
-        if ($this->isColumnModified(CurtirTableMap::COL_ID_USUARIO)) {
-            $criteria->add(CurtirTableMap::COL_ID_USUARIO, $this->id_usuario);
+        if ($this->isColumnModified(SeguirTableMap::COL_ID_USUARIO)) {
+            $criteria->add(SeguirTableMap::COL_ID_USUARIO, $this->id_usuario);
         }
-        if ($this->isColumnModified(CurtirTableMap::COL_DATA_CADASTRO)) {
-            $criteria->add(CurtirTableMap::COL_DATA_CADASTRO, $this->data_cadastro);
+        if ($this->isColumnModified(SeguirTableMap::COL_DATA_CADASTRO)) {
+            $criteria->add(SeguirTableMap::COL_DATA_CADASTRO, $this->data_cadastro);
         }
 
         return $criteria;
@@ -1031,9 +1031,9 @@ abstract class Curtir implements ActiveRecordInterface
      */
     public function buildPkeyCriteria()
     {
-        $criteria = ChildCurtirQuery::create();
-        $criteria->add(CurtirTableMap::COL_ID_PROPOSICAO, $this->id_proposicao);
-        $criteria->add(CurtirTableMap::COL_ID_USUARIO, $this->id_usuario);
+        $criteria = ChildSeguirQuery::create();
+        $criteria->add(SeguirTableMap::COL_ID_PROPOSICAO, $this->id_proposicao);
+        $criteria->add(SeguirTableMap::COL_ID_USUARIO, $this->id_usuario);
 
         return $criteria;
     }
@@ -1052,14 +1052,14 @@ abstract class Curtir implements ActiveRecordInterface
         $validPrimaryKeyFKs = 2;
         $primaryKeyFKs = [];
 
-        //relation fk_curtir_proposicao1 to table proposicao
+        //relation fk_seguir_proposicao1 to table proposicao
         if ($this->aProposicao && $hash = spl_object_hash($this->aProposicao)) {
             $primaryKeyFKs[] = $hash;
         } else {
             $validPrimaryKeyFKs = false;
         }
 
-        //relation fk_curtir_usuario1 to table usuario
+        //relation fk_seguir_usuario1 to table usuario
         if ($this->aUsuario && $hash = spl_object_hash($this->aUsuario)) {
             $primaryKeyFKs[] = $hash;
         } else {
@@ -1116,7 +1116,7 @@ abstract class Curtir implements ActiveRecordInterface
      * If desired, this method can also make copies of all associated (fkey referrers)
      * objects.
      *
-     * @param      object $copyObj An object of \Model\Curtir (or compatible) type.
+     * @param      object $copyObj An object of \Model\Seguir (or compatible) type.
      * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
      * @param      boolean $makeNew Whether to reset autoincrement PKs and make the object new.
      * @throws PropelException
@@ -1140,7 +1140,7 @@ abstract class Curtir implements ActiveRecordInterface
      * objects.
      *
      * @param  boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return \Model\Curtir Clone of current object.
+     * @return \Model\Seguir Clone of current object.
      * @throws PropelException
      */
     public function copy($deepCopy = false)
@@ -1157,14 +1157,14 @@ abstract class Curtir implements ActiveRecordInterface
      * Declares an association between this object and a ChildProposicao object.
      *
      * @param  ChildProposicao $v
-     * @return $this|\Model\Curtir The current object (for fluent API support)
+     * @return $this|\Model\Seguir The current object (for fluent API support)
      * @throws PropelException
      */
     public function setProposicao(ChildProposicao $v = null)
     {
         // aggregate_column_relation behavior
         if (null !== $this->aProposicao && $v !== $this->aProposicao) {
-            $this->oldProposicaoQteCurtidas = $this->aProposicao;
+            $this->oldProposicaoQteSeguidores = $this->aProposicao;
         }
         if ($v === null) {
             $this->setIdProposicao(NULL);
@@ -1177,7 +1177,7 @@ abstract class Curtir implements ActiveRecordInterface
         // Add binding for other direction of this n:n relationship.
         // If this object has already been added to the ChildProposicao object, it will not be re-added.
         if ($v !== null) {
-            $v->addCurtir($this);
+            $v->addSeguir($this);
         }
 
 
@@ -1201,7 +1201,7 @@ abstract class Curtir implements ActiveRecordInterface
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aProposicao->addCurtirs($this);
+                $this->aProposicao->addSeguirs($this);
              */
         }
 
@@ -1212,7 +1212,7 @@ abstract class Curtir implements ActiveRecordInterface
      * Declares an association between this object and a ChildUsuario object.
      *
      * @param  ChildUsuario $v
-     * @return $this|\Model\Curtir The current object (for fluent API support)
+     * @return $this|\Model\Seguir The current object (for fluent API support)
      * @throws PropelException
      */
     public function setUsuario(ChildUsuario $v = null)
@@ -1228,7 +1228,7 @@ abstract class Curtir implements ActiveRecordInterface
         // Add binding for other direction of this n:n relationship.
         // If this object has already been added to the ChildUsuario object, it will not be re-added.
         if ($v !== null) {
-            $v->addCurtir($this);
+            $v->addSeguir($this);
         }
 
 
@@ -1252,7 +1252,7 @@ abstract class Curtir implements ActiveRecordInterface
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aUsuario->addCurtirs($this);
+                $this->aUsuario->addSeguirs($this);
              */
         }
 
@@ -1267,10 +1267,10 @@ abstract class Curtir implements ActiveRecordInterface
     public function clear()
     {
         if (null !== $this->aProposicao) {
-            $this->aProposicao->removeCurtir($this);
+            $this->aProposicao->removeSeguir($this);
         }
         if (null !== $this->aUsuario) {
-            $this->aUsuario->removeCurtir($this);
+            $this->aUsuario->removeSeguir($this);
         }
         $this->id_proposicao = null;
         $this->id_usuario = null;
@@ -1306,24 +1306,24 @@ abstract class Curtir implements ActiveRecordInterface
      */
     public function __toString()
     {
-        return (string) $this->exportTo(CurtirTableMap::DEFAULT_STRING_FORMAT);
+        return (string) $this->exportTo(SeguirTableMap::DEFAULT_STRING_FORMAT);
     }
 
-    // aggregate_column_relation_aggregate_curtir behavior
+    // aggregate_column_relation_aggregate_seguir behavior
 
     /**
      * Update the aggregate column in the related Proposicao object
      *
      * @param ConnectionInterface $con A connection object
      */
-    protected function updateRelatedProposicaoQteCurtidas(ConnectionInterface $con)
+    protected function updateRelatedProposicaoQteSeguidores(ConnectionInterface $con)
     {
         if ($proposicao = $this->getProposicao()) {
-            $proposicao->updateQteCurtidas($con);
+            $proposicao->updateQteSeguidores($con);
         }
-        if ($this->oldProposicaoQteCurtidas) {
-            $this->oldProposicaoQteCurtidas->updateQteCurtidas($con);
-            $this->oldProposicaoQteCurtidas = null;
+        if ($this->oldProposicaoQteSeguidores) {
+            $this->oldProposicaoQteSeguidores->updateQteSeguidores($con);
+            $this->oldProposicaoQteSeguidores = null;
         }
     }
 

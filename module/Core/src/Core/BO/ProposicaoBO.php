@@ -59,9 +59,27 @@ class ProposicaoBO extends BO {
 	 * @throws Exception
 	 * @return boolean
 	 */
-	public function save(Proposicao $o) {
+	public function save(Proposicao $o, $imagem = null) {
 		$con = Propel::getWriteConnection(ProposicaoTableMap::DATABASE_NAME);
 		$con->beginTransaction();
+		
+		// Resize Image
+		if($imagem != null) {
+			try {
+				$thumbnailer = $this->getServiceLocator()->get('WebinoImageThumb');
+				$thumb = $thumbnailer->create($imagem, $options = [], $plugins = []);
+				$thumb->adaptiveResize(1146, 302);
+				$thumb->save($imagem);
+				
+				$thumb = $thumbnailer->create($imagem, $options = [], $plugins = []);
+				$thumb->adaptiveResize(363, 302);
+				$thumb->save('./public/uploads/thumb_' . basename($imagem));
+				
+				$o->setImagem(basename($imagem));
+			} catch (\Exception $e) {
+				$this->handleException($e);
+			}
+		}
 		
 		try {
 			$o->save($con);
@@ -273,5 +291,15 @@ class ProposicaoBO extends BO {
 		$query->orderByNome();
 		
 		return $query->find();
+	}
+	
+	/**
+	 * Método deletePasso
+	 * @author <a href="mailto:bsaliba@gmail.com">Bruno Saliba</a>
+	 * @since 24/05/2016 21:14:55
+	 * @throws Exception
+	 */
+	public function minhaLista() {
+		return ProposicaoQuery::create()->orderByNome()->find();
 	}
 }

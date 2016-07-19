@@ -4,9 +4,9 @@ namespace Model\Base;
 
 use \Exception;
 use \PDO;
-use Model\Curtir as ChildCurtir;
-use Model\CurtirQuery as ChildCurtirQuery;
-use Model\Map\CurtirTableMap;
+use Model\Concluir as ChildConcluir;
+use Model\ConcluirQuery as ChildConcluirQuery;
+use Model\Map\ConcluirTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -16,99 +16,99 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 
 /**
- * Base class that represents a query for the 'curtir' table.
+ * Base class that represents a query for the 'concluir' table.
  *
  *
  *
- * @method     ChildCurtirQuery orderByIdProposicao($order = Criteria::ASC) Order by the id_proposicao column
- * @method     ChildCurtirQuery orderByIdUsuario($order = Criteria::ASC) Order by the id_usuario column
- * @method     ChildCurtirQuery orderByDataCadastro($order = Criteria::ASC) Order by the data_cadastro column
+ * @method     ChildConcluirQuery orderByIdProposicao($order = Criteria::ASC) Order by the id_proposicao column
+ * @method     ChildConcluirQuery orderByIdUsuario($order = Criteria::ASC) Order by the id_usuario column
+ * @method     ChildConcluirQuery orderByDataCadastro($order = Criteria::ASC) Order by the data_cadastro column
  *
- * @method     ChildCurtirQuery groupByIdProposicao() Group by the id_proposicao column
- * @method     ChildCurtirQuery groupByIdUsuario() Group by the id_usuario column
- * @method     ChildCurtirQuery groupByDataCadastro() Group by the data_cadastro column
+ * @method     ChildConcluirQuery groupByIdProposicao() Group by the id_proposicao column
+ * @method     ChildConcluirQuery groupByIdUsuario() Group by the id_usuario column
+ * @method     ChildConcluirQuery groupByDataCadastro() Group by the data_cadastro column
  *
- * @method     ChildCurtirQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
- * @method     ChildCurtirQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
- * @method     ChildCurtirQuery innerJoin($relation) Adds a INNER JOIN clause to the query
+ * @method     ChildConcluirQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
+ * @method     ChildConcluirQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
+ * @method     ChildConcluirQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildCurtirQuery leftJoinWith($relation) Adds a LEFT JOIN clause and with to the query
- * @method     ChildCurtirQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
- * @method     ChildCurtirQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
+ * @method     ChildConcluirQuery leftJoinWith($relation) Adds a LEFT JOIN clause and with to the query
+ * @method     ChildConcluirQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
+ * @method     ChildConcluirQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildCurtirQuery leftJoinProposicao($relationAlias = null) Adds a LEFT JOIN clause to the query using the Proposicao relation
- * @method     ChildCurtirQuery rightJoinProposicao($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Proposicao relation
- * @method     ChildCurtirQuery innerJoinProposicao($relationAlias = null) Adds a INNER JOIN clause to the query using the Proposicao relation
+ * @method     ChildConcluirQuery leftJoinProposicao($relationAlias = null) Adds a LEFT JOIN clause to the query using the Proposicao relation
+ * @method     ChildConcluirQuery rightJoinProposicao($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Proposicao relation
+ * @method     ChildConcluirQuery innerJoinProposicao($relationAlias = null) Adds a INNER JOIN clause to the query using the Proposicao relation
  *
- * @method     ChildCurtirQuery joinWithProposicao($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Proposicao relation
+ * @method     ChildConcluirQuery joinWithProposicao($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Proposicao relation
  *
- * @method     ChildCurtirQuery leftJoinWithProposicao() Adds a LEFT JOIN clause and with to the query using the Proposicao relation
- * @method     ChildCurtirQuery rightJoinWithProposicao() Adds a RIGHT JOIN clause and with to the query using the Proposicao relation
- * @method     ChildCurtirQuery innerJoinWithProposicao() Adds a INNER JOIN clause and with to the query using the Proposicao relation
+ * @method     ChildConcluirQuery leftJoinWithProposicao() Adds a LEFT JOIN clause and with to the query using the Proposicao relation
+ * @method     ChildConcluirQuery rightJoinWithProposicao() Adds a RIGHT JOIN clause and with to the query using the Proposicao relation
+ * @method     ChildConcluirQuery innerJoinWithProposicao() Adds a INNER JOIN clause and with to the query using the Proposicao relation
  *
- * @method     ChildCurtirQuery leftJoinUsuario($relationAlias = null) Adds a LEFT JOIN clause to the query using the Usuario relation
- * @method     ChildCurtirQuery rightJoinUsuario($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Usuario relation
- * @method     ChildCurtirQuery innerJoinUsuario($relationAlias = null) Adds a INNER JOIN clause to the query using the Usuario relation
+ * @method     ChildConcluirQuery leftJoinUsuario($relationAlias = null) Adds a LEFT JOIN clause to the query using the Usuario relation
+ * @method     ChildConcluirQuery rightJoinUsuario($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Usuario relation
+ * @method     ChildConcluirQuery innerJoinUsuario($relationAlias = null) Adds a INNER JOIN clause to the query using the Usuario relation
  *
- * @method     ChildCurtirQuery joinWithUsuario($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Usuario relation
+ * @method     ChildConcluirQuery joinWithUsuario($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Usuario relation
  *
- * @method     ChildCurtirQuery leftJoinWithUsuario() Adds a LEFT JOIN clause and with to the query using the Usuario relation
- * @method     ChildCurtirQuery rightJoinWithUsuario() Adds a RIGHT JOIN clause and with to the query using the Usuario relation
- * @method     ChildCurtirQuery innerJoinWithUsuario() Adds a INNER JOIN clause and with to the query using the Usuario relation
+ * @method     ChildConcluirQuery leftJoinWithUsuario() Adds a LEFT JOIN clause and with to the query using the Usuario relation
+ * @method     ChildConcluirQuery rightJoinWithUsuario() Adds a RIGHT JOIN clause and with to the query using the Usuario relation
+ * @method     ChildConcluirQuery innerJoinWithUsuario() Adds a INNER JOIN clause and with to the query using the Usuario relation
  *
  * @method     \Model\ProposicaoQuery|\Model\UsuarioQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
- * @method     ChildCurtir findOne(ConnectionInterface $con = null) Return the first ChildCurtir matching the query
- * @method     ChildCurtir findOneOrCreate(ConnectionInterface $con = null) Return the first ChildCurtir matching the query, or a new ChildCurtir object populated from the query conditions when no match is found
+ * @method     ChildConcluir findOne(ConnectionInterface $con = null) Return the first ChildConcluir matching the query
+ * @method     ChildConcluir findOneOrCreate(ConnectionInterface $con = null) Return the first ChildConcluir matching the query, or a new ChildConcluir object populated from the query conditions when no match is found
  *
- * @method     ChildCurtir findOneByIdProposicao(int $id_proposicao) Return the first ChildCurtir filtered by the id_proposicao column
- * @method     ChildCurtir findOneByIdUsuario(int $id_usuario) Return the first ChildCurtir filtered by the id_usuario column
- * @method     ChildCurtir findOneByDataCadastro(string $data_cadastro) Return the first ChildCurtir filtered by the data_cadastro column *
+ * @method     ChildConcluir findOneByIdProposicao(int $id_proposicao) Return the first ChildConcluir filtered by the id_proposicao column
+ * @method     ChildConcluir findOneByIdUsuario(int $id_usuario) Return the first ChildConcluir filtered by the id_usuario column
+ * @method     ChildConcluir findOneByDataCadastro(string $data_cadastro) Return the first ChildConcluir filtered by the data_cadastro column *
 
- * @method     ChildCurtir requirePk($key, ConnectionInterface $con = null) Return the ChildCurtir by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildCurtir requireOne(ConnectionInterface $con = null) Return the first ChildCurtir matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildConcluir requirePk($key, ConnectionInterface $con = null) Return the ChildConcluir by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildConcluir requireOne(ConnectionInterface $con = null) Return the first ChildConcluir matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildCurtir requireOneByIdProposicao(int $id_proposicao) Return the first ChildCurtir filtered by the id_proposicao column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildCurtir requireOneByIdUsuario(int $id_usuario) Return the first ChildCurtir filtered by the id_usuario column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildCurtir requireOneByDataCadastro(string $data_cadastro) Return the first ChildCurtir filtered by the data_cadastro column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildConcluir requireOneByIdProposicao(int $id_proposicao) Return the first ChildConcluir filtered by the id_proposicao column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildConcluir requireOneByIdUsuario(int $id_usuario) Return the first ChildConcluir filtered by the id_usuario column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildConcluir requireOneByDataCadastro(string $data_cadastro) Return the first ChildConcluir filtered by the data_cadastro column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildCurtir[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildCurtir objects based on current ModelCriteria
- * @method     ChildCurtir[]|ObjectCollection findByIdProposicao(int $id_proposicao) Return ChildCurtir objects filtered by the id_proposicao column
- * @method     ChildCurtir[]|ObjectCollection findByIdUsuario(int $id_usuario) Return ChildCurtir objects filtered by the id_usuario column
- * @method     ChildCurtir[]|ObjectCollection findByDataCadastro(string $data_cadastro) Return ChildCurtir objects filtered by the data_cadastro column
- * @method     ChildCurtir[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @method     ChildConcluir[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildConcluir objects based on current ModelCriteria
+ * @method     ChildConcluir[]|ObjectCollection findByIdProposicao(int $id_proposicao) Return ChildConcluir objects filtered by the id_proposicao column
+ * @method     ChildConcluir[]|ObjectCollection findByIdUsuario(int $id_usuario) Return ChildConcluir objects filtered by the id_usuario column
+ * @method     ChildConcluir[]|ObjectCollection findByDataCadastro(string $data_cadastro) Return ChildConcluir objects filtered by the data_cadastro column
+ * @method     ChildConcluir[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
-abstract class CurtirQuery extends ModelCriteria
+abstract class ConcluirQuery extends ModelCriteria
 {
     protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
-     * Initializes internal state of \Model\Base\CurtirQuery object.
+     * Initializes internal state of \Model\Base\ConcluirQuery object.
      *
      * @param     string $dbName The database name
      * @param     string $modelName The phpName of a model, e.g. 'Book'
      * @param     string $modelAlias The alias for the model in this query, e.g. 'b'
      */
-    public function __construct($dbName = 'default', $modelName = '\\Model\\Curtir', $modelAlias = null)
+    public function __construct($dbName = 'default', $modelName = '\\Model\\Concluir', $modelAlias = null)
     {
         parent::__construct($dbName, $modelName, $modelAlias);
     }
 
     /**
-     * Returns a new ChildCurtirQuery object.
+     * Returns a new ChildConcluirQuery object.
      *
      * @param     string $modelAlias The alias of a model in the query
      * @param     Criteria $criteria Optional Criteria to build the query from
      *
-     * @return ChildCurtirQuery
+     * @return ChildConcluirQuery
      */
     public static function create($modelAlias = null, Criteria $criteria = null)
     {
-        if ($criteria instanceof ChildCurtirQuery) {
+        if ($criteria instanceof ChildConcluirQuery) {
             return $criteria;
         }
-        $query = new ChildCurtirQuery();
+        $query = new ChildConcluirQuery();
         if (null !== $modelAlias) {
             $query->setModelAlias($modelAlias);
         }
@@ -131,7 +131,7 @@ abstract class CurtirQuery extends ModelCriteria
      * @param array[$id_proposicao, $id_usuario] $key Primary key to use for the query
      * @param ConnectionInterface $con an optional connection object
      *
-     * @return ChildCurtir|array|mixed the result, formatted by the current formatter
+     * @return ChildConcluir|array|mixed the result, formatted by the current formatter
      */
     public function findPk($key, ConnectionInterface $con = null)
     {
@@ -140,7 +140,7 @@ abstract class CurtirQuery extends ModelCriteria
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(CurtirTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection(ConcluirTableMap::DATABASE_NAME);
         }
 
         $this->basePreSelect($con);
@@ -153,7 +153,7 @@ abstract class CurtirQuery extends ModelCriteria
             return $this->findPkComplex($key, $con);
         }
 
-        if ((null !== ($obj = CurtirTableMap::getInstanceFromPool(serialize([(null === $key[0] || is_scalar($key[0]) || is_callable([$key[0], '__toString']) ? (string) $key[0] : $key[0]), (null === $key[1] || is_scalar($key[1]) || is_callable([$key[1], '__toString']) ? (string) $key[1] : $key[1])]))))) {
+        if ((null !== ($obj = ConcluirTableMap::getInstanceFromPool(serialize([(null === $key[0] || is_scalar($key[0]) || is_callable([$key[0], '__toString']) ? (string) $key[0] : $key[0]), (null === $key[1] || is_scalar($key[1]) || is_callable([$key[1], '__toString']) ? (string) $key[1] : $key[1])]))))) {
             // the object is already in the instance pool
             return $obj;
         }
@@ -170,11 +170,11 @@ abstract class CurtirQuery extends ModelCriteria
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ChildCurtir A model object, or null if the key is not found
+     * @return ChildConcluir A model object, or null if the key is not found
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id_proposicao, id_usuario, data_cadastro FROM curtir WHERE id_proposicao = :p0 AND id_usuario = :p1';
+        $sql = 'SELECT id_proposicao, id_usuario, data_cadastro FROM concluir WHERE id_proposicao = :p0 AND id_usuario = :p1';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
@@ -186,10 +186,10 @@ abstract class CurtirQuery extends ModelCriteria
         }
         $obj = null;
         if ($row = $stmt->fetch(\PDO::FETCH_NUM)) {
-            /** @var ChildCurtir $obj */
-            $obj = new ChildCurtir();
+            /** @var ChildConcluir $obj */
+            $obj = new ChildConcluir();
             $obj->hydrate($row);
-            CurtirTableMap::addInstanceToPool($obj, serialize([(null === $key[0] || is_scalar($key[0]) || is_callable([$key[0], '__toString']) ? (string) $key[0] : $key[0]), (null === $key[1] || is_scalar($key[1]) || is_callable([$key[1], '__toString']) ? (string) $key[1] : $key[1])]));
+            ConcluirTableMap::addInstanceToPool($obj, serialize([(null === $key[0] || is_scalar($key[0]) || is_callable([$key[0], '__toString']) ? (string) $key[0] : $key[0]), (null === $key[1] || is_scalar($key[1]) || is_callable([$key[1], '__toString']) ? (string) $key[1] : $key[1])]));
         }
         $stmt->closeCursor();
 
@@ -202,7 +202,7 @@ abstract class CurtirQuery extends ModelCriteria
      * @param     mixed $key Primary key to use for the query
      * @param     ConnectionInterface $con A connection object
      *
-     * @return ChildCurtir|array|mixed the result, formatted by the current formatter
+     * @return ChildConcluir|array|mixed the result, formatted by the current formatter
      */
     protected function findPkComplex($key, ConnectionInterface $con)
     {
@@ -244,12 +244,12 @@ abstract class CurtirQuery extends ModelCriteria
      *
      * @param     mixed $key Primary key to use for the query
      *
-     * @return $this|ChildCurtirQuery The current query, for fluid interface
+     * @return $this|ChildConcluirQuery The current query, for fluid interface
      */
     public function filterByPrimaryKey($key)
     {
-        $this->addUsingAlias(CurtirTableMap::COL_ID_PROPOSICAO, $key[0], Criteria::EQUAL);
-        $this->addUsingAlias(CurtirTableMap::COL_ID_USUARIO, $key[1], Criteria::EQUAL);
+        $this->addUsingAlias(ConcluirTableMap::COL_ID_PROPOSICAO, $key[0], Criteria::EQUAL);
+        $this->addUsingAlias(ConcluirTableMap::COL_ID_USUARIO, $key[1], Criteria::EQUAL);
 
         return $this;
     }
@@ -259,7 +259,7 @@ abstract class CurtirQuery extends ModelCriteria
      *
      * @param     array $keys The list of primary key to use for the query
      *
-     * @return $this|ChildCurtirQuery The current query, for fluid interface
+     * @return $this|ChildConcluirQuery The current query, for fluid interface
      */
     public function filterByPrimaryKeys($keys)
     {
@@ -267,8 +267,8 @@ abstract class CurtirQuery extends ModelCriteria
             return $this->add(null, '1<>1', Criteria::CUSTOM);
         }
         foreach ($keys as $key) {
-            $cton0 = $this->getNewCriterion(CurtirTableMap::COL_ID_PROPOSICAO, $key[0], Criteria::EQUAL);
-            $cton1 = $this->getNewCriterion(CurtirTableMap::COL_ID_USUARIO, $key[1], Criteria::EQUAL);
+            $cton0 = $this->getNewCriterion(ConcluirTableMap::COL_ID_PROPOSICAO, $key[0], Criteria::EQUAL);
+            $cton1 = $this->getNewCriterion(ConcluirTableMap::COL_ID_USUARIO, $key[1], Criteria::EQUAL);
             $cton0->addAnd($cton1);
             $this->addOr($cton0);
         }
@@ -294,18 +294,18 @@ abstract class CurtirQuery extends ModelCriteria
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildCurtirQuery The current query, for fluid interface
+     * @return $this|ChildConcluirQuery The current query, for fluid interface
      */
     public function filterByIdProposicao($idProposicao = null, $comparison = null)
     {
         if (is_array($idProposicao)) {
             $useMinMax = false;
             if (isset($idProposicao['min'])) {
-                $this->addUsingAlias(CurtirTableMap::COL_ID_PROPOSICAO, $idProposicao['min'], Criteria::GREATER_EQUAL);
+                $this->addUsingAlias(ConcluirTableMap::COL_ID_PROPOSICAO, $idProposicao['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
             if (isset($idProposicao['max'])) {
-                $this->addUsingAlias(CurtirTableMap::COL_ID_PROPOSICAO, $idProposicao['max'], Criteria::LESS_EQUAL);
+                $this->addUsingAlias(ConcluirTableMap::COL_ID_PROPOSICAO, $idProposicao['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -316,7 +316,7 @@ abstract class CurtirQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(CurtirTableMap::COL_ID_PROPOSICAO, $idProposicao, $comparison);
+        return $this->addUsingAlias(ConcluirTableMap::COL_ID_PROPOSICAO, $idProposicao, $comparison);
     }
 
     /**
@@ -337,18 +337,18 @@ abstract class CurtirQuery extends ModelCriteria
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildCurtirQuery The current query, for fluid interface
+     * @return $this|ChildConcluirQuery The current query, for fluid interface
      */
     public function filterByIdUsuario($idUsuario = null, $comparison = null)
     {
         if (is_array($idUsuario)) {
             $useMinMax = false;
             if (isset($idUsuario['min'])) {
-                $this->addUsingAlias(CurtirTableMap::COL_ID_USUARIO, $idUsuario['min'], Criteria::GREATER_EQUAL);
+                $this->addUsingAlias(ConcluirTableMap::COL_ID_USUARIO, $idUsuario['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
             if (isset($idUsuario['max'])) {
-                $this->addUsingAlias(CurtirTableMap::COL_ID_USUARIO, $idUsuario['max'], Criteria::LESS_EQUAL);
+                $this->addUsingAlias(ConcluirTableMap::COL_ID_USUARIO, $idUsuario['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -359,7 +359,7 @@ abstract class CurtirQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(CurtirTableMap::COL_ID_USUARIO, $idUsuario, $comparison);
+        return $this->addUsingAlias(ConcluirTableMap::COL_ID_USUARIO, $idUsuario, $comparison);
     }
 
     /**
@@ -380,18 +380,18 @@ abstract class CurtirQuery extends ModelCriteria
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
      * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return $this|ChildCurtirQuery The current query, for fluid interface
+     * @return $this|ChildConcluirQuery The current query, for fluid interface
      */
     public function filterByDataCadastro($dataCadastro = null, $comparison = null)
     {
         if (is_array($dataCadastro)) {
             $useMinMax = false;
             if (isset($dataCadastro['min'])) {
-                $this->addUsingAlias(CurtirTableMap::COL_DATA_CADASTRO, $dataCadastro['min'], Criteria::GREATER_EQUAL);
+                $this->addUsingAlias(ConcluirTableMap::COL_DATA_CADASTRO, $dataCadastro['min'], Criteria::GREATER_EQUAL);
                 $useMinMax = true;
             }
             if (isset($dataCadastro['max'])) {
-                $this->addUsingAlias(CurtirTableMap::COL_DATA_CADASTRO, $dataCadastro['max'], Criteria::LESS_EQUAL);
+                $this->addUsingAlias(ConcluirTableMap::COL_DATA_CADASTRO, $dataCadastro['max'], Criteria::LESS_EQUAL);
                 $useMinMax = true;
             }
             if ($useMinMax) {
@@ -402,7 +402,7 @@ abstract class CurtirQuery extends ModelCriteria
             }
         }
 
-        return $this->addUsingAlias(CurtirTableMap::COL_DATA_CADASTRO, $dataCadastro, $comparison);
+        return $this->addUsingAlias(ConcluirTableMap::COL_DATA_CADASTRO, $dataCadastro, $comparison);
     }
 
     /**
@@ -413,20 +413,20 @@ abstract class CurtirQuery extends ModelCriteria
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ChildCurtirQuery The current query, for fluid interface
+     * @return ChildConcluirQuery The current query, for fluid interface
      */
     public function filterByProposicao($proposicao, $comparison = null)
     {
         if ($proposicao instanceof \Model\Proposicao) {
             return $this
-                ->addUsingAlias(CurtirTableMap::COL_ID_PROPOSICAO, $proposicao->getId(), $comparison);
+                ->addUsingAlias(ConcluirTableMap::COL_ID_PROPOSICAO, $proposicao->getId(), $comparison);
         } elseif ($proposicao instanceof ObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(CurtirTableMap::COL_ID_PROPOSICAO, $proposicao->toKeyValue('PrimaryKey', 'Id'), $comparison);
+                ->addUsingAlias(ConcluirTableMap::COL_ID_PROPOSICAO, $proposicao->toKeyValue('PrimaryKey', 'Id'), $comparison);
         } else {
             throw new PropelException('filterByProposicao() only accepts arguments of type \Model\Proposicao or Collection');
         }
@@ -438,7 +438,7 @@ abstract class CurtirQuery extends ModelCriteria
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return $this|ChildCurtirQuery The current query, for fluid interface
+     * @return $this|ChildConcluirQuery The current query, for fluid interface
      */
     public function joinProposicao($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
@@ -490,20 +490,20 @@ abstract class CurtirQuery extends ModelCriteria
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
-     * @return ChildCurtirQuery The current query, for fluid interface
+     * @return ChildConcluirQuery The current query, for fluid interface
      */
     public function filterByUsuario($usuario, $comparison = null)
     {
         if ($usuario instanceof \Model\Usuario) {
             return $this
-                ->addUsingAlias(CurtirTableMap::COL_ID_USUARIO, $usuario->getId(), $comparison);
+                ->addUsingAlias(ConcluirTableMap::COL_ID_USUARIO, $usuario->getId(), $comparison);
         } elseif ($usuario instanceof ObjectCollection) {
             if (null === $comparison) {
                 $comparison = Criteria::IN;
             }
 
             return $this
-                ->addUsingAlias(CurtirTableMap::COL_ID_USUARIO, $usuario->toKeyValue('PrimaryKey', 'Id'), $comparison);
+                ->addUsingAlias(ConcluirTableMap::COL_ID_USUARIO, $usuario->toKeyValue('PrimaryKey', 'Id'), $comparison);
         } else {
             throw new PropelException('filterByUsuario() only accepts arguments of type \Model\Usuario or Collection');
         }
@@ -515,7 +515,7 @@ abstract class CurtirQuery extends ModelCriteria
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return $this|ChildCurtirQuery The current query, for fluid interface
+     * @return $this|ChildConcluirQuery The current query, for fluid interface
      */
     public function joinUsuario($relationAlias = null, $joinType = Criteria::INNER_JOIN)
     {
@@ -562,15 +562,15 @@ abstract class CurtirQuery extends ModelCriteria
     /**
      * Exclude object from result
      *
-     * @param   ChildCurtir $curtir Object to remove from the list of results
+     * @param   ChildConcluir $concluir Object to remove from the list of results
      *
-     * @return $this|ChildCurtirQuery The current query, for fluid interface
+     * @return $this|ChildConcluirQuery The current query, for fluid interface
      */
-    public function prune($curtir = null)
+    public function prune($concluir = null)
     {
-        if ($curtir) {
-            $this->addCond('pruneCond0', $this->getAliasedColName(CurtirTableMap::COL_ID_PROPOSICAO), $curtir->getIdProposicao(), Criteria::NOT_EQUAL);
-            $this->addCond('pruneCond1', $this->getAliasedColName(CurtirTableMap::COL_ID_USUARIO), $curtir->getIdUsuario(), Criteria::NOT_EQUAL);
+        if ($concluir) {
+            $this->addCond('pruneCond0', $this->getAliasedColName(ConcluirTableMap::COL_ID_PROPOSICAO), $concluir->getIdProposicao(), Criteria::NOT_EQUAL);
+            $this->addCond('pruneCond1', $this->getAliasedColName(ConcluirTableMap::COL_ID_USUARIO), $concluir->getIdUsuario(), Criteria::NOT_EQUAL);
             $this->combine(array('pruneCond0', 'pruneCond1'), Criteria::LOGICAL_OR);
         }
 
@@ -584,8 +584,8 @@ abstract class CurtirQuery extends ModelCriteria
      */
     protected function basePreDelete(ConnectionInterface $con)
     {
-        // aggregate_column_relation_aggregate_curtir behavior
-        $this->findRelatedProposicaoQteCurtidass($con);
+        // aggregate_column_relation_aggregate_concluir behavior
+        $this->findRelatedProposicaoQteConcluidoss($con);
 
         return $this->preDelete($con);
     }
@@ -598,8 +598,8 @@ abstract class CurtirQuery extends ModelCriteria
      */
     protected function basePostDelete($affectedRows, ConnectionInterface $con)
     {
-        // aggregate_column_relation_aggregate_curtir behavior
-        $this->updateRelatedProposicaoQteCurtidass($con);
+        // aggregate_column_relation_aggregate_concluir behavior
+        $this->updateRelatedProposicaoQteConcluidoss($con);
 
         return $this->postDelete($affectedRows, $con);
     }
@@ -613,8 +613,8 @@ abstract class CurtirQuery extends ModelCriteria
      */
     protected function basePreUpdate(&$values, ConnectionInterface $con, $forceIndividualSaves = false)
     {
-        // aggregate_column_relation_aggregate_curtir behavior
-        $this->findRelatedProposicaoQteCurtidass($con);
+        // aggregate_column_relation_aggregate_concluir behavior
+        $this->findRelatedProposicaoQteConcluidoss($con);
 
         return $this->preUpdate($values, $con, $forceIndividualSaves);
     }
@@ -627,14 +627,14 @@ abstract class CurtirQuery extends ModelCriteria
      */
     protected function basePostUpdate($affectedRows, ConnectionInterface $con)
     {
-        // aggregate_column_relation_aggregate_curtir behavior
-        $this->updateRelatedProposicaoQteCurtidass($con);
+        // aggregate_column_relation_aggregate_concluir behavior
+        $this->updateRelatedProposicaoQteConcluidoss($con);
 
         return $this->postUpdate($affectedRows, $con);
     }
 
     /**
-     * Deletes all rows from the curtir table.
+     * Deletes all rows from the concluir table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
@@ -642,7 +642,7 @@ abstract class CurtirQuery extends ModelCriteria
     public function doDeleteAll(ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(CurtirTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(ConcluirTableMap::DATABASE_NAME);
         }
 
         // use transaction because $criteria could contain info
@@ -653,8 +653,8 @@ abstract class CurtirQuery extends ModelCriteria
             // Because this db requires some delete cascade/set null emulation, we have to
             // clear the cached instance *after* the emulation has happened (since
             // instances get re-added by the select statement contained therein).
-            CurtirTableMap::clearInstancePool();
-            CurtirTableMap::clearRelatedInstancePool();
+            ConcluirTableMap::clearInstancePool();
+            ConcluirTableMap::clearRelatedInstancePool();
 
             return $affectedRows;
         });
@@ -672,36 +672,36 @@ abstract class CurtirQuery extends ModelCriteria
     public function delete(ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(CurtirTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(ConcluirTableMap::DATABASE_NAME);
         }
 
         $criteria = $this;
 
         // Set the correct dbName
-        $criteria->setDbName(CurtirTableMap::DATABASE_NAME);
+        $criteria->setDbName(ConcluirTableMap::DATABASE_NAME);
 
         // use transaction because $criteria could contain info
         // for more than one table or we could emulating ON DELETE CASCADE, etc.
         return $con->transaction(function () use ($con, $criteria) {
             $affectedRows = 0; // initialize var to track total num of affected rows
 
-            CurtirTableMap::removeInstanceFromPool($criteria);
+            ConcluirTableMap::removeInstanceFromPool($criteria);
 
             $affectedRows += ModelCriteria::delete($con);
-            CurtirTableMap::clearRelatedInstancePool();
+            ConcluirTableMap::clearRelatedInstancePool();
 
             return $affectedRows;
         });
     }
 
-    // aggregate_column_relation_aggregate_curtir behavior
+    // aggregate_column_relation_aggregate_concluir behavior
 
     /**
      * Finds the related Proposicao objects and keep them for later
      *
      * @param ConnectionInterface $con A connection object
      */
-    protected function findRelatedProposicaoQteCurtidass($con)
+    protected function findRelatedProposicaoQteConcluidoss($con)
     {
         $criteria = clone $this;
         if ($this->useAliasInSQL) {
@@ -710,18 +710,18 @@ abstract class CurtirQuery extends ModelCriteria
         } else {
             $alias = '';
         }
-        $this->proposicaoQteCurtidass = \Model\ProposicaoQuery::create()
-            ->joinCurtir($alias)
+        $this->proposicaoQteConcluidoss = \Model\ProposicaoQuery::create()
+            ->joinConcluir($alias)
             ->mergeWith($criteria)
             ->find($con);
     }
 
-    protected function updateRelatedProposicaoQteCurtidass($con)
+    protected function updateRelatedProposicaoQteConcluidoss($con)
     {
-        foreach ($this->proposicaoQteCurtidass as $proposicaoQteCurtidas) {
-            $proposicaoQteCurtidas->updateQteCurtidas($con);
+        foreach ($this->proposicaoQteConcluidoss as $proposicaoQteConcluidos) {
+            $proposicaoQteConcluidos->updateQteConcluidos($con);
         }
-        $this->proposicaoQteCurtidass = array();
+        $this->proposicaoQteConcluidoss = array();
     }
 
-} // CurtirQuery
+} // ConcluirQuery

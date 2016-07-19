@@ -59,7 +59,7 @@ class ProposicaoTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 10;
+    const NUM_COLUMNS = 14;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class ProposicaoTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 10;
+    const NUM_HYDRATE_COLUMNS = 14;
 
     /**
      * the column name for the id field
@@ -122,6 +122,26 @@ class ProposicaoTableMap extends TableMap
     const COL_CATEGORIA = 'proposicao.categoria';
 
     /**
+     * the column name for the qte_comentarios field
+     */
+    const COL_QTE_COMENTARIOS = 'proposicao.qte_comentarios';
+
+    /**
+     * the column name for the qte_curtidas field
+     */
+    const COL_QTE_CURTIDAS = 'proposicao.qte_curtidas';
+
+    /**
+     * the column name for the qte_seguidores field
+     */
+    const COL_QTE_SEGUIDORES = 'proposicao.qte_seguidores';
+
+    /**
+     * the column name for the qte_concluidos field
+     */
+    const COL_QTE_CONCLUIDOS = 'proposicao.qte_concluidos';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -133,11 +153,11 @@ class ProposicaoTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'IdUsuario', 'Nome', 'Objetivo', 'Start', 'Imagem', 'TempoTotal', 'DataCadastro', 'IsRascunho', 'Categoria', ),
-        self::TYPE_CAMELNAME     => array('id', 'idUsuario', 'nome', 'objetivo', 'start', 'imagem', 'tempoTotal', 'dataCadastro', 'isRascunho', 'categoria', ),
-        self::TYPE_COLNAME       => array(ProposicaoTableMap::COL_ID, ProposicaoTableMap::COL_ID_USUARIO, ProposicaoTableMap::COL_NOME, ProposicaoTableMap::COL_OBJETIVO, ProposicaoTableMap::COL_START, ProposicaoTableMap::COL_IMAGEM, ProposicaoTableMap::COL_TEMPO_TOTAL, ProposicaoTableMap::COL_DATA_CADASTRO, ProposicaoTableMap::COL_IS_RASCUNHO, ProposicaoTableMap::COL_CATEGORIA, ),
-        self::TYPE_FIELDNAME     => array('id', 'id_usuario', 'nome', 'objetivo', 'start', 'imagem', 'tempo_total', 'data_cadastro', 'is_rascunho', 'categoria', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+        self::TYPE_PHPNAME       => array('Id', 'IdUsuario', 'Nome', 'Objetivo', 'Start', 'Imagem', 'TempoTotal', 'DataCadastro', 'IsRascunho', 'Categoria', 'QteComentarios', 'QteCurtidas', 'QteSeguidores', 'QteConcluidos', ),
+        self::TYPE_CAMELNAME     => array('id', 'idUsuario', 'nome', 'objetivo', 'start', 'imagem', 'tempoTotal', 'dataCadastro', 'isRascunho', 'categoria', 'qteComentarios', 'qteCurtidas', 'qteSeguidores', 'qteConcluidos', ),
+        self::TYPE_COLNAME       => array(ProposicaoTableMap::COL_ID, ProposicaoTableMap::COL_ID_USUARIO, ProposicaoTableMap::COL_NOME, ProposicaoTableMap::COL_OBJETIVO, ProposicaoTableMap::COL_START, ProposicaoTableMap::COL_IMAGEM, ProposicaoTableMap::COL_TEMPO_TOTAL, ProposicaoTableMap::COL_DATA_CADASTRO, ProposicaoTableMap::COL_IS_RASCUNHO, ProposicaoTableMap::COL_CATEGORIA, ProposicaoTableMap::COL_QTE_COMENTARIOS, ProposicaoTableMap::COL_QTE_CURTIDAS, ProposicaoTableMap::COL_QTE_SEGUIDORES, ProposicaoTableMap::COL_QTE_CONCLUIDOS, ),
+        self::TYPE_FIELDNAME     => array('id', 'id_usuario', 'nome', 'objetivo', 'start', 'imagem', 'tempo_total', 'data_cadastro', 'is_rascunho', 'categoria', 'qte_comentarios', 'qte_curtidas', 'qte_seguidores', 'qte_concluidos', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
     );
 
     /**
@@ -147,11 +167,11 @@ class ProposicaoTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'IdUsuario' => 1, 'Nome' => 2, 'Objetivo' => 3, 'Start' => 4, 'Imagem' => 5, 'TempoTotal' => 6, 'DataCadastro' => 7, 'IsRascunho' => 8, 'Categoria' => 9, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'idUsuario' => 1, 'nome' => 2, 'objetivo' => 3, 'start' => 4, 'imagem' => 5, 'tempoTotal' => 6, 'dataCadastro' => 7, 'isRascunho' => 8, 'categoria' => 9, ),
-        self::TYPE_COLNAME       => array(ProposicaoTableMap::COL_ID => 0, ProposicaoTableMap::COL_ID_USUARIO => 1, ProposicaoTableMap::COL_NOME => 2, ProposicaoTableMap::COL_OBJETIVO => 3, ProposicaoTableMap::COL_START => 4, ProposicaoTableMap::COL_IMAGEM => 5, ProposicaoTableMap::COL_TEMPO_TOTAL => 6, ProposicaoTableMap::COL_DATA_CADASTRO => 7, ProposicaoTableMap::COL_IS_RASCUNHO => 8, ProposicaoTableMap::COL_CATEGORIA => 9, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'id_usuario' => 1, 'nome' => 2, 'objetivo' => 3, 'start' => 4, 'imagem' => 5, 'tempo_total' => 6, 'data_cadastro' => 7, 'is_rascunho' => 8, 'categoria' => 9, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'IdUsuario' => 1, 'Nome' => 2, 'Objetivo' => 3, 'Start' => 4, 'Imagem' => 5, 'TempoTotal' => 6, 'DataCadastro' => 7, 'IsRascunho' => 8, 'Categoria' => 9, 'QteComentarios' => 10, 'QteCurtidas' => 11, 'QteSeguidores' => 12, 'QteConcluidos' => 13, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'idUsuario' => 1, 'nome' => 2, 'objetivo' => 3, 'start' => 4, 'imagem' => 5, 'tempoTotal' => 6, 'dataCadastro' => 7, 'isRascunho' => 8, 'categoria' => 9, 'qteComentarios' => 10, 'qteCurtidas' => 11, 'qteSeguidores' => 12, 'qteConcluidos' => 13, ),
+        self::TYPE_COLNAME       => array(ProposicaoTableMap::COL_ID => 0, ProposicaoTableMap::COL_ID_USUARIO => 1, ProposicaoTableMap::COL_NOME => 2, ProposicaoTableMap::COL_OBJETIVO => 3, ProposicaoTableMap::COL_START => 4, ProposicaoTableMap::COL_IMAGEM => 5, ProposicaoTableMap::COL_TEMPO_TOTAL => 6, ProposicaoTableMap::COL_DATA_CADASTRO => 7, ProposicaoTableMap::COL_IS_RASCUNHO => 8, ProposicaoTableMap::COL_CATEGORIA => 9, ProposicaoTableMap::COL_QTE_COMENTARIOS => 10, ProposicaoTableMap::COL_QTE_CURTIDAS => 11, ProposicaoTableMap::COL_QTE_SEGUIDORES => 12, ProposicaoTableMap::COL_QTE_CONCLUIDOS => 13, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'id_usuario' => 1, 'nome' => 2, 'objetivo' => 3, 'start' => 4, 'imagem' => 5, 'tempo_total' => 6, 'data_cadastro' => 7, 'is_rascunho' => 8, 'categoria' => 9, 'qte_comentarios' => 10, 'qte_curtidas' => 11, 'qte_seguidores' => 12, 'qte_concluidos' => 13, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
     );
 
     /**
@@ -176,11 +196,15 @@ class ProposicaoTableMap extends TableMap
         $this->addColumn('nome', 'Nome', 'VARCHAR', true, 250, null);
         $this->addColumn('objetivo', 'Objetivo', 'LONGVARCHAR', true, null, null);
         $this->addColumn('start', 'Start', 'LONGVARCHAR', false, null, null);
-        $this->addColumn('imagem', 'Imagem', 'BLOB', false, null, null);
+        $this->addColumn('imagem', 'Imagem', 'VARCHAR', false, 200, null);
         $this->addColumn('tempo_total', 'TempoTotal', 'VARCHAR', false, 255, null);
         $this->addColumn('data_cadastro', 'DataCadastro', 'TIMESTAMP', true, null, null);
         $this->addColumn('is_rascunho', 'IsRascunho', 'BOOLEAN', true, 1, true);
         $this->addColumn('categoria', 'Categoria', 'CHAR', true, null, null);
+        $this->addColumn('qte_comentarios', 'QteComentarios', 'INTEGER', true, 10, 0);
+        $this->addColumn('qte_curtidas', 'QteCurtidas', 'INTEGER', true, 10, 0);
+        $this->addColumn('qte_seguidores', 'QteSeguidores', 'INTEGER', true, 10, 0);
+        $this->addColumn('qte_concluidos', 'QteConcluidos', 'INTEGER', true, 10, 0);
     } // initialize()
 
     /**
@@ -209,6 +233,13 @@ class ProposicaoTableMap extends TableMap
     1 => ':id',
   ),
 ), 'CASCADE', 'CASCADE', 'Comentarios', false);
+        $this->addRelation('Concluir', '\\Model\\Concluir', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':id_proposicao',
+    1 => ':id',
+  ),
+), null, null, 'Concluirs', false);
         $this->addRelation('Curtir', '\\Model\\Curtir', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
@@ -237,6 +268,13 @@ class ProposicaoTableMap extends TableMap
     1 => ':id',
   ),
 ), 'CASCADE', 'CASCADE', 'RecursoProposicaos', false);
+        $this->addRelation('Seguir', '\\Model\\Seguir', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':id_proposicao',
+    1 => ':id',
+  ),
+), null, null, 'Seguirs', false);
         $this->addRelation('TamanhoTurmaProposicao', '\\Model\\TamanhoTurmaProposicao', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
@@ -255,7 +293,11 @@ class ProposicaoTableMap extends TableMap
     public function getBehaviors()
     {
         return array(
-            'aggregate_custo_producao' => array('name' => 'tempo_total', 'expression' => 'SUM(duracao)', 'condition' => '', 'foreign_table' => 'passo', 'foreign_schema' => '', ),
+            'aggregate_tempo_total' => array('name' => 'tempo_total', 'expression' => 'SUM(duracao)', 'condition' => '', 'foreign_table' => 'passo', 'foreign_schema' => '', ),
+            'aggregate_comentarios' => array('name' => 'qte_comentarios', 'expression' => 'COUNT(id)', 'condition' => '', 'foreign_table' => 'comentario', 'foreign_schema' => '', ),
+            'aggregate_curtir' => array('name' => 'qte_curtidas', 'expression' => 'COUNT(id)', 'condition' => '', 'foreign_table' => 'curtir', 'foreign_schema' => '', ),
+            'aggregate_seguir' => array('name' => 'qte_seguidores', 'expression' => 'COUNT(id)', 'condition' => '', 'foreign_table' => 'seguir', 'foreign_schema' => '', ),
+            'aggregate_concluir' => array('name' => 'qte_concluidos', 'expression' => 'COUNT(id)', 'condition' => '', 'foreign_table' => 'concluir', 'foreign_schema' => '', ),
         );
     } // getBehaviors()
     /**
@@ -425,6 +467,10 @@ class ProposicaoTableMap extends TableMap
             $criteria->addSelectColumn(ProposicaoTableMap::COL_DATA_CADASTRO);
             $criteria->addSelectColumn(ProposicaoTableMap::COL_IS_RASCUNHO);
             $criteria->addSelectColumn(ProposicaoTableMap::COL_CATEGORIA);
+            $criteria->addSelectColumn(ProposicaoTableMap::COL_QTE_COMENTARIOS);
+            $criteria->addSelectColumn(ProposicaoTableMap::COL_QTE_CURTIDAS);
+            $criteria->addSelectColumn(ProposicaoTableMap::COL_QTE_SEGUIDORES);
+            $criteria->addSelectColumn(ProposicaoTableMap::COL_QTE_CONCLUIDOS);
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.id_usuario');
@@ -436,6 +482,10 @@ class ProposicaoTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.data_cadastro');
             $criteria->addSelectColumn($alias . '.is_rascunho');
             $criteria->addSelectColumn($alias . '.categoria');
+            $criteria->addSelectColumn($alias . '.qte_comentarios');
+            $criteria->addSelectColumn($alias . '.qte_curtidas');
+            $criteria->addSelectColumn($alias . '.qte_seguidores');
+            $criteria->addSelectColumn($alias . '.qte_concluidos');
         }
     }
 

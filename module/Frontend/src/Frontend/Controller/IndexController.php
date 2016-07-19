@@ -4,6 +4,7 @@ namespace Frontend\Controller;
 
 use Core\Mvc\Controller\BaseController;
 use Model\Proposicao;
+use Util\Util;
 use Zend\View\Model\ViewModel;
 
 /**

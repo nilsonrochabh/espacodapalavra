@@ -194,7 +194,7 @@ class PassoTableMap extends TableMap
     public function getBehaviors()
     {
         return array(
-            'aggregate_column_relation_aggregate_custo_producao' => array('foreign_table' => 'proposicao', 'update_method' => 'updateTempoTotal', 'aggregate_name' => 'TempoTotal', ),
+            'aggregate_column_relation_aggregate_tempo_total' => array('foreign_table' => 'proposicao', 'update_method' => 'updateTempoTotal', 'aggregate_name' => 'TempoTotal', ),
         );
     } // getBehaviors()
 
