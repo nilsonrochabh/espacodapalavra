@@ -329,7 +329,7 @@ class RegistrarForm extends Form implements InputFilterProviderInterface {
 						),
 					),
 				),
-				'validators' => array(
+				/*'validators' => array(
 					array(
 						'name' => '\Zend\Validator\File\IsImage',
 						'options' => array(
@@ -351,7 +351,7 @@ class RegistrarForm extends Form implements InputFilterProviderInterface {
 							),
 						),
 					),
-				),
+				),*/
 			),
 		);
 	}

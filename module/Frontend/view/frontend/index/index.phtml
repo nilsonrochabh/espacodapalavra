@@ -1,3 +1,4 @@
+<?php if(!$this->termoBusca): ?>
 <aside class="filterbox">
 	<div class="filter-full">
 		<div class="content-filter">
@@ -21,8 +22,13 @@
 		</div>
 	</div>
 </aside>
+<?php endif; ?>
 <main class="home">
 	<div class="container">
+		<?php if($this->termoBusca): ?>
+		<h2><?php echo $this->translate('Resultados de pesquisa para:'); ?> [<?php echo $this->termoBusca; ?>]</h2>
+		<?php endif; ?>
+		
 		<ul>
 			<?php foreach($this->lista as $l): ?>
 			<a class="inline" href="#proposicao-<?php echo $l->getId(); ?>">

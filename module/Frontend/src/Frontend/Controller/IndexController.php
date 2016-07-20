@@ -27,7 +27,8 @@ class IndexController extends BaseController {
 		
 		$lista = $this->getProposicaoBO()->lista($categoria, $q);
 		return new ViewModel(array(
-			'lista' => $lista
+			'lista' => $lista,
+			'termoBusca' => $q,
 		));
 	}
 	

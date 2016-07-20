@@ -60,7 +60,7 @@ $identity = $this->userIdentity();
 							<a class="inline" href="#porque-box"><?php echo $this->translate('Por quê?'); ?></a>
 						</li>
 						<li class="metodologias">
-							<a href="metodologias.html"><?php echo $this->translate('Metodologias'); ?></a>
+							<a href="<?php echo $this->url('metodologias'); ?>"><?php echo $this->translate('Metodologias'); ?></a>
 						</li>
 						<li class="quem-faz">
 							<a class="inline" href="#quem-faz-box"><?php echo $this->translate('Quem faz'); ?></a>
@@ -76,10 +76,10 @@ $identity = $this->userIdentity();
 							<a href="<?php echo $this->url('home'); ?>"><?php echo $this->translate('Proposições'); ?></a>
 						</li>
 						<li class="porque">
-							<a href="explore-artistas.html"><?php echo $this->translate('Artistas'); ?></a>
+							<a href="<?php echo $this->url('artistas'); ?>"><?php echo $this->translate('Artistas'); ?></a>
 						</li>
 						<li class="quem-faz">
-							<a href="explore-leitura.html"><?php echo $this->translate('Leitura'); ?></a>
+							<a href="<?php echo $this->url('leitura'); ?>"><?php echo $this->translate('Leitura'); ?></a>
 						</li>
 					</ul>
 				</div>

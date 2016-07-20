@@ -12,7 +12,9 @@ return array(
 			// Controllers
 			'Frontend\Controller\Index'      => 'Frontend\Controller\IndexController',
 			'Frontend\Controller\Usuario'    => 'Frontend\Controller\UsuarioController',
+			'Frontend\Controller\Conta'      => 'Frontend\Controller\ContaController',
 			'Frontend\Controller\Proposicao' => 'Frontend\Controller\ProposicaoController',
+			'Frontend\Controller\Pagina'     => 'Frontend\Controller\PaginaController',
 		),
 	),
 	
@@ -70,8 +72,8 @@ return array(
 				'options' => array(
 					'route'    => '/conta',
 					'defaults' => array(
-						'controller' => 'Frontend\Controller\Usuario',
-						'action'     => 'conta',
+						'controller' => 'Frontend\Controller\Conta',
+						'action'     => 'index',
 					),
 				),
 			),
@@ -117,6 +119,39 @@ return array(
 					'defaults' => array(
 						'controller' => 'Frontend\Controller\Index',
 						'action'     => 'proposicao',
+					),
+				),
+			),
+			
+			'metodologias' => array(
+				'type' => 'Literal',
+				'options' => array(
+					'route'    => '/metodologias',
+					'defaults' => array(
+						'controller' => 'Frontend\Controller\Pagina',
+						'action'     => 'metodologias',
+					),
+				),
+			),
+			
+			'artistas' => array(
+				'type' => 'Literal',
+				'options' => array(
+					'route'    => '/artistas',
+					'defaults' => array(
+						'controller' => 'Frontend\Controller\Pagina',
+						'action'     => 'artistas',
+					),
+				),
+			),
+			
+			'leitura' => array(
+				'type' => 'Literal',
+				'options' => array(
+					'route'    => '/leitura',
+					'defaults' => array(
+						'controller' => 'Frontend\Controller\Pagina',
+						'action'     => 'leitura',
 					),
 				),
 			),

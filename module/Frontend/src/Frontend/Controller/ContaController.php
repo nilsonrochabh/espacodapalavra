@@ -11,11 +11,11 @@ use Util\Util;
 use Zend\View\Model\ViewModel;
 
 /**
- * Classe Frontend\Controller$UsuarioController
+ * Classe Frontend\Controller$ContaController
  * @author <a href="mailto:bsaliba@gmail.com">Bruno Saliba</a>
  * @since 04/03/2016 10:53:17
  */
-class UsuarioController extends BaseController {
+class ContaController extends BaseController {
 	
 	protected $authservice;
 	protected $registrarForm;
@@ -51,30 +51,36 @@ class UsuarioController extends BaseController {
 	 * @see \Zend\Mvc\Controller\AbstractActionController::indexAction()
 	 */
 	public function indexAction() {
-		$this->layout('frontend/layout/simple');
-		
-		$form = $this->getRegistrarForm();
+		$form = new ContaForm();
 		
 		$request = $this->getRequest();
 		if($request->isPost()) {
-			$post = array_merge_recursive(
-				$request->getPost()->toArray(),
-				$request->getFiles()->toArray()
-			);
+			$files = $request->getFiles()->toArray();
+			if(isset($files['foto']['name']) &&
+				!Util::IsNullOrEmptyString($files['foto']['name'])) {
+				$post = array_merge_recursive(
+					$request->getPost()->toArray(),
+					$files
+				);
+			} else {
+				$post = $request->getPost();
+			}
+			
 			$form->setData($post);
 			
-			try {
-				if($form->isValid()) {
+			if($form->isValid()) {
+				try {
 					$data = $form->getData();
 					
-					$usuario = $this->getUsuarioBO()->registrar(
+					$usuario = $this->getUsuarioBO()->editar(
+						$this->getIdUsuarioLogado(),
 						$data['nome'],
 						$data['email'],
 						$data['atuacao'],
 						$data['genero'],
-						$data['senha'],
+						null,
 						$data['sobre'],
-						$data['foto']['tmp_name']
+						$data['foto'] ? $data['foto']['tmp_name'] : null
 					);
 					
 					$identity = array(
@@ -84,20 +90,27 @@ class UsuarioController extends BaseController {
 					
 					$this->getAuthService()->getStorage()->write($identity);
 					
+					$this->flashMessenger()->addSuccessMessage('Dados salvos com sucesso.');
 					return $this->redirect()->toRoute('conta');
+				} catch(CoreException $e) {
+					$this->flashMessenger()->addErrorMessage($e->getMessage());
+				} catch(\Exception $e) {
+					$this->handleException($e);
 				}
-			} catch(EmailExistenteException $e) {
-				$this->flashMessenger()->addErrorMessage($e->getMessage());
-				$form->get('email')->setMessages(array($e->getMessage()));
-			} catch(CoreException $e) {
-				$this->flashMessenger()->addErrorMessage($e->getMessage());
-			} catch(\Exception $e) {
-				$this->handleException($e);
 			}
+		} else {
+			$form->get('nome')->setValue($this->getUsuarioLogado()->getNome());
+			$form->get('email')->setValue($this->getUsuarioLogado()->getEmail());
+			$form->get('atuacao')->setValue($this->getUsuarioLogado()->getAtuacao());
+			$form->get('genero')->setValue($this->getUsuarioLogado()->getGenero());
+			$form->get('sobre')->setValue($this->getUsuarioLogado()->getDescricaoContexto());
 		}
+		
+		$lista = $this->getProposicaoBO()->minhaLista();
 		
 		return new ViewModel(array(
 			'form' => $form,
+			'lista' => $lista,
 		));
 	}
 }
