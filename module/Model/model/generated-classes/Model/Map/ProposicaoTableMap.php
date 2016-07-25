@@ -295,9 +295,9 @@ class ProposicaoTableMap extends TableMap
         return array(
             'aggregate_tempo_total' => array('name' => 'tempo_total', 'expression' => 'SUM(duracao)', 'condition' => '', 'foreign_table' => 'passo', 'foreign_schema' => '', ),
             'aggregate_comentarios' => array('name' => 'qte_comentarios', 'expression' => 'COUNT(id)', 'condition' => '', 'foreign_table' => 'comentario', 'foreign_schema' => '', ),
-            'aggregate_curtir' => array('name' => 'qte_curtidas', 'expression' => 'COUNT(id)', 'condition' => '', 'foreign_table' => 'curtir', 'foreign_schema' => '', ),
-            'aggregate_seguir' => array('name' => 'qte_seguidores', 'expression' => 'COUNT(id)', 'condition' => '', 'foreign_table' => 'seguir', 'foreign_schema' => '', ),
-            'aggregate_concluir' => array('name' => 'qte_concluidos', 'expression' => 'COUNT(id)', 'condition' => '', 'foreign_table' => 'concluir', 'foreign_schema' => '', ),
+            'aggregate_curtir' => array('name' => 'qte_curtidas', 'expression' => 'COUNT(*)', 'condition' => '', 'foreign_table' => 'curtir', 'foreign_schema' => '', ),
+            'aggregate_seguir' => array('name' => 'qte_seguidores', 'expression' => 'COUNT(*)', 'condition' => '', 'foreign_table' => 'seguir', 'foreign_schema' => '', ),
+            'aggregate_concluir' => array('name' => 'qte_concluidos', 'expression' => 'COUNT(*)', 'condition' => '', 'foreign_table' => 'concluir', 'foreign_schema' => '', ),
         );
     } // getBehaviors()
     /**

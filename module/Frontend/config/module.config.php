@@ -121,6 +121,39 @@ return array(
 						'action'     => 'proposicao',
 					),
 				),
+				'may_terminate' => true,
+				'child_routes' => array(
+					'seguir' => array(
+						'type' => 'segment',
+						'options' => array(
+							'route' => '/seguir',
+							'defaults' => array(
+								'controller' => 'Frontend\Controller\Index',
+								'action'     => 'seguir',
+							),
+						),
+					),
+					'curtir' => array(
+						'type' => 'segment',
+						'options' => array(
+							'route' => '/curtir',
+							'defaults' => array(
+								'controller' => 'Frontend\Controller\Index',
+								'action'     => 'curtir',
+							),
+						),
+					),
+					'concluir' => array(
+						'type' => 'segment',
+						'options' => array(
+							'route' => '/concluir',
+							'defaults' => array(
+								'controller' => 'Frontend\Controller\Index',
+								'action'     => 'concluir',
+							),
+						),
+					),
+				),
 			),
 			
 			'metodologias' => array(

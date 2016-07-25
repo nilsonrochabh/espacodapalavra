@@ -4,6 +4,9 @@ namespace Model;
 
 use Model\Base\Proposicao as BaseProposicao;
 use Model\Map\ProposicaoTableMap;
+use Model\SeguirQuery;
+use Model\CurtirQuery;
+use Model\ConcluirQuery;
 use Propel\Runtime\Propel;
 
 /**
@@ -47,5 +50,26 @@ class Proposicao extends BaseProposicao
 	public function calcularTempoTotal() {
 		$con = Propel::getWriteConnection(ProposicaoTableMap::DATABASE_NAME);
 		$this->setTempoTotal($this->computeTempoTotal($con));
+	}
+	
+	public function seguiu($idUsuario) {
+		return SeguirQuery::create()
+			->filterByIdUsuario($idUsuario)
+			->filterByIdProposicao($this->getId())
+			->count();
+	}
+	
+	public function curtiu($idUsuario) {
+		return CurtirQuery::create()
+			->filterByIdUsuario($idUsuario)
+			->filterByIdProposicao($this->getId())
+			->count();
+	}
+	
+	public function fez($idUsuario) {
+		return ConcluirQuery::create()
+			->filterByIdUsuario($idUsuario)
+			->filterByIdProposicao($this->getId())
+			->count();
 	}
 }

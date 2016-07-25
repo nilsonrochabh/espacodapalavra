@@ -583,7 +583,6 @@ main.proposicao {
       font-size: 15px;
       color: #636466; }
     main.proposicao .author-pr a {
-      margin-top: 15px;
       display: inline-block;
       width: 150px;
       height: 47px;
@@ -597,6 +596,20 @@ main.proposicao {
       text-decoration: none; }
       main.proposicao .author-pr a:hover {
         background: #1a7c9d; }
+
+main.proposicao .author-pr a.amarelo {
+	background: #d77501;
+}
+main.proposicao .author-pr a.amarelo:hover {
+	background: #be6701;
+}
+
+main.proposicao .author-pr a.verde {
+	background: #359445;
+}
+main.proposicao .author-pr a.verde:hover {
+	background: #026112;
+}
 
 main.publique {
   clear: both; }
@@ -1201,4 +1214,12 @@ table.list tr td.position a {
 .steps-publish ul li a:visited {
     color: #cee5f0;
 	text-decoration: none;
+}
+
+main.login a {
+	display: inline-block;
+    font-size: 15px;
+    color: #636466;
+    text-decoration: none;
+    margin: 30px 0 0;
 }

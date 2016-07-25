@@ -31,8 +31,20 @@ use Util\Util;
 			</div>
 			<?php endif; ?>
 			<h2><?php echo $this->proposicao->getUsuario()->getNome(); ?></h2>
-			<span>12 Seguidores</span>
-			<a href="#">Seguir</a>
+			<span><?php echo $this->proposicao->getQteSeguidores();?> Seguidores</span>
+			<div>
+				<a href="<?php echo $this->url('proposicao/seguir', array('id' => $this->proposicao->getId())); ?>"><?php echo $this->seguiu > 0 ? 'Seguindo' : 'Seguir'; ?></a>
+			</div>
+			<br />
+			<span><?php echo $this->proposicao->getQteCurtidas();?> Curtidas</span>
+			<div>
+				<a href="<?php echo $this->url('proposicao/curtir', array('id' => $this->proposicao->getId())); ?>" class="verde"><?php echo $this->curtiu > 0 ? 'Curti' : 'Curtir'; ?></a>
+			</div>
+			<br />
+			<span><?php echo $this->proposicao->getQteConcluidos();?> Fizeram</span>
+			<div>
+				<a href="<?php echo $this->url('proposicao/concluir', array('id' => $this->proposicao->getId())); ?>" class="amarelo"><?php echo $this->fez > 0 ? 'Fiz' : 'Fizeram'; ?></a>
+			</div>
 		</div>
 		
 		<div id="tabs">

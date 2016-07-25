@@ -106,7 +106,7 @@ class ContaController extends BaseController {
 			$form->get('sobre')->setValue($this->getUsuarioLogado()->getDescricaoContexto());
 		}
 		
-		$lista = $this->getProposicaoBO()->minhaLista();
+		$lista = $this->getProposicaoBO()->minhaLista($this->getIdUsuarioLogado());
 		
 		return new ViewModel(array(
 			'form' => $form,

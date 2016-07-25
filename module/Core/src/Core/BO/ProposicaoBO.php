@@ -6,6 +6,10 @@ use Core\Exception\CoreException;
 use Model\AmbienteProposicao;
 use Model\AmbienteProposicaoQuery;
 use Model\Comentario;
+use Model\Concluir;
+use Model\ConcluirQuery;
+use Model\Curtir;
+use Model\CurtirQuery;
 use Model\HabilidadeProposicao;
 use Model\HabilidadeProposicaoQuery;
 use Model\Map\ProposicaoTableMap;
@@ -15,6 +19,8 @@ use Model\Passo;
 use Model\PassoQuery;
 use Model\RecursoProposicao;
 use Model\RecursoProposicaoQuery;
+use Model\Seguir;
+use Model\SeguirQuery;
 use Model\TamanhoTurmaProposicao;
 use Model\TamanhoTurmaProposicaoQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -300,8 +306,11 @@ class ProposicaoBO extends BO {
 	 * @since 24/05/2016 21:14:55
 	 * @throws Exception
 	 */
-	public function minhaLista() {
-		return ProposicaoQuery::create()->orderByNome()->find();
+	public function minhaLista($idUsuarioLogado) {
+		return ProposicaoQuery::create()
+			->filterByIdUsuario($idUsuarioLogado)
+			->orderByNome()
+			->find();
 	}
 	
 	/**
@@ -321,6 +330,123 @@ class ProposicaoBO extends BO {
 			$comentario->setComentario($textoComentario);
 			$comentario->setIdProposicao($proposicao->getId());
 			$comentario->save();
+			
+			$con->commit();
+			return true;
+		} catch (\Exception $e) {
+			$con->rollback();
+			throw $e;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Método seguir
+	 * @author <a href="mailto:bsaliba@gmail.com">Bruno Saliba</a>
+	 * @since 24/05/2016 21:14:55
+	 * @throws Exception
+	 */
+	public function seguir(Proposicao $proposicao, $idUsuarioLogado) {
+		$con = Propel::getWriteConnection(ProposicaoTableMap::DATABASE_NAME);
+		$con->beginTransaction();
+		
+		try {
+			$jaSegue = SeguirQuery::create()
+				->filterByIdUsuario($idUsuarioLogado)
+				->filterByProposicao($proposicao)
+				->count();
+			
+			if($jaSegue > 0) {
+				SeguirQuery::create()
+					->filterByIdUsuario($idUsuarioLogado)
+					->filterByProposicao($proposicao)
+					->delete($con);
+			} else {
+				$seguir = new Seguir();
+				$seguir->setIdUsuario($idUsuarioLogado);
+				$seguir->setIdProposicao($proposicao->getId());
+				$seguir->setDataCadastro(Util::agora());
+				$seguir->save($con);
+			}
+			
+			$con->commit();
+			return true;
+		} catch (\Exception $e) {
+			$con->rollback();
+			throw $e;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Método curtir
+	 * @author <a href="mailto:bsaliba@gmail.com">Bruno Saliba</a>
+	 * @since 24/05/2016 21:14:55
+	 * @throws Exception
+	 */
+	public function curtir(Proposicao $proposicao, $idUsuarioLogado) {
+		$con = Propel::getWriteConnection(ProposicaoTableMap::DATABASE_NAME);
+		$con->beginTransaction();
+		
+		try {
+			$jaSegue = CurtirQuery::create()
+				->filterByIdUsuario($idUsuarioLogado)
+				->filterByProposicao($proposicao)
+				->count();
+			
+			if($jaSegue > 0) {
+				CurtirQuery::create()
+					->filterByIdUsuario($idUsuarioLogado)
+					->filterByProposicao($proposicao)
+					->delete($con);
+			} else {
+				$curtir = new Curtir();
+				$curtir->setIdUsuario($idUsuarioLogado);
+				$curtir->setIdProposicao($proposicao->getId());
+				$curtir->setDataCadastro(Util::agora());
+				$curtir->save($con);
+			}
+			
+			$con->commit();
+			return true;
+		} catch (\Exception $e) {
+			$con->rollback();
+			throw $e;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Método concluir
+	 * @author <a href="mailto:bsaliba@gmail.com">Bruno Saliba</a>
+	 * @since 24/05/2016 21:14:55
+	 * @throws Exception
+	 */
+	public function concluir(Proposicao $proposicao, $idUsuarioLogado) {
+		$con = Propel::getWriteConnection(ProposicaoTableMap::DATABASE_NAME);
+		$con->beginTransaction();
+		
+		try {
+			$jaSegue = ConcluirQuery::create()
+				->filterByIdUsuario($idUsuarioLogado)
+				->filterByProposicao($proposicao)
+				->count();
+			
+			if($jaSegue > 0) {
+				ConcluirQuery::create()
+					->filterByIdUsuario($idUsuarioLogado)
+					->filterByProposicao($proposicao)
+					->delete($con);
+			} else {
+				$concluir = new Concluir();
+				$concluir->setIdUsuario($idUsuarioLogado);
+				$concluir->setIdProposicao($proposicao->getId());
+				$concluir->setDataCadastro(Util::agora());
+				$concluir->save($con);
+			}
 			
 			$con->commit();
 			return true;

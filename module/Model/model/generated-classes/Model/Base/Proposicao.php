@@ -4835,7 +4835,7 @@ abstract class Proposicao implements ActiveRecordInterface
      */
     public function computeQteCurtidas(ConnectionInterface $con)
     {
-        $stmt = $con->prepare('SELECT COUNT(id) FROM curtir WHERE curtir.ID_PROPOSICAO = :p1');
+        $stmt = $con->prepare('SELECT COUNT(*) FROM curtir WHERE curtir.ID_PROPOSICAO = :p1');
         $stmt->bindValue(':p1', $this->getId());
         $stmt->execute();
 
@@ -4862,7 +4862,7 @@ abstract class Proposicao implements ActiveRecordInterface
      */
     public function computeQteSeguidores(ConnectionInterface $con)
     {
-        $stmt = $con->prepare('SELECT COUNT(id) FROM seguir WHERE seguir.ID_PROPOSICAO = :p1');
+        $stmt = $con->prepare('SELECT COUNT(*) FROM seguir WHERE seguir.ID_PROPOSICAO = :p1');
         $stmt->bindValue(':p1', $this->getId());
         $stmt->execute();
 
@@ -4889,7 +4889,7 @@ abstract class Proposicao implements ActiveRecordInterface
      */
     public function computeQteConcluidos(ConnectionInterface $con)
     {
-        $stmt = $con->prepare('SELECT COUNT(id) FROM concluir WHERE concluir.ID_PROPOSICAO = :p1');
+        $stmt = $con->prepare('SELECT COUNT(*) FROM concluir WHERE concluir.ID_PROPOSICAO = :p1');
         $stmt->bindValue(':p1', $this->getId());
         $stmt->execute();
 

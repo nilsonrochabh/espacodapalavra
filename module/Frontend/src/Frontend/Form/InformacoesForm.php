@@ -31,6 +31,18 @@ class InformacoesForm extends Form implements InputFilterProviderInterface {
 		));
 		
 		$this->add(array(
+			'name' => 'start',
+			'attributes' => array(
+				'id'    => 'start',
+				'type'  => 'textarea',
+				'rows'  => 5,
+			),
+			'options' => array(
+				'label' => _('Resumo da Atividade'),
+			),
+		));
+		
+		$this->add(array(
 			'name' => 'objetivo',
 			'attributes' => array(
 				'id'    => 'objetivo',
@@ -39,18 +51,6 @@ class InformacoesForm extends Form implements InputFilterProviderInterface {
 			),
 			'options' => array(
 				'label' => _('Objetivo'),
-			),
-		));
-		
-		$this->add(array(
-			'name' => 'start',
-			'attributes' => array(
-				'id'    => 'start',
-				'type'  => 'textarea',
-				'rows'  => 5,
-			),
-			'options' => array(
-				'label' => _('Start'),
 			),
 		));
 		

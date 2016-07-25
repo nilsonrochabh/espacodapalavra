@@ -10,6 +10,8 @@ use Model\ResetSenha;
 use Propel\Runtime\Propel;
 use Model\Map\ResetSenhaTableMap;
 use Model\Map\UsuarioTableMap;
+use Util\Mail;
+use Util\MailBox;
 
 /**
  * Classe Login\ControllerEsqueciSenhaController
@@ -93,25 +95,24 @@ class EsqueciSenhaController extends AbstractActionController {
 						ResetSenhaQuery::create()->filterByIdUsuario($existente->getId())->delete($con);
 						$reset->save($con);
 						
-// 						$mail = new Mail("*******", 587, "*******", "*******");
-						
-// 						$remetente = new MailBox('*******', '*******');
-// 						$destinatario = new MailBox($existente->getNome(), $existente->getEmail());
-// 						$responderPara = new MailBox('Not Reply', 'nao-responda@*******');
-						
-// 						$assunto = $translator->translate("Esqueci minha senha");
-						
-// 						$event = $this->getEvent();
-// 						$request = $event->getRequest();
-// 						$router = $event->getRouter();
-// 						$uri = $router->getRequestUri();
-// 						$baseUrl = sprintf('%s://%s', $uri->getScheme(), $uri->getHost());
-						
-// 						$corpo = sprintf($translator->translate('Prezado(a) %1$s,<br /><br />Segue link para alterar sua senha:<br /><a href="%2$s">Alterar Senha</a><br /><br />ou cole no browser (navegador web):<br />%2$s<br /><br />Esse link expira em 24 horas.'),
-// 								$existente->getNome(),
-// 								$baseUrl . $this->url()->fromRoute('login/codigo', array('codigo' => $reset->getCodigo())));
-						
-// 						$mail->enviaEmail($remetente, $destinatario, $responderPara, $assunto, $corpo);
+ 						$mail = new Mail("smtp.gmail.com", 587, "espacodapalavrabh@gmail.com", "espacobh2016");
+					
+ 						$remetente = new MailBox('Espaço da Palavra', 'espacodapalavrabh@gmail.com');
+ 						$destinatario = new MailBox($existente->getNome(), $existente->getEmail());
+					
+ 						$assunto = $translator->translate("Esqueci minha senha - Espaço da Palavra");
+					
+ 						$event = $this->getEvent();
+ 						$request = $event->getRequest();
+ 						$router = $event->getRouter();
+ 						$uri = $router->getRequestUri();
+ 						$baseUrl = sprintf('%s://%s', $uri->getScheme(), $uri->getHost());
+					
+ 						$corpo = sprintf($translator->translate('Prezado(a) %1$s,<br /><br />Segue link para alterar sua senha:<br /><a href="%2$s">Alterar Senha</a><br /><br />ou cole no browser (navegador web):<br />%2$s<br /><br />Esse link expira em 24 horas.'),
+ 								$existente->getNome(),
+ 								$baseUrl . $this->url()->fromRoute('login/codigo', array('codigo' => $reset->getCodigo())));
+					
+ 						$mail->enviaEmail($remetente, $destinatario, $responderPara, $assunto, $corpo);
 						
 						$con->commit();
 					

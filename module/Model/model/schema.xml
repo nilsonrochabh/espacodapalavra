@@ -155,17 +155,17 @@
 	<behavior id="aggregate_curtir" name="aggregate_column">
       <parameter name="name" value="qte_curtidas" />
       <parameter name="foreign_table" value="curtir" />
-      <parameter name="expression" value="COUNT(id)" />
+      <parameter name="expression" value="COUNT(*)" />
     </behavior>
 	<behavior id="aggregate_seguir" name="aggregate_column">
       <parameter name="name" value="qte_seguidores" />
       <parameter name="foreign_table" value="seguir" />
-      <parameter name="expression" value="COUNT(id)" />
+      <parameter name="expression" value="COUNT(*)" />
     </behavior>
 	<behavior id="aggregate_concluir" name="aggregate_column">
       <parameter name="name" value="qte_concluidos" />
       <parameter name="foreign_table" value="concluir" />
-      <parameter name="expression" value="COUNT(id)" />
+      <parameter name="expression" value="COUNT(*)" />
     </behavior>
     <foreign-key foreignTable="usuario" name="fk_proposicao_usuario" onDelete="CASCADE" onUpdate="CASCADE">
       <reference local="id_usuario" foreign="id"/>
