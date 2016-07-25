@@ -54,11 +54,11 @@ return array(
     ),
 
     'view_manager' => array(
-        'display_not_found_reason' => true,
-        'display_exceptions'       => true,
+        'display_not_found_reason' => false,
+        'display_exceptions'       => false,
         'doctype'                  => 'HTML5',
-        'not_found_template'       => 'error/404',
-        'exception_template'       => 'error/index',
+        'not_found_template'       => 'frontend/error/404',
+        'exception_template'       => 'frontend/error/index',
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
         	'layout/login'            => __DIR__ . '/../view/layout/login.phtml',

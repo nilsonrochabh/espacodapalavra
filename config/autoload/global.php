@@ -13,7 +13,8 @@
 
 return array(
     'module_layouts' => array(
-        'Core' => 'layout/layout',
+		'Application' => 'frontend/layout/layout',
+        'Core' => 'frontend/layout/layout',
         'Frontend' => 'frontend/layout/layout',
 		'Login' => 'frontend/layout/simple',
     ),
