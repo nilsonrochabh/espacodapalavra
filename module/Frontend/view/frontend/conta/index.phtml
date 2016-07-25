@@ -1,11 +1,11 @@
 <?php
 use Util\Util;
 ?>
-<main class="login">
+<main class="login no-margin-a">
 	<div class="container">
 		<div class="col-full">
 			<form action="" method="post" name="cadastroForm" enctype="multipart/form-data">
-				<h2>Atualizar Cadastro</h2>
+				<h2><?php echo $this->translate('Atualizar Cadastro'); ?></h2>
 				
 				<?php if(!Util::IsNullOrEmptyString($this->userIdentity()['usuario']->getImagemProfile())): ?>
 				<div class="photo-profile">
@@ -60,12 +60,12 @@ use Util\Util;
 		<br />
 		
 		<div class="col-full">
-			<h2>Minhas Proposições</h2>
+			<h2><?php echo $this->translate('Minhas Proposições'); ?></h2>
 			<table class="list">
 				<?php foreach($this->lista as $l): ?>
 				<tr>
-					<td><?php echo $l->getNome(); ?></td>
-					<td class="position"><a href="<?php echo $this->url('publique', array('idProposicao' => $l->getId())); ?>">Editar</a></td>
+					<td><?php echo $l->getNome(); ?> <span class="muted"><?php echo $l->getIsRascunho() ? $this->translate('(Rascunho)') : ''; ?></span></td>
+					<td class="position"><a href="<?php echo $this->url('publique', array('idProposicao' => $l->getId())); ?>"><?php echo $this->translate('Editar'); ?></a></td>
 				</tr>
 				<?php endforeach; ?>
 			</table>

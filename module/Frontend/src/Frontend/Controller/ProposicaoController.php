@@ -244,6 +244,8 @@ class ProposicaoController extends BaseController {
 						$form->get('recurso')->getValue(),
 						$form->get('tamanho')->getValue()
 					);
+					
+					return $this->redirect()->toRoute('proposicao', array('id' => $proposicao->getId()));
 				} catch(CoreException $e) {
 					$this->flashMessenger()->addErrorMessage($e->getMessage());
 				} catch(\Exception $e) {

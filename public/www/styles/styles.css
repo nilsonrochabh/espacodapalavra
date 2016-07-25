@@ -1223,3 +1223,29 @@ main.login a {
     text-decoration: none;
     margin: 30px 0 0;
 }
+
+main.no-margin-a a {
+	 margin: 0;
+}
+
+.muted {
+	color: #777;
+	font-size: 0.67em;
+}
+
+ul.recursos {
+    list-style: none;
+    padding:0;
+    margin:0;
+}
+
+ul.recursos li { 
+	font-size: 16px;
+    color: #616264;
+}
+
+ul.recursos li:before {
+    content: "\002022";
+	padding-right: 7px;
+    color: #df268a;
+}

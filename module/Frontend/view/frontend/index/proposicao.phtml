@@ -17,8 +17,14 @@ use Util\Util;
 		</div>
 		
 		<div class="info-pr-2">
+			<?php if($this->proposicao->getRecursoProposicaosJoinRecurso()): ?>
 			<h3>Recursos utilizados</h3>
-			<img src="<?php echo $this->basePath(); ?>/www/img/recursos-temp.jpg" />
+			<ul class="recursos">
+			<?php foreach($this->proposicao->getRecursoProposicaosJoinRecurso() as $r): ?>
+				<li><?php echo $r->getRecurso()->getDescricao(); ?></li>
+			<?php endforeach; ?>
+			</ul>
+			<?php endif; ?>
 			
 			<h3>Duração total</h3>
 			<span class="icon-clock"></span><span class="duration-time"><?php echo substr($this->proposicao->getTempoTotal(), 0, -3); ?></span>

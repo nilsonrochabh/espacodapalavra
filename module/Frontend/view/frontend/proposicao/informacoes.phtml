@@ -32,15 +32,15 @@
 			<?php echo $this->formElement($this->form->get('nome')); ?>
 			<?php echo $this->formElementErrors()->render($this->form->get('nome')); ?>
 			
-			<?php echo $this->formLabel($this->form->get('objetivo')); ?>
-			<span class="desc"><?php echo $this->translate('Quais são seus objetivos pedagógicos com essa proposição? (o que quer alcançar com os estudantes?)'); ?></span>
-			<?php echo $this->formElement($this->form->get('objetivo')); ?>
-			<?php echo $this->formElementErrors()->render($this->form->get('objetivo')); ?>
-			
 			<?php echo $this->formLabel($this->form->get('start')); ?>
 			<span class="desc"><?php echo $this->translate('Explique como ela começa: (como você provocará uma inquietação nos estudantes?)'); ?></span>
 			<?php echo $this->formElement($this->form->get('start')); ?>
 			<?php echo $this->formElementErrors()->render($this->form->get('start')); ?>
+			
+			<?php echo $this->formLabel($this->form->get('objetivo')); ?>
+			<span class="desc"><?php echo $this->translate('Quais são seus objetivos pedagógicos com essa proposição? (o que quer alcançar com os estudantes?)'); ?></span>
+			<?php echo $this->formElement($this->form->get('objetivo')); ?>
+			<?php echo $this->formElementErrors()->render($this->form->get('objetivo')); ?>
 			
 			<?php echo $this->formLabel($this->form->get('imagem')); ?>
 			<span class="desc"><?php echo $this->translate('A imagem deve ter 1146 x 302 pixels para melhor otimização.'); ?></span>
